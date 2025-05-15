@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.home-container {
+  background-color: #041e42;
+  min-height: 100vh;
+  padding: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #041e42 0%, #0a2b5c 50%, #041e42 100%);
+}
+
+.stars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.25;
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.home-content {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+}
+
+
+@keyframes marquee {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-370%);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.home-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  border: 2px solid #bf0d3e;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-star {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: #bf0d3e;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.home-description {
+  color: #041e42;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.home-description p {
+  margin-bottom: 1rem;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.home-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.signup-btn {
+  background-color: #bf0d3e;
+  color: #ffd700;
+  text-shadow: 2px 2px 0 #041e42;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  animation: coin-blink 1.5s infinite;
+}
+
+.login-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 2px 2px 0 #bf0d3e;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  animation: coin-blink 1.5s infinite;
+  animation-delay: 0.75s;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes coin-blink {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  50% { 
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .home-description {
+    font-size: 0.7rem;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+  }
+
+  .home-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.add-financial-page-container {
+  background-color: #041e42;
+  min-height: 100vh;
+  padding: 1.5rem;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-financial-stars-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-position:
+    0 0,
+    25px 25px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.add-financial-back-button-container {
+  flex: 4;
+  z-index: 10;
+}
+
+.add-financial-title-container {
+  flex: 10;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.add-financial-header {
+  background-color: #bf0d3e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 0 2rem 2rem 2rem;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  width: calc(100% - 4rem);
+  max-width: 1200px;
+}
+
+/* .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+} */
+
+/* .header-left {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+} */
+
+/* .header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  width: 40px; /* Match the back button width */
+}
+
+/* Override any absolute positioning from BackButton */
+/* .header-left .back-btn {
+  position: static !important;
+  margin: 0;
+  padding: 0.8rem 1.2rem;
+  height: auto;
+} */
+
+/* .back-btn {
+  position: static !important;
+  margin: 0;
+  padding: 0.8rem 1.2rem;
+  height: auto;
+} */
+
+.add-financial-stripes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}
+
+.add-financial-title {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 0;
+  text-shadow: 2px 2px 0 #041e42;
+  text-align: center;
+}
+
+.add-financial-grid {
+  background-color: transparent;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-financial-expenses-title-container {
+  background-color: #bf0d0d;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 3px solid #ffffff;
+}
+
+.add-financial-cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.add-financial-card {
+  flex: 1;
+  max-width: 500px;
+  min-width: 300px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #bf0d3e;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-financial-card-star {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: #bf0d3e;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.add-financial-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.add-financial-label {
+  display: block;
+  color: #041e42;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
+.add-financial-input,
+.add-financial-select,
+.add-financial-textarea {
+  width: calc(100% - 20px); /* Adjust width to account for padding */
+  padding: 0.8rem;
+  padding-right: 20px;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+}
+
+.add-financial-expenses {
+  margin-top: 1.5rem;
+}
+
+.add-financial-expenses-list {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.add-financial-expense-item {
+  padding: 0.8rem;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.add-financial-expense-item:last-child {
+  border-bottom: none;
+}
+
+.add-financial-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.add-financial-btn-expense {
+  background-color: #28a745;
+  color: white;
+}
+
+.add-financial-btn-submit {
+  background-color: #28a745;
+  border: 2px solid #28a745;
+  color: rgb(255, 255, 255);
+  width: auto;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.add-financial-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.add-financial-delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  margin-left: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.add-financial-delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.1);
+}
+
+.add-financial-expenses-total {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e9ecef;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #041e42;
+}
+
+.add-financial-game-finance {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+}
+
+.add-financial-game-finance h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.add-financial-totals {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.add-financial-totals > div {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.add-financial-input-error {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+}
+
+.add-financial-error-message {
+  color: #dc3545;
+  font-size: 0.6rem;
+  margin-top: 0.3rem;
+  font-family: 'Press Start 2P', cursive;
+}
+
+@media (max-width: 1024px) {
+  .add-financial-cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-financial-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-financial-page-container {
+    padding: 1rem;
+  }
+
+  .add-financial-header {
+    margin: 0 1rem 2rem 1rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
+
+  /* .header-content {
+    padding: 0 0.5rem;
+  } */
+
+  /* .header-left,
+  .header-center,
+  .header-right {
+    width: 100%;
+    justify-content: center;
+  } */
+
+  .add-financial-title {
+    font-size: 1rem;
+  }
+
+  .add-financial-card {
+    padding: 1rem;
+  }
+
+  .add-financial-btn {
+    padding: 0.8rem;
+    font-size: 0.6rem;
+  }
+}
+
+.add-financial-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.add-financial-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.add-financial-modal h3 {
+  margin-bottom: 1.5rem;
+  color: #041e42;
+  text-align: center;
+}
+
+.add-financial-modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.add-financial-btn-cancel {
+  background-color: #6c757d;
+}
+
+.add-financial-btn-cancel:hover {
+  background-color: #5a6268;
+}

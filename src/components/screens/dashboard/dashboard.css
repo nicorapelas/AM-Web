@@ -1,0 +1,200 @@
+/* Import retro gaming font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Main container */
+.dashboard-container {
+  background-color: #041e42;
+  min-height: 100vh;
+  padding: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stars background */
+.stars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-position:
+    0 0,
+    25px 25px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Header styles */
+/* .dashboard-header {
+  background-color: #bf0d3e;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+} */
+
+.stripes-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}
+
+/* .header-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+} */
+
+.dashboard-title {
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  font-size: 1rem;
+  text-shadow: 2px 2px 0 #041e42;
+  position: relative;
+  z-index: 1;
+}
+
+/* Grid layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+/* Card styles */
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 1rem;
+  border: 2px solid #bf0d3e;
+  transition: transform 0.2s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 10px rgba(191, 13, 62, 0.3);
+}
+
+.card-star {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: #bf0d3e;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.card-title {
+  color: #041e42;
+  font-size: 0.8rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+  padding-right: 25px;
+}
+
+.stat {
+  color: #bf0d3e;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0.3rem 0;
+}
+
+.nav-button {
+  background-color: #ffffff;
+  color: #bf0d3e;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.nav-button:hover {
+  background-color: #041e42;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.dashboard-card.clickable {
+  cursor: pointer;
+  background: linear-gradient(45deg, #bf0d3e, #041e42);
+}
+
+.dashboard-card.clickable .card-title,
+.dashboard-card.clickable .stat {
+  color: #ffffff;
+}
+
+.dashboard-card.clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  } */
+
+  /* .dashboard-title {
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  } */
+
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .card-title {
+    font-size: 0.7rem;
+  }
+
+  .stat {
+    font-size: 1.2rem;
+  }
+}

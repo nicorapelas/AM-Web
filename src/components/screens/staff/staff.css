@@ -1,0 +1,616 @@
+.staff-page-container {
+    background-color: #041e42;
+    min-height: 100vh;
+    padding: 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .staff-stars-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(white 2px, transparent 2px),
+      radial-gradient(white 2px, transparent 2px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  
+  .staff-content {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .staff-header {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 3px solid #bf0d3e;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .staff-title {
+    color: #041e42;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .staff-stats {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .staff-stat-item {
+    text-align: center;
+  }
+  
+  .staff-stat-label {
+    font-size: 0.7rem;
+    color: #041e42;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .staff-stat-value {
+    font-size: 1rem;
+    color: #bf0d3e;
+  }
+  
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .staff-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 3px solid #bf0d3e;
+    position: relative;
+  }
+  
+  .staff-card-star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: #bf0d3e;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+  }
+  
+  .staff-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .staff-name {
+    font-size: 0.9rem;
+    color: #041e42;
+    margin: 0;
+  }
+  
+  .staff-status {
+    font-size: 0.6rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+  }
+  
+  .staff-status-active {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .staff-status-inactive {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .staff-card-content {
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  
+  .staff-info-item {
+    margin-bottom: 0.8rem;
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+  
+  .staff-label {
+    color: #041e42;
+    flex: 0 0 40%;
+  }
+  
+  .staff-value {
+    color: #666;
+    flex: 0 0 58%;
+    text-align: right;
+  }
+  
+  .staff-card-actions {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .staff-action-btn {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .staff-edit-btn {
+    background-color: #041e42;
+    color: white;
+  }
+  
+  .staff-delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .staff-add-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 1rem 2rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .staff-action-btn:hover,
+  .staff-add-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  .staff-no-store-message {
+    color: white;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .staff-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+  
+    .staff-stats {
+      justify-content: center;
+    }
+  
+    .staff-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .staff-card-actions {
+      flex-direction: column;
+    }
+  
+    .staff-add-btn {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 0.7rem;
+    }
+  }
+
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 3px solid #bf0d3e;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: auto;
+  }
+
+  .modal-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb {
+    background: #bf0d3e;
+    border-radius: 4px;
+  }
+
+  .modal-content::-webkit-scrollbar-thumb:hover {
+    background: #8a092c;
+  }
+
+  .modal-content h3 {
+    color: #041e42;
+    font-size: 1rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .modal-content p {
+    color: #666;
+    font-size: 0.7rem;
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+
+  .modal-staff-name {
+    color: #bf0d3e !important;
+    font-weight: bold;
+    margin: 1rem 0 !important;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .modal-actions button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .cancel-btn {
+    background-color: #6c757d;
+    color: white;
+  }
+
+  .cancel-btn:hover {
+    background-color: #5a6268;
+  }
+
+  .modal-actions .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .modal-actions .delete-btn:hover {
+    background-color: #c82333;
+  }
+
+  @media (max-width: 768px) {
+    .modal-content {
+      width: 95%;
+      padding: 1.5rem;
+    }
+
+    .modal-actions {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .modal-actions button {
+      width: 100%;
+    }
+  }
+
+  .staff-loans-btn {
+    background-color: #041e42;
+    color: white;
+    margin: 0 5px;
+  }
+
+  .staff-loans-btn:hover {
+    background-color: #030f1f;
+  }
+
+  .create-loan-btn {
+    background-color: #041e42;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+
+  .create-loan-btn:hover {
+    background-color: #030f1f;
+  }
+
+  .loan-form {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .loan-form .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .loan-form label {
+    display: block;
+    color: #041e42;
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .loan-form input,
+  .loan-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #bf0d3e;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    background-color: white;
+  }
+
+  .loan-form input:focus,
+  .loan-form textarea:focus {
+    outline: none;
+    border-color: #041e42;
+  }
+
+  .loan-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .loan-form .modal-actions {
+    margin-top: 1.5rem;
+  }
+
+  .loan-details {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 2px solid #bf0d3e;
+  }
+
+  .loan-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+
+  .loan-label {
+    color: #041e42;
+    font-weight: bold;
+  }
+
+  .loan-value {
+    color: #666;
+  }
+
+  .loan-status {
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: bold;
+  }
+
+  .loan-status-active {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .loan-status-paid {
+    background-color: #17a2b8;
+    color: white;
+  }
+
+  .loan-status-overdue {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  .loan-payments {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #bf0d3e;
+  }
+
+  .loan-payments h4 {
+    color: #041e42;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .payment-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.7rem;
+    background-color: white;
+  }
+
+  .payment-item:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+
+  .payment-main-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .payment-date {
+    text-align: left;
+  }
+
+  .payment-amount {
+    text-align: right;
+    color: #041e42;
+    font-weight: bold;
+  }
+
+  .payment-notes {
+    text-align: left;
+    color: #666;
+    font-size: 0.6rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .no-loan-message {
+    color: #666;
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 1.5rem 0;
+  }
+
+  .take-payment-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    margin-top: 1rem;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+  }
+
+  .take-payment-btn:hover {
+    background-color: #218838;
+  }
+
+  .take-payment-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+
+  #payment-amount {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    border: 2px solid #bf0d3e;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #f8f9fa;
+    color: #041e42;
+  }
+
+  #payment-amount:focus {
+    outline: none;
+    border-color: #041e42;
+    box-shadow: 0 0 0 2px rgba(4, 30, 66, 0.2);
+  }
+
+  #payment-notes {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    border: 2px solid #bf0d3e;
+    border-radius: 4px;
+    width: 100%;
+    background-color: #f8f9fa;
+    color: #041e42;
+    resize: vertical;
+  }
+
+  #payment-notes:focus {
+    outline: none;
+    border-color: #041e42;
+    box-shadow: 0 0 0 2px rgba(4, 30, 66, 0.2);
+  }
+
+  .loan-balance-outstanding {
+    color: #dc3545;
+    font-weight: bold;
+  }
+
+  .loan-balance-paid {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .payment-balance-info {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 2px solid #bf0d3e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .payment-balance-label {
+    color: #041e42;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  .payment-balance-value {
+    color: #dc3545;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }

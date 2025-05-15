@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.staff-dashboard-container {
+  background-color: #041e42;
+  min-height: 100vh;
+  padding: 1.5rem;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.staff-dashboard-stars-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.staff-dashboard-header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 1.5rem;
+}
+
+.staff-dashboard-header-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+}
+
+.staff-dashboard-store-name {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 #041e42;
+  margin: 0;
+}
+
+.staff-dashboard-date {
+  font-size: 0.7rem;
+  text-shadow: 1px 1px 0 #041e42;
+}
+
+.staff-dashboard-add-financial-btn,
+.staff-dashboard-loans-btn {
+  width: 100%;
+  padding: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  border: 2px solid #ffffff;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 60px;
+}
+
+.staff-dashboard-add-financial-btn {
+  background-color: #bf0d3e;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+}
+
+.staff-dashboard-loans-btn {
+  background-color: #000000;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+}
+
+.staff-dashboard-add-financial-btn:hover,
+.staff-dashboard-loans-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.3);
+}
+
+.loan-notification {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #bf0d3e;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  animation: pulse 1.5s infinite;
+  margin-left: 8px;
+  top: -1px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.staff-dashboard-financials-container {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.staff-dashboard-financials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.staff-dashboard-financial-item {
+  background-color: #ffffff;
+  color: #041e42;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.staff-dashboard-financial-item:hover {
+  background-color: #f8f9fa;
+  transform: none;
+  box-shadow: none;
+}
+
+.staff-dashboard-financial-date {
+  font-size: 0.7rem;
+  margin-bottom: 0;
+}
+
+.staff-dashboard-financial-details {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.7rem;
+}
+
+.staff-dashboard-financial-details span.positive {
+  color: #4caf50;
+}
+
+.staff-dashboard-financial-details span.negative {
+  color: #dc3545;
+}
+
+.staff-dashboard-financial-notes {
+  font-size: 0.6rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.staff-dashboard-details-btn {
+  background-color: #bf0d3e;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.staff-dashboard-details-btn:hover {
+  background-color: #041e42;
+  color: #ffffff;
+}
+
+.staff-dashboard-financials-title {
+  font-size: 0.7rem;
+  color: #041e42;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.staff-dashboard-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 7px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.modal-content h3 {
+  color: #041e42;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #041e42;
+  font-size: 0.8rem;
+}
+
+.form-group input {
+  padding: 0.8rem;
+  border: 2px solid #041e42;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-align: center;
+  letter-spacing: 0.5rem;
+}
+
+.error-message {
+  color: #bf0d3e;
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #041e42;
+}
+
+.submit-btn {
+  background-color: #041e42;
+  color: #ffffff;
+}
+
+.close-btn {
+  background-color: #bf0d3e;
+  color: #ffffff;
+  width: 100%;
+}
+
+.loan-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.loan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loan-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.loan-info-item .label {
+  color: #041e42;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.loan-info-item .value {
+  color: #041e42;
+  font-size: 0.8rem;
+}
+
+.loan-info-item .value.outstanding {
+  color: #bf0d3e;
+  font-weight: bold;
+}
+
+.no-loan-message {
+  text-align: center;
+  color: #041e42;
+  font-size: 0.8rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .staff-dashboard-store-name {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .staff-dashboard-financial-item {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .staff-dashboard-financial-details {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .staff-dashboard-financial-details span {
+    position: relative;
+    padding-left: 100px;
+  }
+
+  .staff-dashboard-financial-details span::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: #041e42;
+  }
+
+  .staff-dashboard-details-btn {
+    width: 100%;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.5rem;
+  }
+
+  .staff-dashboard-actions {
+    flex-direction: column;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .modal-content h3 {
+    font-size: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.7rem;
+  }
+
+  .form-group input {
+    font-size: 0.9rem;
+  }
+
+  .modal-actions button {
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .loan-info-item .label,
+  .loan-info-item .value {
+    font-size: 0.7rem;
+  }
+}
