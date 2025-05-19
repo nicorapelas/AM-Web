@@ -21,8 +21,6 @@ const Financial = () => {
     state: { storeStaff },
   } = useContext(StaffContext)
 
-  console.log('storeStaff @financial', storeStaff)
-
   const { setFinancialSelected } = useContext(FinancialContext)
 
   const formatDate = (date) => {
@@ -271,41 +269,53 @@ const Financial = () => {
             <div className="financial-table-header">Updated By</div>
             <div className="financial-table-header">Money In</div>
             <div className="financial-table-header">Balance</div>
-            <div className="financial-table-header">Actions</div>
+            <div className="financial-table-header">Info</div>
           </div>
 
-          {filteredFinancials.map((financial) => (
-            <div key={financial._id} className="table-row">
-              <div className="financial-table-cell">
-                <span className="cell-label">Date:</span>
-                {formatDate(financial.date)}
+          {filteredFinancials.map((financial) => {
+            const difference = financial.cash - financial.dailyProfit
+            return (
+              <div key={financial._id} className="table-row">
+                <div className="financial-table-cell">
+                  <span className="cell-label">Date:</span>
+                  {formatDate(financial.date)}
+                </div>
+                <div className="financial-table-cell money-out">
+                  <span className="cell-label">Created By:</span>
+                  {financial.createdBy}
+                </div>
+                <div className="financial-table-cell money-out">
+                  <span className="cell-label">Updated By:</span>
+                  {financial.updatedBy || 'N/A'}
+                </div>
+                <div className="financial-table-cell money-in">
+                  <span className="cell-label">Money In:</span>
+                  {formatCurrency(financial.totalMoneyIn)}
+                </div>
+                <div className="financial-table-cell balance">
+                  <span className="cell-label">Profit:</span>
+                  {formatCurrency(financial.dailyProfit)}
+                </div>
+                <div className="financial-table-cell actions">
+                  <button
+                    className={`info-btn ${difference !== 0 ? 'flash' : ''} ${
+                      difference >= 0 ? 'over' : ''
+                    }`}
+                    onClick={() => handleFinancialSelected(financial)}
+                    title={`${
+                      difference !== 0
+                        ? (difference >= 0 ? 'Over' : 'Short') +
+                          ' by ' +
+                          formatCurrency(Math.abs(difference))
+                        : 'View Details'
+                    }`}
+                  >
+                    i
+                  </button>
+                </div>
               </div>
-              <div className="financial-table-cell money-out">
-                <span className="cell-label">Created By:</span>
-                {financial.createdBy}
-              </div>
-              <div className="financial-table-cell money-out">
-                <span className="cell-label">Updated By:</span>
-                {financial.updatedBy || 'N/A'}
-              </div>
-              <div className="financial-table-cell money-in">
-                <span className="cell-label">Money In:</span>
-                {formatCurrency(financial.totalMoneyIn)}
-              </div>
-              <div className="financial-table-cell balance">
-                <span className="cell-label">Profit:</span>
-                {formatCurrency(financial.dailyProfit)}
-              </div>
-              <div className="financial-table-cell actions">
-                <button
-                  className="details-btn"
-                  onClick={() => handleFinancialSelected(financial)}
-                >
-                  Details
-                </button>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     )

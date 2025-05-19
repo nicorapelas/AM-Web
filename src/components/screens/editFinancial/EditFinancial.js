@@ -32,6 +32,8 @@ const EditFinancial = () => {
     state: { storeStaff },
   } = useContext(StaffContext)
 
+  console.log('financialToEdit', financialToEdit)
+
   const navigate = useNavigate()
 
   const [dataPrepopulated, setDataPrepopulated] = useState(false)
@@ -47,6 +49,8 @@ const EditFinancial = () => {
     totalMoneyIn: 0,
     totalMoneyOut: 0,
     dailyProfit: 0,
+    cash: 0, // Add cash field
+    actualCashCount: 0,
     notes: '',
     createdBy: '',
     createdAt: '',
@@ -54,6 +58,17 @@ const EditFinancial = () => {
     __v: 0,
     updatedBy: '',
   })
+
+  // Calculate totals
+  const gameFinancesTotal = financialData.gameFinances.reduce(
+    (sum, game) => sum + (Number(game.sum) || 0),
+    0,
+  )
+  const totalExpenses = financialData.expenses.reduce(
+    (sum, expense) => sum + (Number(expense.amount) || 0),
+    0,
+  )
+  const moneyBalance = gameFinancesTotal - totalExpenses
 
   useEffect(() => {
     if (financialToEdit) {
@@ -80,6 +95,7 @@ const EditFinancial = () => {
         totalMoneyIn: totalGameSum,
         totalMoneyOut: totalExpenses,
         dailyProfit: totalGameSum - totalExpenses,
+        cash: financialToEdit.actualCashCount || 0,
       })
       setDataPrepopulated(true)
     } else if (storeGames.length > 0) {
@@ -290,17 +306,6 @@ const EditFinancial = () => {
   }
 
   const submitForm = async () => {
-    // Calculate totals
-    const totalGameSum = financialData.gameFinances.reduce(
-      (sum, game) => sum + (Number(game.sum) || 0),
-      0,
-    )
-    const totalExpenses = financialData.expenses.reduce(
-      (sum, expense) => sum + (Number(expense.amount) || 0),
-      0,
-    )
-    const dailyProfit = totalGameSum - totalExpenses
-
     // Format game finances to ensure all values are numbers
     const formattedGameFinances = financialData.gameFinances.map((game) => ({
       gameId: game.gameId,
@@ -341,14 +346,16 @@ const EditFinancial = () => {
       storeId: storeSelected._id,
       gameFinances: formattedGameFinances,
       expenses: formattedExpenses,
-      totalMoneyIn: totalGameSum,
-      totalMoneyOut: totalExpenses,
-      dailyProfit: dailyProfit,
+      gameFinancesTotal,
+      totalExpenses,
+      moneyBalance,
+      actualCashCount: Number(financialData.cash),
       notes: financialData.notes || '',
       createdBy: financialData.createdBy,
-      updatedBy: updatedBy || financialData.createdBy, // Fallback to createdBy if no staff found
+      updatedBy: updatedBy || financialData.createdBy,
     }
 
+    console.log('Submitting financial data:', finalData)
     await editFinancial(finalData)
     navigate('/financials')
   }
@@ -585,7 +592,41 @@ const EditFinancial = () => {
                   )
                   .toFixed(2)}
               </div>
-              <div>Money Balance: ${financialData.dailyProfit.toFixed(2)}</div>
+              <div>Expected Cash: ${moneyBalance.toFixed(2)}</div>
+            </div>
+
+            <div className="add-financial-form-group">
+              <label className="add-financial-label" htmlFor="cash">
+                Actual Cash Count
+              </label>
+              <input
+                type="number"
+                id="cash"
+                name="cash"
+                value={financialData.cash}
+                onChange={handleInputChange}
+                className="add-financial-input"
+                step="0.01"
+                min="0"
+                required
+              />
+              {financialData.cash > 0 && (
+                <div
+                  className={`add-financial-cash-difference ${financialData.cash < moneyBalance ? 'short' : financialData.cash > moneyBalance ? 'over' : 'balanced'}`}
+                >
+                  {financialData.cash < moneyBalance ? (
+                    <span>
+                      Short: ${(moneyBalance - financialData.cash).toFixed(2)}
+                    </span>
+                  ) : financialData.cash > moneyBalance ? (
+                    <span>
+                      Over: ${(financialData.cash - moneyBalance).toFixed(2)}
+                    </span>
+                  ) : (
+                    <span>Balanced</span>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="add-financial-form-group">

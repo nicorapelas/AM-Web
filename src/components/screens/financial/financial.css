@@ -378,7 +378,7 @@
 
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 100px;
+  grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 100px;
   background-color: #041e42;
   color: #ffffff;
   padding: 1rem;
@@ -388,7 +388,7 @@
 
 .table-row {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 100px;
+  grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 100px;
   padding: 1rem;
   border-bottom: 1px solid #e0e0e0;
   gap: 0.5rem;
@@ -527,7 +527,7 @@
 @media (max-width: 1200px) {
   .table-header,
   .table-row {
-    grid-template-columns: 0.8fr 1.2fr 1.2fr 0.8fr 0.8fr 100px;
+    grid-template-columns: 0.8fr 1fr 0.8fr 0.8fr 0.8fr 100px;
   }
 }
 
@@ -939,4 +939,61 @@
   .outstanding-loan-item {
     font-size: 0.6rem;
   }
+}
+
+/* Remove cash status styles */
+.cash-status,
+.cash-status.short,
+.cash-status.over,
+.cash-status.balanced {
+  display: none;
+}
+
+.info-btn {
+  background-color: #bf0d3e;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.info-btn:hover {
+  background-color: #041e42;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .info-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
+  }
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  25% { opacity: 0.2; }
+  50% { opacity: 1; }
+  75% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.info-btn.flash {
+  animation: flash 1.5s infinite;
+  background-color: #dc3545;
+  color: white;
+}
+
+.info-btn.flash.over {
+  background-color: #4caf50;
 }

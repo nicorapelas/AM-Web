@@ -116,12 +116,40 @@ const FinancialDetail = () => {
                   {formatCurrency(financialSelected.dailyProfit)}
                 </span>
               </div>
-              {/* <div className="summary-item">
-                <label>Money Balance</label>
+              <div className="summary-item">
+                <label>Actual Cash Count</label>
                 <span className="balance">
-                  {formatCurrency(financialSelected.moneyBalance)}
+                  {formatCurrency(financialSelected.actualCashCount)}
                 </span>
-              </div> */}
+              </div>
+              <div className="summary-item">
+                <label>Cash Status</label>
+                <span
+                  className={`${Math.abs(financialSelected.actualCashCount - financialSelected.dailyProfit) > 1 ? (financialSelected.actualCashCount - financialSelected.dailyProfit >= 0 ? 'money-in' : 'money-out') : ''} ${Math.abs(financialSelected.actualCashCount - financialSelected.dailyProfit) > 1 ? 'flash-animation' : ''}`}
+                >
+                  {Math.abs(
+                    financialSelected.actualCashCount -
+                      financialSelected.dailyProfit,
+                  ) > 1 ? (
+                    <>
+                      {financialSelected.actualCashCount -
+                        financialSelected.dailyProfit >=
+                      0
+                        ? 'Over'
+                        : 'Short'}{' '}
+                      by{' '}
+                      {formatCurrency(
+                        Math.abs(
+                          financialSelected.actualCashCount -
+                            financialSelected.dailyProfit,
+                        ),
+                      )}
+                    </>
+                  ) : (
+                    'Balanced'
+                  )}
+                </span>
+              </div>
             </div>
           </section>
 

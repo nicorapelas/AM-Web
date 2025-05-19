@@ -329,6 +329,20 @@
   font-family: 'Press Start 2P', cursive;
 }
 
+.add-financial-input-readonly {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+}
+
+.add-financial-help-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
 @media (max-width: 1024px) {
   .add-financial-cards-container {
     flex-direction: column;

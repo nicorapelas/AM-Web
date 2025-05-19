@@ -38,12 +38,23 @@ const AddFinancial = () => {
 
   // Move financialData state after staffName to avoid using empty initial value
   const [financialData, setFinancialData] = useState({
+    _id: '',
+    _user: '',
+    storeId: '',
     date: '',
     gameFinances: [],
     expenses: [],
+    totalMoneyIn: 0,
+    totalMoneyOut: 0,
+    dailyProfit: 0,
+    cash: 0, // Add cash field
+    actualCashCount: 0,
     notes: '',
-    storeId: '',
-    createdBy: 'Admin', // Remove dependency on staffName for initial value
+    createdBy: '',
+    createdAt: '',
+    updatedAt: '',
+    __v: 0,
+    updatedBy: '',
   })
 
   useEffect(() => {
@@ -280,8 +291,9 @@ const AddFinancial = () => {
       gameFinancesTotal,
       totalExpenses,
       moneyBalance,
+      actualCashCount: financialData.cash,
       notes: financialData.notes || '',
-      createdBy: financialData.createdBy,
+      createdBy: staffCredentials ? financialData.createdBy : 'Admin',
     }
 
     await createFinancial(finalData)
@@ -498,9 +510,53 @@ const AddFinancial = () => {
             <div style={{ height: '30px' }} />
             {/* Totals */}
             <div className="add-financial-totals">
-              <div>Game Finances Total: ${gameFinancesTotal.toFixed(2)}</div>
-              <div>Total Expenses: ${totalExpenses.toFixed(2)}</div>
-              <div>Money Balance: ${moneyBalance.toFixed(2)}</div>
+              <div>
+                Game Finances Total: $
+                {financialData.gameFinances
+                  .reduce((sum, game) => sum + (Number(game.sum) || 0), 0)
+                  .toFixed(2)}
+              </div>
+              <div>
+                Total Expenses: $
+                {financialData.expenses
+                  .reduce((total, expense) => total + Number(expense.amount), 0)
+                  .toFixed(2)}
+              </div>
+              <div>Expected Cash: ${moneyBalance.toFixed(2)}</div>
+            </div>
+
+            <div className="add-financial-form-group">
+              <label className="add-financial-label" htmlFor="cash">
+                Actual Cash Count
+              </label>
+              <input
+                type="number"
+                id="cash"
+                name="cash"
+                value={financialData.cash}
+                onChange={handleInputChange}
+                className="add-financial-input"
+                step="0.01"
+                min="0"
+                required
+              />
+              {financialData.cash > 0 && (
+                <div
+                  className={`add-financial-cash-difference ${financialData.cash < moneyBalance ? 'short' : financialData.cash > moneyBalance ? 'over' : 'balanced'}`}
+                >
+                  {financialData.cash < moneyBalance ? (
+                    <span>
+                      Short: ${(moneyBalance - financialData.cash).toFixed(2)}
+                    </span>
+                  ) : financialData.cash > moneyBalance ? (
+                    <span>
+                      Over: ${(financialData.cash - moneyBalance).toFixed(2)}
+                    </span>
+                  ) : (
+                    <span>Balanced</span>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="add-financial-form-group">

@@ -350,3 +350,15 @@
     width: 100%;
   }
 }
+
+@keyframes flash {
+  0% { opacity: 1; }
+  25% { opacity: 0.2; }
+  50% { opacity: 1; }
+  75% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.flash-animation {
+  animation: flash 1.5s infinite;
+}
