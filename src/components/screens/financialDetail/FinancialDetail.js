@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Context as FinancialsContext } from '../../../context/FinancialsContext'
 import { Context as StoresContext } from '../../../context/StoresContext'
+import { Context as AuthContext } from '../../../context/AuthContext'
 import Header from '../../common/header/Header'
 import './financialDetail.css'
 
@@ -18,6 +19,10 @@ const FinancialDetail = () => {
   const {
     state: { userStores },
   } = useContext(StoresContext)
+
+  const {
+    state: { user },
+  } = useContext(AuthContext)
 
   useEffect(() => {
     if (!userStores || userStores.length === 0) {
@@ -208,15 +213,16 @@ const FinancialDetail = () => {
               <p className="notes-content">{financialSelected.notes}</p>
             </section>
           )}
-
-          <div className="detail-actions">
-            <button className="delete-btn" onClick={handleDeleteClick}>
-              Delete Record
-            </button>
-            <button className="edit-btn" onClick={handleEditFinancial}>
-              Edit Record
-            </button>
-          </div>
+          {user?.bossCreds && (
+            <div className="detail-actions">
+              <button className="delete-btn" onClick={handleDeleteClick}>
+                Delete Record
+              </button>
+              <button className="edit-btn" onClick={handleEditFinancial}>
+                Edit Record
+              </button>
+            </div>
+          )}
         </div>
         {renderDeleteModal()}
       </div>

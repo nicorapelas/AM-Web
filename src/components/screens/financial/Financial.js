@@ -273,7 +273,7 @@ const Financial = () => {
           </div>
 
           {filteredFinancials.map((financial) => {
-            const difference = financial.cash - financial.dailyProfit
+            const difference = financial.actualCashCount - financial.dailyProfit
             return (
               <div key={financial._id} className="table-row">
                 <div className="financial-table-cell">
@@ -298,12 +298,12 @@ const Financial = () => {
                 </div>
                 <div className="financial-table-cell actions">
                   <button
-                    className={`info-btn ${difference !== 0 ? 'flash' : ''} ${
-                      difference >= 0 ? 'over' : ''
+                    className={`info-btn ${Math.abs(difference) > 1 ? 'flash' : ''} ${
+                      Math.abs(difference) > 1 && difference >= 0 ? 'over' : ''
                     }`}
                     onClick={() => handleFinancialSelected(financial)}
                     title={`${
-                      difference !== 0
+                      Math.abs(difference) > 1
                         ? (difference >= 0 ? 'Over' : 'Short') +
                           ' by ' +
                           formatCurrency(Math.abs(difference))
