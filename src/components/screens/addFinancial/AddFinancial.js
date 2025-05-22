@@ -537,10 +537,9 @@ const AddFinancial = () => {
                 onChange={handleInputChange}
                 className="add-financial-input"
                 step="0.01"
-                min="0"
                 required
               />
-              {financialData.cash > 0 && (
+              {financialData.cash !== 0 && (
                 <div
                   className={`add-financial-cash-difference ${financialData.cash < moneyBalance ? 'short' : financialData.cash > moneyBalance ? 'over' : 'balanced'}`}
                 >

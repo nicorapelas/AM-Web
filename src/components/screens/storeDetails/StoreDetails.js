@@ -168,14 +168,8 @@ const StoreDetails = () => {
                 </span>
               </div>
               <div className="stat-item">
-                <span className="stat-label">Money Out</span>
-                <span className="stat-value">
-                  $
-                  {recentFinancials.totalMoneyOut.toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </span>
+                <span className="stat-label">Created by</span>
+                <span className="stat-value">{recentFinancials.createdBy}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Daily Profit</span>

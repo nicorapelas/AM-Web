@@ -607,7 +607,6 @@ const EditFinancial = () => {
                 onChange={handleInputChange}
                 className="add-financial-input"
                 step="0.01"
-                min="0"
                 required
               />
               {financialData.cash > 0 && (

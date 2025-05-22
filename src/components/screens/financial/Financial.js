@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Context as FinancialContext } from '../../../context/FinancialsContext'
+import { Context as GameContext } from '../../../context/GamesContext'
 import { Context as StaffContext } from '../../../context/StaffContext'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
 import BackButton from '../../common/backButton/BackButton'
@@ -20,6 +21,14 @@ const Financial = () => {
   const {
     state: { storeStaff },
   } = useContext(StaffContext)
+
+  const {
+    state: { storeGames },
+  } = useContext(GameContext)
+
+  console.log('storeGames', storeGames)
+
+  console.log('storeFinancials', storeFinancials)
 
   const { setFinancialSelected } = useContext(FinancialContext)
 
@@ -217,6 +226,44 @@ const Financial = () => {
       0,
     )
 
+    // Calculate commissions
+    const calculateCommissions = () => {
+      const repCommissions = {}
+
+      filteredFinancials.forEach((financial) => {
+        financial.gameFinances.forEach((gameFinance) => {
+          const game = storeGames.find((g) => g._id === gameFinance.gameId)
+          if (game) {
+            const commission = (gameFinance.sum * game.commission) / 100
+            if (!repCommissions[game.repName]) {
+              repCommissions[game.repName] = {
+                total: 0,
+                games: {},
+              }
+            }
+            if (!repCommissions[game.repName].games[game.gameName]) {
+              repCommissions[game.repName].games[game.gameName] = {
+                total: 0,
+                commission: game.commission,
+              }
+            }
+            repCommissions[game.repName].games[game.gameName].total +=
+              commission
+            repCommissions[game.repName].total += commission
+          }
+        })
+      })
+
+      return repCommissions
+    }
+
+    const repCommissions = calculateCommissions()
+
+    const totalCommission = Object.values(repCommissions).reduce(
+      (sum, data) => sum + data.total,
+      0,
+    )
+
     return (
       <div className="financials-container">
         <div className="stars-background"></div>
@@ -243,6 +290,36 @@ const Financial = () => {
             >
               {formatCurrency(totalProfit)}
             </span>
+          </div>
+        </div>
+
+        {/* Commission Section */}
+        <div className="commission-section">
+          <h3>Commission Summary</h3>
+          {Object.entries(repCommissions).map(([repName, data]) => (
+            <div key={repName} className="rep-commission-card">
+              <h4>{repName}</h4>
+              <div className="rep-commission-games">
+                {Object.entries(data.games).map(([gameName, gameData]) => (
+                  <div key={gameName} className="game-commission">
+                    <span>
+                      {gameName} ({gameData.commission}%)
+                    </span>
+                    <span>{formatCurrency(gameData.total)}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="rep-commission-total">
+                <span>Total Commission:</span>
+                <span>{formatCurrency(data.total)}</span>
+              </div>
+            </div>
+          ))}
+          <div className="commission-total-section">
+            <div className="commission-total-row">
+              <span>Total Commission Owed</span>
+              <span>{formatCurrency(totalCommission)}</span>
+            </div>
           </div>
         </div>
 

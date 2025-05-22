@@ -997,3 +997,110 @@
 .info-btn.flash.over {
   background-color: #4caf50;
 }
+
+/* Commission Section Styles */
+.commission-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 2px solid #bf0d3e;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.commission-section h3 {
+  color: #041e42;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+}
+
+.rep-commission-card {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rep-commission-card h4 {
+  color: #041e42;
+  margin-bottom: 0.8rem;
+  font-size: 0.7rem;
+}
+
+.rep-commission-games {
+  margin-bottom: 0.8rem;
+}
+
+.game-commission {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.7rem;
+}
+
+.game-commission:last-child {
+  border-bottom: none;
+}
+
+.rep-commission-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.8rem;
+  margin-top: 0.8rem;
+  border-top: 2px solid #041e42;
+  font-weight: bold;
+  color: #041e42;
+  font-size: 0.7rem;
+}
+
+.commission-total-section {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.commission-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commission-total-row span:last-child {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.commission-total-row:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .commission-section {
+    padding: 0.8rem;
+  }
+
+  .commission-section h3 {
+    font-size: 0.7rem;
+  }
+
+  .rep-commission-card h4 {
+    font-size: 0.6rem;
+  }
+
+  .game-commission {
+    font-size: 0.6rem;
+  }
+
+  .rep-commission-total {
+    font-size: 0.6rem;
+  }
+
+  .commission-total-section {
+    font-size: 0.7rem;
+    padding: 0.8rem;
+  }
+}
