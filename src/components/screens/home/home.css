@@ -34,6 +34,7 @@
   max-width: 800px;
   position: relative;
   z-index: 1;
+  margin-bottom: 70px;
 }
 
 
@@ -184,4 +185,109 @@
   .home-btn {
     width: 100%;
   }
+}
+
+.flag-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.banner-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.usa-flag {
+  width: 140px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 0;
+  padding-bottom: 30px;
+}
+
+.usa-flag:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .usa-flag {
+    width: 70px;
+  }
+  .banner-row {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.logo-carousel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 56px;
+  background: rgba(4, 30, 66, 0.9);
+  overflow: hidden;
+  z-index: 2;
+  border-top: 2px solid #bf0d3e;
+}
+
+.logo-track {
+  display: flex;
+  animation: scroll-logos 120s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+
+.company-logo {
+  height: 35px;
+  width: auto;
+  margin: 0 1.4rem;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.company-logo:hover {
+  opacity: 1;
+}
+
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Add a gradient overlay to smooth the edges */
+.logo-carousel::before,
+.logo-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 105px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(4, 30, 66, 1), rgba(4, 30, 66, 0));
+}
+
+.logo-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(4, 30, 66, 1), rgba(4, 30, 66, 0));
 }

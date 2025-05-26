@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Context as FinancialContext } from '../../../context/FinancialsContext'
@@ -34,6 +34,8 @@ const AddFinancial = () => {
 
   const navigate = useNavigate()
 
+  console.log('storeStaff', storeStaff)
+
   const [staffName, setStaffName] = useState('')
 
   // Move financialData state after staffName to avoid using empty initial value
@@ -57,9 +59,10 @@ const AddFinancial = () => {
     updatedBy: '',
   })
 
+  const pinVerifiedStaffName = useRef('')
+
   useEffect(() => {
     if (staffCredentials && storeStaff && storeStaff.length > 0) {
-      // Try matching by any available identifier
       const currentStaff = storeStaff.find((staff) => {
         return (
           staff._id === staffCredentials.staffId ||
@@ -79,7 +82,6 @@ const AddFinancial = () => {
     }
   }, [staffCredentials, storeStaff])
 
-  // Add effect to update createdBy when staffName changes
   useEffect(() => {
     if (staffName) {
       setFinancialData((prev) => ({
@@ -231,24 +233,25 @@ const AddFinancial = () => {
   const moneyBalance = gameFinancesTotal - totalExpenses
 
   const verifyPin = () => {
+    console.log('Verifying PIN:', pin)
+    console.log('Current storeStaff:', storeStaff)
+
     if (!storeStaff || !Array.isArray(storeStaff)) {
       setPinError('Staff data not available')
       return false
     }
 
     const staffMember = storeStaff.find((staff) => staff.pin === pin)
+    console.log('Found staff member:', staffMember)
+
     if (!staffMember) {
       setPinError('Invalid PIN')
       return false
     }
 
-    // Only update createdBy if it hasn't been set already
-    if (!financialData.createdBy) {
-      setFinancialData((prev) => ({
-        ...prev,
-        createdBy: `${staffMember.firstName} ${staffMember.lastName}`,
-      }))
-    }
+    // Store the staff name in the ref
+    pinVerifiedStaffName.current = `${staffMember.firstName} ${staffMember.lastName}`
+    console.log('Stored staff name in ref:', pinVerifiedStaffName.current)
     return true
   }
 
@@ -264,6 +267,8 @@ const AddFinancial = () => {
   }
 
   const submitForm = async () => {
+    console.log('Submitting form with financialData:', financialData)
+
     // Format game finances to ensure all values are numbers
     const formattedGameFinances = financialData.gameFinances.map((game) => ({
       gameId: game.gameId,
@@ -293,9 +298,10 @@ const AddFinancial = () => {
       moneyBalance,
       actualCashCount: financialData.cash,
       notes: financialData.notes || '',
-      createdBy: staffCredentials ? financialData.createdBy : 'Admin',
+      createdBy: staffCredentials ? pinVerifiedStaffName.current : 'Admin',
     }
 
+    console.log('Final data being submitted:', finalData)
     await createFinancial(finalData)
     navigate('/financials')
   }
@@ -305,6 +311,8 @@ const AddFinancial = () => {
     if (verifyPin()) {
       setShowPinModal(false)
       setPinError('')
+      // Wait for state update to complete
+      await new Promise((resolve) => setTimeout(resolve, 0))
       await submitForm()
     }
   }

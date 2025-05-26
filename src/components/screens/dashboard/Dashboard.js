@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../common/header/Header'
 import { Context as StoresContext } from '../../../context/StoresContext'

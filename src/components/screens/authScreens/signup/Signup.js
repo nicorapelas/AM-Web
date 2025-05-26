@@ -83,7 +83,7 @@ const Signup = () => {
   const renderContent = () => {
     return (
       <div className="signup-container">
-        <div className="home-content">
+        <div className="auth-home-content">
           <RunningBanner />
         </div>
         {!errorMessage ? (

@@ -2,16 +2,52 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import RunningBanner from '../../common/runningBanner/RunningBanner'
+import usaFlag from '../../../assets/images/general/USA_Flag-pixed.png'
+import gameLogo01 from '../../../assets/images/arcade-companies/game-logo01.png'
+import gameLogo02 from '../../../assets/images/arcade-companies/game-logo02.png'
+import gameLogo03 from '../../../assets/images/arcade-companies/game-logo03.png'
+import gameLogo04 from '../../../assets/images/arcade-companies/game-logo04.png'
+import gameLogo05 from '../../../assets/images/arcade-companies/game-logo05.png'
+import gameLogo06 from '../../../assets/images/arcade-companies/game-logo06.png'
+import gameLogo07 from '../../../assets/images/arcade-companies/game-logo07.png'
+import gameLogo08 from '../../../assets/images/arcade-companies/game-logo08.png'
+import gameLogo09 from '../../../assets/images/arcade-companies/game-logo09.png'
+import gameLogo10 from '../../../assets/images/arcade-companies/game-logo10.png'
+import gameLogo11 from '../../../assets/images/arcade-companies/game-logo11.png'
+import gameLogo12 from '../../../assets/images/arcade-companies/game-logo12.png'
+import gameLogo13 from '../../../assets/images/arcade-companies/game-logo13.png'
+import gameLogo14 from '../../../assets/images/arcade-companies/game-logo14.png'
+import gameLogo15 from '../../../assets/images/arcade-companies/game-logo15.png'
 import './home.css'
 
 const Home = () => {
+  const gameLogos = [
+    gameLogo01,
+    gameLogo02,
+    gameLogo03,
+    gameLogo04,
+    gameLogo05,
+    gameLogo06,
+    gameLogo07,
+    gameLogo08,
+    gameLogo09,
+    gameLogo10,
+    gameLogo11,
+    gameLogo12,
+    gameLogo13,
+    gameLogo14,
+    gameLogo15,
+  ]
+
   return (
     <div className="home-container">
       <div className="stars-background" />
-      {/* <div className="grid-overlay" />
-      <div className="scanline" /> */}
       <div className="home-content">
-        <RunningBanner />
+        <div className="banner-row">
+          <img src={usaFlag} alt="USA Flag" className="usa-flag" />
+          <RunningBanner />
+          <img src={usaFlag} alt="USA Flag" className="usa-flag" />
+        </div>
         <div className="home-card">
           <div className="card-star" />
           <div className="home-description">
@@ -37,6 +73,27 @@ const Home = () => {
               Login
             </Link>
           </div>
+        </div>
+      </div>
+      <div className="logo-carousel">
+        <div className="logo-track">
+          {gameLogos.map((logo, index) => (
+            <img
+              key={index}
+              src={logo}
+              alt={`Game Company Logo ${index + 1}`}
+              className="company-logo"
+            />
+          ))}
+          {/* Duplicate logos for seamless loop */}
+          {gameLogos.map((logo, index) => (
+            <img
+              key={`dup-${index}`}
+              src={logo}
+              alt={`Game Company Logo ${index + 1}`}
+              className="company-logo"
+            />
+          ))}
         </div>
       </div>
     </div>

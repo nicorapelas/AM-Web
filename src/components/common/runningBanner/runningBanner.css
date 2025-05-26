@@ -65,7 +65,7 @@
     text-align: center;
     animation: scroll-text 15s linear infinite;
     text-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
-    padding-right: 20px;
+    padding-right: 290px;
   }
 
   @media (max-width: 768px) {
