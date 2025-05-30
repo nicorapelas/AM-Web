@@ -1,25 +1,22 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import LoaderFullScreen from '../../../common/loaders/fullScreenLoader/LoaderFullScreen'
+import RunningBanner from '../../../common/runningBanner/RunningBanner'
 import AuthError from '../authApiFeedback/authError/AuthError'
 import AuthSuccess from '../authApiFeedback/authSuccess/AuthSuccess'
 import NetworkChecker from '../../../common/NetworkChecker'
+import LoadingSpinner from '../../../common/loaders/loadingSpinner/LoadingSpinner'
 import { Context as AuthContext } from '../../../../context/AuthContext'
-import './login.css'
-import arcadeLogo from '../../../../assets/images/logo/arcadeManagerLogo.png'
-import { useNavigate } from 'react-router-dom'
+import './passwordReset.css'
 
-const Login = () => {
-  const navigate = useNavigate()
+const PasswordReset = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: '',
   })
 
   const {
     state: { loading, apiMessage, errorMessage, networkError },
-    login,
+    forgotPassword,
     clearErrorMessage,
     clearApiMessage,
   } = useContext(AuthContext)
@@ -35,33 +32,25 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    login(formData)
+    forgotPassword(formData)
   }
 
   const renderForm = () => {
     return (
       <form onSubmit={handleSubmit}>
         <div className="auth-form-group">
-          <label>Username</label>
+          <label>Email</label>
           <input
+            type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             onFocus={handleOnFocus}
-          />
-        </div>
-        <div className="auth-form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            onFocus={handleOnFocus}
+            required
           />
         </div>
         <button type="submit" className="signup-button">
-          Login
+          Reset Password
         </button>
       </form>
     )
@@ -74,31 +63,24 @@ const Login = () => {
     if (errorMessage) {
       return <AuthError error={errorMessage} />
     }
-    return <div className="auth-title">Login</div>
+    return <div className="auth-title">Reset Password</div>
   }
 
   const renderContent = () => {
     if (loading) {
-      return <LoaderFullScreen />
+      return <LoadingSpinner />
     }
     return (
       <div className="login-container">
-        <div className="auth-home-content" onClick={() => navigate('/')}>
-          <img
-            src={arcadeLogo}
-            alt="Arcade Manager Logo"
-            className="arcade-logo"
-          />
+        <div className="auth-home-content">
+          <RunningBanner />
         </div>
         <div className="auth-content">
           {headerSelector()}
           {renderForm()}
         </div>
-        <div className="forgot-password-link">
-          <Link to="/forgot-password">Forgot Password?</Link>
-        </div>
         <div className="signup-link">
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Remember your password? <Link to="/login">Login</Link>
         </div>
       </div>
     )
@@ -112,4 +94,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default PasswordReset

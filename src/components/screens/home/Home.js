@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import RunningBanner from '../../common/runningBanner/RunningBanner'
 import usaFlag from '../../../assets/images/general/USA_Flag-pixed.png'
+import arcadeLogo from '../../../assets/images/logo/arcadeManagerLogo.png'
 import gameLogo01 from '../../../assets/images/arcade-companies/game-logo01.png'
 import gameLogo02 from '../../../assets/images/arcade-companies/game-logo02.png'
 import gameLogo03 from '../../../assets/images/arcade-companies/game-logo03.png'
@@ -24,8 +25,6 @@ const Home = () => {
   const gameLogos = [
     gameLogo01,
     gameLogo02,
-    gameLogo03,
-    gameLogo04,
     gameLogo05,
     gameLogo06,
     gameLogo07,
@@ -51,6 +50,11 @@ const Home = () => {
         <div className="home-card">
           <div className="card-star" />
           <div className="home-description">
+            <img
+              src={arcadeLogo}
+              alt="Arcade Manager Logo"
+              className="arcade-logo"
+            />
             <p>
               Welcome to Arcade Manager - Your Ultimate Arcade Management
               Solution!

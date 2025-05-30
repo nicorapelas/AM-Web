@@ -74,13 +74,23 @@ const Dashboard = () => {
 
   // Prepare data for revenue trend chart
   const revenueTrendData = useMemo(() => {
+    // Find the most recent date in userFinancials
+    const mostRecentDate =
+      userFinancials.length > 0
+        ? new Date(Math.max(...userFinancials.map((f) => new Date(f.date))))
+        : new Date()
+
+    console.log('Most recent financial date:', mostRecentDate)
+
     const last7Days = [...Array(7)]
       .map((_, i) => {
-        const date = new Date()
+        const date = new Date(mostRecentDate)
         date.setDate(date.getDate() - i)
         return date.toISOString().split('T')[0]
       })
       .reverse()
+
+    console.log('Last 7 days:', last7Days)
 
     const revenueByDate = last7Days.map((date) => {
       const dayRevenue = userFinancials
@@ -89,8 +99,15 @@ const Dashboard = () => {
       return dayRevenue
     })
 
-    return {
-      labels: last7Days.map((date) => new Date(date).toLocaleDateString()),
+    console.log('Revenue by date:', revenueByDate)
+
+    const formattedLabels = last7Days.map((date) =>
+      new Date(date).toLocaleDateString(),
+    )
+    console.log('Formatted labels:', formattedLabels)
+
+    const data = {
+      labels: formattedLabels,
       datasets: [
         {
           label: 'Daily Revenue',
@@ -101,6 +118,9 @@ const Dashboard = () => {
         },
       ],
     }
+
+    console.log('Final revenue trend data:', data)
+    return data
   }, [userFinancials])
 
   // Prepare data for game performance chart

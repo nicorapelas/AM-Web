@@ -10,6 +10,7 @@ import LoaderFullScreen from './components/common/loaders/fullScreenLoader/Loade
 import NotFound from './components/common/notFound/NotFound'
 import SignupHR from './components/screens/authScreens/signup/Signup'
 import Login from './components/screens/authScreens/login/Login'
+import PasswordReset from './components/screens/authScreens/passwordReset/PasswordReset'
 import Dashboard from './components/screens/dashboard/Dashboard'
 import InitDataFetch from './components/InitDataFetch'
 import CheckoutPage from './components/screens/checkout/Checkout'
@@ -106,6 +107,12 @@ const AppRouter = () => {
               path="/signup"
               element={
                 token ? <Navigate to="/dashboard" replace /> : <SignupHR />
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                token ? <Navigate to="/dashboard" replace /> : <PasswordReset />
               }
             />
             <Route path="/network-error" element={<NetworkError />} />

@@ -3,8 +3,8 @@ import { useNavigate, Link } from 'react-router-dom'
 
 import NetworkChecker from '../../../common/NetworkChecker'
 import AuthError from '../authApiFeedback/authError/AuthError'
-import RunningBanner from '../../../common/runningBanner/RunningBanner'
 import { Context as AuthContext } from '../../../../context/AuthContext'
+import arcadeLogo from '../../../../assets/images/logo/arcadeManagerLogo.png'
 import './signup.css'
 
 const Signup = () => {
@@ -44,7 +44,7 @@ const Signup = () => {
   const renderForm = () => {
     return (
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="auth-form-group">
           <label>Username</label>
           <input
             name="email"
@@ -53,7 +53,7 @@ const Signup = () => {
             onFocus={handleOnFocus}
           />
         </div>
-        <div className="form-group">
+        <div className="auth-form-group">
           <label>Password</label>
           <input
             type="password"
@@ -63,7 +63,7 @@ const Signup = () => {
             onFocus={handleOnFocus}
           />
         </div>
-        <div className="form-group">
+        <div className="auth-form-group">
           <label>Confirm Password</label>
           <input
             type="password"
@@ -82,16 +82,22 @@ const Signup = () => {
 
   const renderContent = () => {
     return (
-      <div className="signup-container">
-        <div className="auth-home-content">
-          <RunningBanner />
+      <div className="login-container">
+        <div className="auth-home-content" onClick={() => navigate('/')}>
+          <img
+            src={arcadeLogo}
+            alt="Arcade Manager Logo"
+            className="arcade-logo"
+          />
         </div>
-        {!errorMessage ? (
-          <div className="auth-title">Sign up</div>
-        ) : (
-          <AuthError error={errorMessage} />
-        )}
-        {renderForm()}
+        <div className="auth-content">
+          {!errorMessage ? (
+            <div className="auth-title">Sign up</div>
+          ) : (
+            <AuthError error={errorMessage} />
+          )}
+          {renderForm()}
+        </div>
         <div className="signup-link">
           Already have an account? <Link to="/login">Login</Link>
         </div>

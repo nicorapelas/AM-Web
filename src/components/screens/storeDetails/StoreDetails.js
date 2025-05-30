@@ -65,19 +65,19 @@ const StoreDetails = () => {
         totalMoneyOut: 0,
         dailyProfit: 0,
         moneyBalance: 0,
+        createdBy: '',
       }
     }
-
     // Sort financials by date in descending order and get the most recent
     const mostRecent = storeFinancials.sort(
       (a, b) => new Date(b.date) - new Date(a.date),
     )[0]
-
     return {
       totalMoneyIn: mostRecent.totalMoneyIn,
       totalMoneyOut: mostRecent.totalMoneyOut,
       dailyProfit: mostRecent.dailyProfit,
       moneyBalance: mostRecent.moneyBalance,
+      createdBy: mostRecent.createdBy,
     }
   }
 
