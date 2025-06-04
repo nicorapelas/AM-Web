@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import RunningBanner from '../../common/runningBanner/RunningBanner'
@@ -21,6 +21,8 @@ import gameLogo14 from '../../../assets/images/arcade-companies/game-logo14.png'
 import gameLogo15 from '../../../assets/images/arcade-companies/game-logo15.png'
 import './home.css'
 
+import { Context as AuthContext } from '../../../context/AuthContext'
+
 const Home = () => {
   const gameLogos = [
     gameLogo01,
@@ -37,6 +39,12 @@ const Home = () => {
     gameLogo14,
     gameLogo15,
   ]
+
+  const { signout } = useContext(AuthContext)
+
+  // useEffect(() => {
+  //   signout()
+  // }, [])
 
   return (
     <div className="home-container">

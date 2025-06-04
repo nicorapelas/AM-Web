@@ -110,7 +110,7 @@ const FinancialDetail = () => {
                 </span>
               </div>
               <div className="summary-item">
-                <label>Total Money Out</label>
+                <label>Expenses</label>
                 <span className="money-out">
                   {formatCurrency(financialSelected.totalMoneyOut)}
                 </span>

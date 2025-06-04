@@ -32,11 +32,8 @@ const EditFinancial = () => {
     state: { storeStaff },
   } = useContext(StaffContext)
 
-  console.log('financialToEdit', financialToEdit)
-
   const navigate = useNavigate()
 
-  const [dataPrepopulated, setDataPrepopulated] = useState(false)
   const [staffName, setStaffName] = useState('')
 
   const [financialData, setFinancialData] = useState({
@@ -59,16 +56,30 @@ const EditFinancial = () => {
     updatedBy: '',
   })
 
-  // Calculate totals
-  const gameFinancesTotal = financialData.gameFinances.reduce(
-    (sum, game) => sum + (Number(game.sum) || 0),
-    0,
+  // Calculate totals - move this into a useMemo to prevent recalculations
+  const gameFinancesTotal = React.useMemo(
+    () =>
+      financialData.gameFinances.reduce(
+        (sum, game) => sum + (game.sum === '' ? 0 : Number(game.sum)),
+        0,
+      ),
+    [financialData.gameFinances],
   )
-  const totalExpenses = financialData.expenses.reduce(
-    (sum, expense) => sum + (Number(expense.amount) || 0),
-    0,
+
+  const totalExpenses = React.useMemo(
+    () =>
+      financialData.expenses.reduce(
+        (sum, expense) =>
+          sum + (expense.amount === '' ? 0 : Number(expense.amount)),
+        0,
+      ),
+    [financialData.expenses],
   )
-  const moneyBalance = gameFinancesTotal - totalExpenses
+
+  const moneyBalance = React.useMemo(
+    () => gameFinancesTotal - totalExpenses,
+    [gameFinancesTotal, totalExpenses],
+  )
 
   useEffect(() => {
     if (financialToEdit) {
@@ -92,12 +103,14 @@ const EditFinancial = () => {
           ...game,
           sum: game.sum.toString(),
         })),
-        totalMoneyIn: totalGameSum,
+        totalMoneyIn:
+          financialToEdit.actualCashCount < 0
+            ? financialToEdit.actualCashCount
+            : totalGameSum,
         totalMoneyOut: totalExpenses,
         dailyProfit: totalGameSum - totalExpenses,
         cash: financialToEdit.actualCashCount || 0,
       })
-      setDataPrepopulated(true)
     } else if (storeGames.length > 0) {
       // Only set the current date if we're creating a new record
       const today = new Date().toISOString().split('T')[0]
@@ -129,11 +142,11 @@ const EditFinancial = () => {
 
     setFinancialData((prev) => ({
       ...prev,
-      totalMoneyIn: totalGameSum,
+      totalMoneyIn: prev.cash < 0 ? prev.cash : totalGameSum,
       totalMoneyOut: totalExpenses,
       dailyProfit: totalGameSum - totalExpenses,
     }))
-  }, [financialData.gameFinances, financialData.expenses])
+  }, [financialData.gameFinances, financialData.expenses, financialData.cash])
 
   useEffect(() => {
     if (staffCredentials && storeStaff && storeStaff.length > 0) {
@@ -190,10 +203,35 @@ const EditFinancial = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFinancialData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    if (name === 'cash') {
+      const cashValue = Number(value)
+      setFinancialData((prevState) => {
+        // Only update if the value is actually different
+        if (
+          prevState[name] === value &&
+          prevState.totalMoneyIn ===
+            (cashValue < 0 ? cashValue : gameFinancesTotal)
+        ) {
+          return prevState
+        }
+        return {
+          ...prevState,
+          [name]: value,
+          totalMoneyIn: cashValue < 0 ? cashValue : gameFinancesTotal,
+        }
+      })
+    } else {
+      setFinancialData((prevState) => {
+        // Only update if the value is actually different
+        if (prevState[name] === value) {
+          return prevState
+        }
+        return {
+          ...prevState,
+          [name]: value,
+        }
+      })
+    }
 
     // Update newExpense.gameId when a game is selected
     if (name === 'gameId') {
@@ -262,14 +300,20 @@ const EditFinancial = () => {
   }
 
   const handleGameFinanceChange = (gameId, field, value) => {
-    setFinancialData((prev) => ({
-      ...prev,
-      gameFinances: prev.gameFinances.map((game) =>
+    setFinancialData((prev) => {
+      // First update the game finances
+      const updatedGameFinances = prev.gameFinances.map((game) =>
         game.gameId === gameId
           ? { ...game, [field]: value === '' ? '' : Number(value) }
           : game,
-      ),
-    }))
+      )
+
+      // Otherwise just update the game finances
+      return {
+        ...prev,
+        gameFinances: updatedGameFinances,
+      }
+    })
   }
 
   const verifyPin = () => {
@@ -349,13 +393,13 @@ const EditFinancial = () => {
       gameFinancesTotal,
       totalExpenses,
       moneyBalance,
-      actualCashCount: Number(financialData.cash),
+      actualCashCount: financialData.cash,
+      totalMoneyIn:
+        financialData.cash < 0 ? financialData.cash : gameFinancesTotal,
       notes: financialData.notes || '',
       createdBy: financialData.createdBy,
       updatedBy: updatedBy || financialData.createdBy,
     }
-
-    console.log('Submitting financial data:', finalData)
     await editFinancial(finalData)
     navigate('/financials')
   }
@@ -453,13 +497,13 @@ const EditFinancial = () => {
                   <input
                     type="number"
                     value={game.sum}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       handleGameFinanceChange(
                         game.gameId,
                         'sum',
                         e.target.value,
                       )
-                    }
+                    }}
                     className="add-financial-input"
                     step="0.01"
                   />

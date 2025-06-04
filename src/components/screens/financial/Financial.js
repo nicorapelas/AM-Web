@@ -26,8 +26,6 @@ const Financial = () => {
     state: { storeGames },
   } = useContext(GameContext)
 
-  console.log('storeGames', storeGames)
-
   console.log('storeFinancials', storeFinancials)
 
   const { setFinancialSelected } = useContext(FinancialContext)
@@ -278,7 +276,7 @@ const Financial = () => {
             </span>
           </div>
           <div className="summary-item">
-            <span className="summary-label">Total Money Out:</span>
+            <span className="summary-label">Expenses:</span>
             <span className="summary-value money-out">
               {formatCurrency(totalMoneyOut)}
             </span>

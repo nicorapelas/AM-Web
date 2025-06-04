@@ -11,6 +11,8 @@ import Header from '../../common/header/Header'
 import './addFinancial.css'
 
 const AddFinancial = () => {
+  console.log('AddFinancial component rendering')
+
   const {
     state: { loading },
     createFinancial,
@@ -33,8 +35,6 @@ const AddFinancial = () => {
   } = useContext(StaffContext)
 
   const navigate = useNavigate()
-
-  console.log('storeStaff', storeStaff)
 
   const [staffName, setStaffName] = useState('')
 
@@ -116,6 +116,7 @@ const AddFinancial = () => {
     // Format current date as YYYY-MM-DD for the date input
     const today = new Date()
     const formattedDate = today.toISOString().split('T')[0]
+    console.log('Setting initial date:', formattedDate)
     setFinancialData((prevState) => ({
       ...prevState,
       date: formattedDate,
@@ -124,11 +125,13 @@ const AddFinancial = () => {
 
   useEffect(() => {
     if (storeGames.length > 0) {
+      console.log('Setting up game finances with storeGames:', storeGames)
       const initialGameFinances = storeGames.map((game) => ({
         gameId: game._id,
         sum: '',
         gameName: game.gameName, // for display purposes
       }))
+      console.log('Initial game finances:', initialGameFinances)
       setFinancialData((prev) => ({
         ...prev,
         gameFinances: initialGameFinances,
@@ -136,12 +139,63 @@ const AddFinancial = () => {
     }
   }, [storeGames])
 
+  // Calculate totals - move this into a useMemo to prevent recalculations
+  const gameFinancesTotal = React.useMemo(
+    () =>
+      financialData.gameFinances.reduce(
+        (sum, game) => sum + (game.sum === '' ? 0 : Number(game.sum)),
+        0,
+      ),
+    [financialData.gameFinances],
+  )
+
+  const totalExpenses = React.useMemo(
+    () =>
+      financialData.expenses.reduce(
+        (sum, expense) =>
+          sum + (expense.amount === '' ? 0 : Number(expense.amount)),
+        0,
+      ),
+    [financialData.expenses],
+  )
+
+  const moneyBalance = React.useMemo(
+    () => gameFinancesTotal - totalExpenses,
+    [gameFinancesTotal, totalExpenses],
+  )
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFinancialData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    if (name === 'cash') {
+      const cashValue = Number(value)
+      setFinancialData((prevState) => {
+        // Only update if the value is actually different
+        if (
+          prevState[name] === value &&
+          prevState.totalMoneyIn ===
+            (cashValue < 0 ? cashValue : gameFinancesTotal)
+        ) {
+          return prevState
+        }
+        return {
+          ...prevState,
+          [name]: value,
+          totalMoneyIn: cashValue < 0 ? cashValue : gameFinancesTotal,
+        }
+      })
+    } else {
+      console.log('Other input changed:', name)
+      setFinancialData((prevState) => {
+        // Only update if the value is actually different
+        if (prevState[name] === value) {
+          return prevState
+        }
+        return {
+          ...prevState,
+          [name]: value,
+        }
+      })
+    }
 
     // Update newExpense.gameId when a game is selected
     if (name === 'gameId') {
@@ -210,32 +264,23 @@ const AddFinancial = () => {
   }
 
   const handleGameFinanceChange = (gameId, field, value) => {
-    setFinancialData((prev) => ({
-      ...prev,
-      gameFinances: prev.gameFinances.map((game) =>
+    setFinancialData((prev) => {
+      // First update the game finances
+      const updatedGameFinances = prev.gameFinances.map((game) =>
         game.gameId === gameId
           ? { ...game, [field]: value === '' ? '' : Number(value) }
           : game,
-      ),
-    }))
+      )
+
+      // Otherwise just update the game finances
+      return {
+        ...prev,
+        gameFinances: updatedGameFinances,
+      }
+    })
   }
 
-  // Calculate totals
-  const gameFinancesTotal = financialData.gameFinances.reduce(
-    (sum, game) => sum + (game.sum === '' ? 0 : Number(game.sum)),
-    0,
-  )
-  const totalExpenses = financialData.expenses.reduce(
-    (sum, expense) =>
-      sum + (expense.amount === '' ? 0 : Number(expense.amount)),
-    0,
-  )
-  const moneyBalance = gameFinancesTotal - totalExpenses
-
   const verifyPin = () => {
-    console.log('Verifying PIN:', pin)
-    console.log('Current storeStaff:', storeStaff)
-
     if (!storeStaff || !Array.isArray(storeStaff)) {
       setPinError('Staff data not available')
       return false
@@ -297,11 +342,11 @@ const AddFinancial = () => {
       totalExpenses,
       moneyBalance,
       actualCashCount: financialData.cash,
+      totalMoneyIn:
+        financialData.cash < 0 ? financialData.cash : gameFinancesTotal,
       notes: financialData.notes || '',
       createdBy: staffCredentials ? pinVerifiedStaffName.current : 'Admin',
     }
-
-    console.log('Final data being submitted:', finalData)
     await createFinancial(finalData)
     navigate('/financials')
   }
@@ -368,7 +413,6 @@ const AddFinancial = () => {
         <div className="add-financial-cards-container">
           <div className="add-financial-card">
             <div className="add-financial-card-star" />
-
             {/* Date input */}
             <div className="add-financial-form-group">
               <label className="add-financial-label" htmlFor="date">
@@ -379,7 +423,10 @@ const AddFinancial = () => {
                 id="date"
                 name="date"
                 value={financialData.date}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  console.log('Date input changed directly:', e.target.value)
+                  handleInputChange(e)
+                }}
                 required
                 className="add-financial-input"
               />
@@ -394,13 +441,13 @@ const AddFinancial = () => {
                   <input
                     type="number"
                     value={game.sum}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       handleGameFinanceChange(
                         game.gameId,
                         'sum',
                         e.target.value,
                       )
-                    }
+                    }}
                     className="add-financial-input"
                     step="0.01"
                   />
