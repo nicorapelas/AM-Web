@@ -21,6 +21,8 @@ import {
 } from 'chart.js'
 import './dashboard.css'
 
+import ReRoutes from '../../common/functions/ReRoutes'
+
 // Register ChartJS components
 ChartJS.register(
   CategoryScale,
@@ -55,6 +57,7 @@ const Dashboard = () => {
 
   // Calculate total daily revenue across all stores
   const totalDailyRevenue = useMemo(() => {
+    if (!Array.isArray(userFinancials)) return 0
     return userFinancials
       .filter(
         (f) => new Date(f.date).toDateString() === new Date().toDateString(),
@@ -64,6 +67,7 @@ const Dashboard = () => {
 
   // Calculate total maintenance expenses
   const maintenanceExpenses = useMemo(() => {
+    if (!Array.isArray(userFinancials)) return 0
     return userFinancials.reduce((sum, f) => {
       const maintenanceExpenses = f.expenses
         .filter((e) => e.category === 'Maintenance')
@@ -74,13 +78,26 @@ const Dashboard = () => {
 
   // Prepare data for revenue trend chart
   const revenueTrendData = useMemo(() => {
+    if (!Array.isArray(userFinancials)) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Daily Revenue',
+            data: [],
+            borderColor: '#bf0d3e',
+            backgroundColor: 'rgba(191, 13, 62, 0.1)',
+            tension: 0.4,
+          },
+        ],
+      }
+    }
+
     // Find the most recent date in userFinancials
     const mostRecentDate =
       userFinancials.length > 0
         ? new Date(Math.max(...userFinancials.map((f) => new Date(f.date))))
         : new Date()
-
-    console.log('Most recent financial date:', mostRecentDate)
 
     const last7Days = [...Array(7)]
       .map((_, i) => {
@@ -90,8 +107,6 @@ const Dashboard = () => {
       })
       .reverse()
 
-    console.log('Last 7 days:', last7Days)
-
     const revenueByDate = last7Days.map((date) => {
       const dayRevenue = userFinancials
         .filter((f) => f.date.split('T')[0] === date)
@@ -99,12 +114,9 @@ const Dashboard = () => {
       return dayRevenue
     })
 
-    console.log('Revenue by date:', revenueByDate)
-
     const formattedLabels = last7Days.map((date) =>
       new Date(date).toLocaleDateString(),
     )
-    console.log('Formatted labels:', formattedLabels)
 
     const data = {
       labels: formattedLabels,
@@ -119,12 +131,32 @@ const Dashboard = () => {
       ],
     }
 
-    console.log('Final revenue trend data:', data)
     return data
   }, [userFinancials])
 
   // Prepare data for game performance chart
   const gamePerformanceData = useMemo(() => {
+    if (!Array.isArray(userFinancials)) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Game Revenue',
+            data: [],
+            backgroundColor: [
+              '#bf0d3e',
+              '#041e42',
+              '#4CAF50',
+              '#FFC107',
+              '#2196F3',
+              '#9C27B0',
+              '#FF5722',
+            ],
+          },
+        ],
+      }
+    }
+
     const gameTotals = userFinancials.reduce((acc, financial) => {
       financial.gameFinances.forEach((game) => {
         if (!acc[game.gameName]) {
@@ -157,6 +189,19 @@ const Dashboard = () => {
 
   // Prepare data for store performance chart
   const storePerformanceData = useMemo(() => {
+    if (!Array.isArray(userFinancials)) {
+      return {
+        labels: [],
+        datasets: [
+          {
+            label: 'Store Revenue',
+            data: [],
+            backgroundColor: ['#bf0d3e', '#041e42'],
+          },
+        ],
+      }
+    }
+
     const storeTotals = userFinancials.reduce((acc, financial) => {
       const store = userStores.find((s) => s._id === financial.storeId)
       if (store) {
@@ -182,6 +227,8 @@ const Dashboard = () => {
 
   // Calculate best performing game
   const bestPerformingGame = useMemo(() => {
+    if (!Array.isArray(userFinancials)) return null
+
     const gameTotals = userFinancials.reduce((acc, financial) => {
       financial.gameFinances.forEach((game) => {
         if (!acc[game.gameName]) {
@@ -206,18 +253,20 @@ const Dashboard = () => {
 
   // Calculate total revenue
   const totalRevenue = useMemo(() => {
+    if (!Array.isArray(userFinancials)) return 0
     return userFinancials.reduce((sum, f) => sum + f.dailyProfit, 0)
   }, [userFinancials])
 
   // Calculate average daily revenue
   const averageDailyRevenue = useMemo(() => {
+    if (!Array.isArray(userFinancials)) return 0
     const uniqueDates = new Set(userFinancials.map((f) => f.date.split('T')[0]))
     return totalRevenue / uniqueDates.size
   }, [userFinancials, totalRevenue])
 
   // Prepare data for best performing game chart
   const bestGameData = useMemo(() => {
-    if (!bestPerformingGame) return null
+    if (!Array.isArray(userFinancials) || !bestPerformingGame) return null
 
     const gameData = userFinancials
       .filter((f) =>
@@ -252,8 +301,17 @@ const Dashboard = () => {
     return <LoadingSpinner />
   }
 
+  const handleTotalStoresClick = () => {
+    if (userStores.length === 0) {
+      navigate('/add-store')
+    } else {
+      navigate('/stores')
+    }
+  }
+
   return (
     <div className="dashboard-container">
+      <ReRoutes />
       <div className="stars-background"></div>
       <Header />
 
@@ -262,11 +320,14 @@ const Dashboard = () => {
         <div className="summary-cards">
           <div
             className="dashboard-card clickable"
-            onClick={() => navigate('/stores')}
+            onClick={handleTotalStoresClick}
           >
             <div className="card-star"></div>
             <h2 className="card-title">Total Stores</h2>
             <p className="stat">{userStores.length}</p>
+            {userStores.length === 0 && (
+              <p className="start-here-message">Start here!</p>
+            )}
           </div>
 
           <div className="dashboard-card">
@@ -278,7 +339,12 @@ const Dashboard = () => {
           <div className="dashboard-card">
             <div className="card-star"></div>
             <h2 className="card-title">Avg Daily Revenue</h2>
-            <p className="stat">${averageDailyRevenue.toLocaleString()}</p>
+            <p className="stat">
+              $
+              {!averageDailyRevenue
+                ? '0'
+                : averageDailyRevenue.toLocaleString()}
+            </p>
           </div>
 
           <div className="dashboard-card">

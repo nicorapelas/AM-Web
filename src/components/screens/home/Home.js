@@ -40,7 +40,22 @@ const Home = () => {
     gameLogo15,
   ]
 
-  const { signout } = useContext(AuthContext)
+  const {
+    state: { apiMessage },
+    signout,
+  } = useContext(AuthContext)
+
+  useEffect(() => {
+    if (apiMessage) {
+      const { success } = apiMessage
+      if (success === 'Account deleted successfully') {
+        let timer = setTimeout(() => {
+          signout()
+        }, 1000)
+        return () => clearTimeout(timer)
+      }
+    }
+  }, [apiMessage])
 
   // useEffect(() => {
   //   signout()
@@ -55,6 +70,18 @@ const Home = () => {
           <RunningBanner />
           <img src={usaFlag} alt="USA Flag" className="usa-flag" />
         </div>
+
+        <div className="promo-banner">
+          <div className="promo-content">
+            <span className="promo-text">
+              Sign Up Free – Manage Your First Arcade On Us!
+            </span>
+            <Link to="/signup" className="promo-btn">
+              Get Started
+            </Link>
+          </div>
+        </div>
+
         <div className="home-card">
           <div className="card-star" />
           <div className="home-description">
@@ -83,6 +110,9 @@ const Home = () => {
             </Link>
             <Link to="/login" className="home-btn login-btn">
               Login
+            </Link>
+            <Link to="/pricing" className="home-btn pricing-btn-home">
+              Pricing
             </Link>
           </div>
         </div>

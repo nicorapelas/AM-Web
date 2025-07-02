@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import LoaderFullScreen from '../../../common/loaders/fullScreenLoader/LoaderFullScreen'
 import AuthError from '../authApiFeedback/authError/AuthError'
@@ -8,7 +9,6 @@ import NetworkChecker from '../../../common/NetworkChecker'
 import { Context as AuthContext } from '../../../../context/AuthContext'
 import './login.css'
 import arcadeLogo from '../../../../assets/images/logo/arcadeManagerLogo.png'
-import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ const Login = () => {
   })
 
   const {
-    state: { loading, apiMessage, errorMessage, networkError },
+    state: { loading, apiMessage, errorMessage },
     login,
     clearErrorMessage,
     clearApiMessage,
@@ -67,16 +67,6 @@ const Login = () => {
     )
   }
 
-  const headerSelector = () => {
-    if (apiMessage) {
-      return <AuthSuccess />
-    }
-    if (errorMessage) {
-      return <AuthError error={errorMessage} />
-    }
-    return <div className="auth-title">Login</div>
-  }
-
   const renderContent = () => {
     if (loading) {
       return <LoaderFullScreen />
@@ -91,13 +81,13 @@ const Login = () => {
           />
         </div>
         <div className="auth-content">
-          {headerSelector()}
+          <div className="auth-title">Login</div>
           {renderForm()}
         </div>
-        <div className="forgot-password-link">
+        <div className="forgot-password-link" onClick={handleOnFocus}>
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
-        <div className="signup-link">
+        <div className="signup-link" onClick={handleOnFocus}>
           Don't have an account? <Link to="/signup">Sign up</Link>
         </div>
       </div>
@@ -105,10 +95,12 @@ const Login = () => {
   }
 
   return (
-    <>
+    <div className="login-page-bed">
       <NetworkChecker />
+      {!errorMessage ? null : <AuthError error={errorMessage} />}
+      {!apiMessage ? null : <AuthSuccess />}
       {renderContent()}
-    </>
+    </div>
   )
 }
 

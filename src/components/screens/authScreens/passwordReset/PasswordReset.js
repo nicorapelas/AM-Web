@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import RunningBanner from '../../../common/runningBanner/RunningBanner'
+import logo from '../../../../assets/images/logo/arcadeManagerLogo.png'
 import AuthError from '../authApiFeedback/authError/AuthError'
 import AuthSuccess from '../authApiFeedback/authSuccess/AuthSuccess'
 import NetworkChecker from '../../../common/NetworkChecker'
@@ -56,14 +56,13 @@ const PasswordReset = () => {
     )
   }
 
-  const headerSelector = () => {
+  const apiMessageSelector = () => {
     if (apiMessage) {
       return <AuthSuccess />
     }
     if (errorMessage) {
       return <AuthError error={errorMessage} />
     }
-    return <div className="auth-title">Reset Password</div>
   }
 
   const renderContent = () => {
@@ -72,11 +71,12 @@ const PasswordReset = () => {
     }
     return (
       <div className="login-container">
+        {apiMessageSelector()}
         <div className="auth-home-content">
-          <RunningBanner />
+          <img src={logo} alt="Arcade Manager Logo" className="arcade-logo" />
         </div>
         <div className="auth-content">
-          {headerSelector()}
+          <div className="auth-title">Reset Password</div>
           {renderForm()}
         </div>
         <div className="signup-link">

@@ -43,6 +43,21 @@ const StoreDetails = () => {
     }
   }, [storeSelected])
 
+  // Auto-scroll to Games card when there are no games
+  useEffect(() => {
+    if (storeGames && storeGames.length === 0) {
+      setTimeout(() => {
+        const gamesCard = document.querySelector('.games-section')
+        if (gamesCard) {
+          gamesCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
+        }
+      }, 500) // Small delay to ensure the component is fully rendered
+    }
+  }, [storeGames])
+
   const handleEditStore = (store) => {
     setStoreToEdit(store)
     navigate('/edit-store')
@@ -56,6 +71,10 @@ const StoreDetails = () => {
     await deleteStore({ _id: storeSelected._id })
     setShowDeleteConfirm(false)
     navigate('/stores')
+  }
+
+  const handleAddGames = () => {
+    navigate('/add-game')
   }
 
   const renderRecentDaily = () => {
@@ -83,23 +102,21 @@ const StoreDetails = () => {
 
   const renderDeleteConfirm = () => {
     return (
-      <div className="delete-confirm-modal">
-        <div className="modal-content">
-          <div className="card-star"></div>
-          <h2>Delete Store</h2>
-          <p>Are you sure you want to delete "{storeSelected?.storeName}"?</p>
-          <p className="warning-text">This action cannot be undone.</p>
-          <div className="modal-actions">
-            <button
-              className="cancel-btn"
-              onClick={() => setShowDeleteConfirm(false)}
-            >
-              Cancel
-            </button>
-            <button className="delete-btn" onClick={handleConfirmDelete}>
-              Delete
-            </button>
-          </div>
+      <div className="delete-confirm-section">
+        <p className="delete-confirm-message">
+          Are you sure you want to delete "{storeSelected?.storeName}"?
+        </p>
+        <p className="warning-text">This action cannot be undone.</p>
+        <div className="delete-confirm-actions">
+          <button
+            className="action-btn cancel"
+            onClick={() => setShowDeleteConfirm(false)}
+          >
+            Cancel
+          </button>
+          <button className="action-btn delete" onClick={handleConfirmDelete}>
+            Delete
+          </button>
         </div>
       </div>
     )
@@ -125,7 +142,6 @@ const StoreDetails = () => {
 
     return (
       <div className="store-details-container">
-        {showDeleteConfirm && renderDeleteConfirm()}
         <div className="stars-background"></div>
         <Header />
         <div className="store-details-grid">
@@ -208,13 +224,25 @@ const StoreDetails = () => {
                   </span>
                 </div>
               </div>
+              {storeGames.length === 0 && (
+                <p className="start-here-message">Start by adding games!</p>
+              )}
               <div className="games-actions">
-                <button
-                  className="action-btn view-games"
-                  onClick={() => navigate(`/games`)}
-                >
-                  View All Games
-                </button>
+                {storeGames.length === 0 ? (
+                  <button
+                    className="action-btn add-game"
+                    onClick={handleAddGames}
+                  >
+                    Add Games
+                  </button>
+                ) : (
+                  <button
+                    className="action-btn view-games"
+                    onClick={() => navigate(`/games`)}
+                  >
+                    View All Games
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -285,17 +313,24 @@ const StoreDetails = () => {
           <div className="details-card actions-section">
             <div className="card-star"></div>
             <h2 className="section-title">Actions</h2>
-            <div className="action-buttons">
-              <button
-                className="action-btn edit"
-                onClick={() => handleEditStore(storeSelected)}
-              >
-                Edit Store
-              </button>
-              <button className="action-btn delete" onClick={handleDeleteClick}>
-                Delete Store
-              </button>
-            </div>
+            {showDeleteConfirm ? (
+              renderDeleteConfirm()
+            ) : (
+              <div className="action-buttons">
+                <button
+                  className="action-btn edit"
+                  onClick={() => handleEditStore(storeSelected)}
+                >
+                  Edit Store
+                </button>
+                <button
+                  className="action-btn delete"
+                  onClick={handleDeleteClick}
+                >
+                  Delete Store
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

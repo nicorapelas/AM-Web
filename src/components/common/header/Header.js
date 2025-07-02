@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+
 import BackButton from '../../common/backButton/BackButton'
 import './header.css'
 import { Context as AuthContext } from '../../../context/AuthContext'
 import { Context as StoresContext } from '../../../context/StoresContext'
+import logo from '../../../assets/images/logo/arcadeManagerLogoLong.png'
+
 const Header = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -14,7 +17,7 @@ const Header = () => {
   } = useContext(AuthContext)
 
   const {
-    state: { storeSelected },
+    state: { storeSelected, userStores, storeToEdit },
   } = useContext(StoresContext)
 
   const handleSignOut = () => {
@@ -36,6 +39,14 @@ const Header = () => {
 
   const handleAddNewStaff = () => {
     navigate('/add-staff')
+  }
+
+  const handleLogoClick = () => {
+    navigate('/dashboard')
+  }
+
+  const handleManageAccount = () => {
+    navigate('/manage-account')
   }
 
   const renderLeft = () => {
@@ -70,6 +81,10 @@ const Header = () => {
         return <BackButton to="/financials" />
       case '/edit-staff':
         return <BackButton to="/staff" />
+      case '/manage-account':
+        return <BackButton to="/dashboard" />
+      case '/billing':
+        return <BackButton to="/add-store" />
       default:
         break
     }
@@ -149,7 +164,7 @@ const Header = () => {
           <div className="nav-header-title-container">
             <div className="nav-header-title">Edit Store</div>
             <div className="nav-header-title-store-name">
-              {storeSelected && storeSelected.storeName}
+              {storeToEdit && storeToEdit.storeName}
             </div>
           </div>
         )
@@ -189,6 +204,18 @@ const Header = () => {
             <div className="nav-header-title">Edit Staff Member</div>
           </div>
         )
+      case '/manage-account':
+        return (
+          <div className="nav-header-title-container">
+            <div className="nav-header-title">Manage Account</div>
+          </div>
+        )
+      case '/billing':
+        return (
+          <div className="nav-header-title-container">
+            <div className="nav-header-title">Billing</div>
+          </div>
+        )
       default:
         break
     }
@@ -198,7 +225,7 @@ const Header = () => {
     switch (location.pathname) {
       case '/dashboard':
         return (
-          <button className="signout-btn" onClick={handleSignOut}>
+          <button className="nav-signout-btn" onClick={handleSignOut}>
             Sign Out
           </button>
         )
@@ -234,12 +261,36 @@ const Header = () => {
     }
   }
   return (
-    <div className="nav-header-bed">
-      <div className="nav-header-container">
-        <div className="nav-header-left">{renderLeft()}</div>
-        <div className="nav-header-username">{user && user.username}</div>
-        <div className="nav-header-center">{renderCenter()}</div>
-        <div className="nav-header-right">{renderRight()}</div>
+    <div>
+      <div className="nav-header-top-container">
+        <img
+          src={logo}
+          alt="logo"
+          className="nav-header-logo"
+          onClick={handleLogoClick}
+        />
+        <div className="nav-header-username-container">
+          <div className="nav-header-username">{user && user.username}</div>
+        </div>
+        <div className="nav-header-right-btn-container">
+          <button
+            className={
+              location.pathname === '/manage-account' || userStores.length < 1
+                ? 'nav-header-right-account-btn-hidden'
+                : 'nav-header-right-account-btn'
+            }
+            onClick={handleManageAccount}
+          >
+            Manage Account
+          </button>
+        </div>
+      </div>
+      <div className="nav-header-bed">
+        <div className="nav-header-container">
+          <div className="nav-header-left">{renderLeft()}</div>
+          <div className="nav-header-center">{renderCenter()}</div>
+          <div className="nav-header-right">{renderRight()}</div>
+        </div>
       </div>
     </div>
   )

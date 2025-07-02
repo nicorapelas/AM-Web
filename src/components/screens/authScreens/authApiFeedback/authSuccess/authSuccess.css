@@ -1,7 +1,13 @@
+.auth-success-container-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .auth-success-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  width: 90%;
   background-color: #e4fee2;
   border: 1px solid #d5feca;
   border-radius: 6px;
@@ -22,4 +28,5 @@
   color: #21991b;
   font-size: 14px;
   line-height: 1.5;
+  text-align: center;
 }

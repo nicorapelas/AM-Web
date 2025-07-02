@@ -1,7 +1,12 @@
+.auth-error-container-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .auth-error-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 90%;
   background-color: #fee2e2;
   border: 1px solid #fecaca;
   border-radius: 6px;
@@ -22,4 +27,16 @@
   color: #991b1b;
   font-size: 14px;
   line-height: 1.5;
+}
+
+.auth-error-resend-button {
+  align-self: center;
+  font-size: 9px;
+  text-align: center;
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }

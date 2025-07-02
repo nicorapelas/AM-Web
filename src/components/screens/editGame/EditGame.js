@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
 import Header from '../../common/header/Header'
 import ReRoutes from '../../common/functions/ReRoutes'
-import '../addStore/addStore.css'
+import '../addGame/addGame.css'
 
 const EditGame = () => {
   const [formData, setFormData] = useState({
@@ -48,14 +48,17 @@ const EditGame = () => {
   }
 
   return (
-    <div className="add-store-container">
+    <div className="add-game-container">
       <ReRoutes />
-      <div className="stars-background"></div>
+      <div className="add-game-stars"></div>
       <Header />
-      <form className="store-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="gameName">Game Name</label>
+      <form className="add-game-form" onSubmit={handleSubmit}>
+        <div className="add-game-form-group">
+          <label className="add-game-label" htmlFor="gameName">
+            Game Name
+          </label>
           <input
+            className="add-game-input"
             type="text"
             id="gameName"
             name="gameName"
@@ -65,9 +68,12 @@ const EditGame = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="quantity">Quantity</label>
+        <div className="add-game-form-group">
+          <label className="add-game-label" htmlFor="quantity">
+            Quantity
+          </label>
           <input
+            className="add-game-input"
             type="text"
             id="quantity"
             name="quantity"
@@ -77,10 +83,13 @@ const EditGame = () => {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="commission">Commission</label>
+        <div className="add-game-form-row">
+          <div className="add-game-form-group">
+            <label className="add-game-label" htmlFor="commission">
+              Commission
+            </label>
             <input
+              className="add-game-input"
               type="text"
               id="commission"
               name="commission"
@@ -90,9 +99,12 @@ const EditGame = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="repName">Representative Name</label>
+          <div className="add-game-form-group">
+            <label className="add-game-label" htmlFor="repName">
+              Representative Name
+            </label>
             <input
+              className="add-game-input"
               type="text"
               id="repName"
               name="repName"
@@ -102,9 +114,12 @@ const EditGame = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="repPhone">Representative Phone</label>
+          <div className="add-game-form-group">
+            <label className="add-game-label" htmlFor="repPhone">
+              Representative Phone
+            </label>
             <input
+              className="add-game-input"
               type="tel"
               id="repPhone"
               name="repPhone"
@@ -115,8 +130,8 @@ const EditGame = () => {
           </div>
         </div>
 
-        <div className="button-container">
-          <button type="submit" className="submit-btn">
+        <div className="add-game-button-container">
+          <button type="submit" className="add-game-submit-btn">
             Save Changes
           </button>
         </div>

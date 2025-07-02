@@ -14,8 +14,9 @@ const EditStore = () => {
   })
 
   const {
-    state: { loading, storeToEdit },
+    state: { loading, storeToEdit, error, userStores },
     editStore,
+    setError,
   } = useContext(StoresContext)
 
   useEffect(() => {
@@ -34,10 +35,21 @@ const EditStore = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    editStore(formData)
-    navigate('/stores')
+    // Check if the store name is unique
+    const existingStore = userStores.find(
+      (store) => store.storeName === formData.storeName,
+    )
+    if (existingStore) {
+      setError(
+        'A store with this name already exists. Please choose a different name.',
+      )
+      return
+    } else {
+      editStore(formData)
+      navigate('/stores')
+    }
   }
 
   if (loading) {
@@ -47,12 +59,15 @@ const EditStore = () => {
   return (
     <div className="add-store-container">
       <ReRoutes />
-      <div className="stars-background"></div>
+      <div className="add-store-stars"></div>
       <Header />
-      <form className="store-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="storeName">Store Name</label>
+      <form className="add-store-form" onSubmit={handleSubmit}>
+        <div className="add-store-form-group">
+          <label className="add-store-label" htmlFor="storeName">
+            Store Name
+          </label>
           <input
+            className="add-store-input"
             type="text"
             id="storeName"
             name="storeName"
@@ -62,9 +77,12 @@ const EditStore = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="address">Address</label>
+        <div className="add-store-form-group">
+          <label className="add-store-label" htmlFor="address">
+            Address
+          </label>
           <input
+            className="add-store-input"
             type="text"
             id="address"
             name="address"
@@ -74,21 +92,25 @@ const EditStore = () => {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+        <div className="add-store-form-row">
+          <div className="add-store-form-group">
+            <label className="add-store-label" htmlFor="notes">
+              Notes
+            </label>
             <textarea
+              className="add-store-textarea"
               id="notes"
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              className="add-store-notes"
             />
           </div>
         </div>
 
-        <div className="button-container">
-          <button type="submit" className="submit-btn">
+        {error && <div className="error-message">{error}</div>}
+
+        <div className="add-store-button-container">
+          <button type="submit" className="add-store-submit-btn">
             Save Changes
           </button>
         </div>

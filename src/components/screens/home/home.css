@@ -161,6 +161,15 @@
   animation-delay: 0.75s;
 }
 
+.pricing-btn-home {
+  background-color: #e6c82f;
+  color: #041e42;
+  text-shadow: 1px 1px 0 #bf0d3e;
+  box-shadow: 0 0 10px rgba(230, 200, 47, 0.3);
+  animation: coin-blink 1.5s infinite;
+  animation-delay: 1.5s;
+}
+
 .home-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
@@ -294,4 +303,106 @@
 .logo-carousel::after {
   right: 0;
   background: linear-gradient(to left, rgba(4, 30, 66, 1), rgba(4, 30, 66, 0));
+}
+
+.promo-banner {
+  background: linear-gradient(45deg, #bf0d3e, #ff4d6d);
+  border: 3px solid #ffd700;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+  animation: promo-pulse 2s infinite;
+}
+
+.promo-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 215, 0, 0.1) 10px,
+    rgba(255, 215, 0, 0.1) 20px
+  );
+  pointer-events: none;
+}
+
+.promo-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.promo-text {
+  color: #ffffff;
+  font-size: 1rem;
+  text-shadow: 2px 2px 0 #041e42;
+  flex-grow: 1;
+  text-align: center;
+  line-height: 2;
+  padding: 0.5rem 0;
+}
+
+.promo-btn {
+  background-color: #ffd700;
+  color: #041e42;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  animation: promo-btn-pulse 1.5s infinite;
+}
+
+.promo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  background-color: #ffffff;
+}
+
+@keyframes promo-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+  }
+}
+
+@keyframes promo-btn-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .promo-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .promo-text {
+    font-size: 0.8rem;
+  }
+
+  .promo-btn {
+    width: 100%;
+  }
 }

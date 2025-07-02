@@ -1,0 +1,427 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.manage-account-page {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #041e42;
+    padding: 1rem;
+    min-height: 100vh;
+    background: linear-gradient(45deg, #041e42 0%, #0a2b5c 50%, #041e42 100%);
+}
+
+.manage-account-container {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.stars-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  opacity: 0.25;
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.manage-account-content {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+}
+
+.manage-account-header p {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.manage-account-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.manage-account-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  border: 2px solid #bf0d3e;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.manage-account-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.manage-account-section-header h2 {
+  font-size: 1rem;
+  color: #041e42;
+  margin: 0;
+}
+
+.manage-account-form {
+  width: 100%;
+  max-width: 500px;
+}
+
+.manage-account-form-group-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.manage-account-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.manage-account-form-group label {
+  display: block;
+  font-size: 0.7rem;
+  color: #041e42;
+  margin-bottom: 0.5rem;
+}
+
+.manage-account-form-group input {
+  width: 90%;
+  align-self: center;
+  padding: 0.8rem;
+  border: 2px solid #041e42;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  background-color: #f5f5f5;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.manage-account-form-group input::placeholder {
+  text-align: center;
+  color: #666;
+}
+
+.manage-account-form-group input:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+.manage-account-form-group input.editing {
+  border-color: #bf0d3e;
+  box-shadow: 0 0 10px rgba(191, 13, 62, 0.3);
+}
+
+.manage-account-edit-btn,  
+.manage-account-save-btn,
+.manage-account-signout-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.manage-account-edit-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #bf0d3e;
+}
+
+.manage-account-save-btn {
+  background-color: #bf0d3e;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #041e42;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.manage-account-signout-btn {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+  width: 100%;
+}
+
+.manage-account-edit-btn:hover,
+.manage-account-save-btn:hover,
+.manage-account-signout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+.manage-account-danger-zone {
+  border-color: #ff4d4d;
+}
+
+.manage-account-error-message,
+.manage-account-success-message {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.manage-account-error-message {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  border: 2px solid #ff0000;
+}
+
+.manage-account-success-message {
+  background-color: #4dff4d;
+  color: #041e42;
+  border: 2px solid #00ff00;
+}
+
+.manage-account-back-link {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #ffd700;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.manage-account-back-link:hover {
+  color: #bf0d3e;
+  text-shadow: 2px 2px 0 #041e42;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.35; }
+}
+
+@media (max-width: 768px) {
+  .manage-account-container {
+    padding: 1rem;
+  }
+
+  .manage-account-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .manage-account-section {
+    padding: 1.5rem;
+  }
+
+  .manage-account-section-header h2 {
+    font-size: 0.8rem;
+  }
+
+  .manage-account-form {
+    max-width: 100%;
+  }
+
+  .manage-account-form-group label,
+  .manage-account-form-group input {
+    font-size: 0.6rem;
+  }
+
+  .manage-account-edit-btn,
+  .manage-account-save-btn,
+  .manage-account-signout-btn {
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+.password-toggle-btn {
+  background-color: #4CAF50;
+  border: 2px solid #041e42;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 8px 15px;
+  font-size: 0.7rem;
+  font-family: 'Press Start 2P', cursive;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: 1px 1px 0 #041e42;
+}
+
+.password-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.password-toggle-btn.passwords-visible {
+  background-color: #bf0d3e;
+}
+
+
+.password-toggle-btn.passwords-hidden {
+  background-color: #4CAF50;
+}
+
+.delete-account-confirmation {
+  padding: 20px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-warning {
+  color: #ff4444;
+  font-weight: bold;
+  margin-bottom: 15px;
+  line-height: 2;
+  font-size: 0.7rem;
+  text-align: center;
+  width: 100%;
+}
+
+.confirmation-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
+}
+
+.delete-account-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.manage-account-delete-btn {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.manage-account-delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+.manage-account-cancel-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #bf0d3e;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.manage-account-cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Billing Section Styles */
+.billing-content {
+  width: 100%;
+  max-width: 500px;
+}
+
+.billing-info {
+  margin-bottom: 2rem;
+}
+
+.billing-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.billing-label {
+  font-size: 0.7rem;
+  color: #041e42;
+  font-weight: bold;
+}
+
+.billing-value {
+  font-size: 0.7rem;
+  color: #bf0d3e;
+  font-weight: bold;
+}
+
+.billing-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.manage-account-billing-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 100%;
+}
+
+.manage-account-billing-btn {
+  background-color: #28a745;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+}
+
+.manage-account-billing-btn.secondary {
+  background-color: #6c757d;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+}
+
+.manage-account-billing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}

@@ -10,7 +10,7 @@ input[type="number"]#repPhone {
   -moz-appearance: textfield;
 }
 
-.add-store-container {
+.add-game-container {
   background-color: #041e42;
   min-height: 100vh;
   padding: 1.5rem;
@@ -19,7 +19,7 @@ input[type="number"]#repPhone {
   overflow: hidden;
 }
 
-.add-store-stars {
+.add-game-stars {
   position: absolute;
   top: 0;
   left: 0;
@@ -35,7 +35,7 @@ input[type="number"]#repPhone {
   pointer-events: none;
 }
 
-.add-store-form {
+.add-game-form {
   background-color: rgba(255, 255, 255, 0.9);
   padding: 2rem;
   border-radius: 8px;
@@ -44,24 +44,24 @@ input[type="number"]#repPhone {
   margin: 0 auto;
 }
 
-.add-store-form-group {
+.add-game-form-group {
   margin-bottom: 1.5rem;
 }
 
-.add-store-form-row {
+.add-game-form-row {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.add-store-label {
+.add-game-label {
   display: block;
   color: #041e42;
   font-size: 0.7rem;
   margin-bottom: 0.5rem;
 }
 
-.add-store-input {
+.add-game-input {
   width: 100%;
   padding: 0.8rem 1.5rem;
   border: 2px solid #041e42;
@@ -72,38 +72,18 @@ input[type="number"]#repPhone {
   box-sizing: border-box;
 }
 
-.add-store-input:focus {
+.add-game-input:focus {
   outline: none;
   border-color: #bf0d3e;
   box-shadow: 0 0 5px rgba(191, 13, 62, 0.3);
 }
 
-.add-store-textarea {
-  width: 100%;
-  height: 150px;
-  padding: 0.8rem 1.5rem;
-  border: 2px solid #041e42;
-  border-radius: 4px;
-  background-color: #ffffff;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 0.7rem;
-  line-height: 1.5;
-  resize: vertical;
-  box-sizing: border-box;
-}
-
-.add-store-textarea:focus {
-  outline: none;
-  border-color: #bf0d3e;
-  box-shadow: 0 0 5px rgba(191, 13, 62, 0.3);
-}
-
-.add-store-button-container {
+.add-game-button-container {
   text-align: center;
   margin-top: 2rem;
 }
 
-.add-store-submit-btn {
+.add-game-submit-btn {
   background-color: #bf0d3e;
   color: white;
   border: none;
@@ -117,7 +97,7 @@ input[type="number"]#repPhone {
   border: 2px solid transparent;
 }
 
-.add-store-submit-btn:hover {
+.add-game-submit-btn:hover {
   background-color: #041e42;
   border-color: #bf0d3e;
   box-shadow: 0 0 10px rgba(191, 13, 62, 0.3);
@@ -125,21 +105,20 @@ input[type="number"]#repPhone {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .add-store-form-row {
+  .add-game-form-row {
     grid-template-columns: 1fr;
   }
 
-  .add-store-form {
+  .add-game-form {
     padding: 1rem;
   }
 
-  .add-store-input,
-  .add-store-textarea {
+  .add-game-input {
     font-size: 0.6rem;
     padding: 0.6rem 1.2rem;
   }
 
-  .add-store-submit-btn {
+  .add-game-submit-btn {
     width: 100%;
     padding: 0.8rem;
     font-size: 0.7rem;

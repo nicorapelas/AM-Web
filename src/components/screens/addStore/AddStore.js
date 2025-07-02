@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Context as StoresContext } from '../../../context/StoresContext'
 import { useNavigate } from 'react-router-dom'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
-import BackButton from '../../common/backButton/BackButton'
 import Header from '../../common/header/Header'
 import './addStore.css'
 
@@ -15,11 +14,22 @@ const AddStore = () => {
   })
 
   const {
-    state: { loading },
+    state: { loading, userStores, error },
     createStore,
+    setNewStoreToAdd,
+    setError,
   } = useContext(StoresContext)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (error) {
+      let timer = setTimeout(() => {
+        setError(null)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [error])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -31,8 +41,25 @@ const AddStore = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await createStore(formData)
-    navigate('/stores')
+    if (userStores.length === 0) {
+      await createStore(formData)
+      navigate('/stores')
+      return
+    }
+    // Check if the store name is unique
+    const existingStore = userStores.find(
+      (store) => store.storeName === formData.storeName,
+    )
+    if (existingStore) {
+      setError(
+        'A store with this name already exists. Please choose a different name.',
+      )
+      return
+    }
+    if (userStores.length > 0) {
+      setNewStoreToAdd(formData)
+      navigate('/billing')
+    }
   }
 
   if (loading) {
@@ -41,13 +68,16 @@ const AddStore = () => {
 
   return (
     <div className="add-store-container">
-      <div className="stars-background"></div>
+      <div className="add-store-stars"></div>
       <Header />
 
-      <form className="store-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="storeName">Store Name</label>
+      <form className="add-store-form" onSubmit={handleSubmit}>
+        <div className="add-store-form-group">
+          <label className="add-store-label" htmlFor="storeName">
+            Store Name
+          </label>
           <input
+            className="add-store-input"
             type="text"
             id="storeName"
             name="storeName"
@@ -57,9 +87,12 @@ const AddStore = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="address">Address</label>
+        <div className="add-store-form-group">
+          <label className="add-store-label" htmlFor="address">
+            Address
+          </label>
           <input
+            className="add-store-input"
             type="text"
             id="address"
             name="address"
@@ -69,21 +102,25 @@ const AddStore = () => {
           />
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="notes">Notes</label>
+        <div className="add-store-form-row">
+          <div className="add-store-form-group">
+            <label className="add-store-label" htmlFor="notes">
+              Notes
+            </label>
             <textarea
+              className="add-store-textarea"
               id="notes"
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              className="add-store-notes"
             />
           </div>
         </div>
 
-        <div className="button-container">
-          <button type="submit" className="submit-btn">
+        {error && <div className="error-message">{error}</div>}
+
+        <div className="add-store-button-container">
+          <button type="submit" className="add-store-submit-btn">
             Add Store
           </button>
         </div>

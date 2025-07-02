@@ -103,6 +103,27 @@
   margin: 0.3rem 0;
 }
 
+.start-here-message {
+  color: #ffd700;
+  font-size: 0.7rem;
+  text-align: center;
+  margin: 0.5rem 0 0 0;
+  text-shadow: 1px 1px 0 #041e42;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* Charts Section */
 .charts-section {
   display: grid;

@@ -230,8 +230,18 @@
 }
 
 .action-btn.view {
-  background-color: #bf0d3e;
+  background-color: #041e42;
   color: white;
+}
+
+.action-btn.delete {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.action-btn.test {
+  background-color: #ffd700;
+  color: #041e42;
 }
 
 .action-btn:hover {
@@ -351,3 +361,190 @@
   padding: 0.8rem 1.2rem;
   height: auto;
 } */
+
+.delete-store-confirmation {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 3px solid #ff4d4d;
+  margin: 2rem auto;
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+}
+
+.delete-warning {
+  color: #bf0d3e;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.paypal-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.paypal-warning p {
+  margin: 0.3rem 0;
+  font-size: 0.7rem;
+  color: #856404;
+}
+
+.paypal-warning p:first-child {
+  font-weight: bold;
+  color: #bf0d3e;
+}
+
+.confirmation-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.delete-store-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group {
+  width: 100%;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+}
+
+.input-container input {
+  width: 100%;
+  max-width: 200px;
+  padding: 0.8rem;
+  border: 2px solid #041e42;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.delete-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+.cancel-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #bf0d3e;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+.delete-confirmation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.delete-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #041e42;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+
+.cancel-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #bf0d3e;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
+}
+

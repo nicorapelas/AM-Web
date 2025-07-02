@@ -1,0 +1,179 @@
+/* Import retro gaming font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.resend-verification-container {
+  background-color: #041e42;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stars background */
+.resend-verification-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(white 2px, transparent 2px),
+    radial-gradient(white 2px, transparent 2px);
+  background-size: 50px 50px;
+  background-position:
+    0 0,
+    25px 25px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.resend-verification-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 6px;
+  border: 2px solid #bf0d3e;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resend-verification-content h1 {
+  color: #041e42;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+.resend-verification-content p {
+  color: #bf0d3e;
+  font-size: 0.7rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.resend-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resend-form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resend-form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resend-verification-content .resend-form .resend-form-group .resend-email-input {
+  width: 90%;
+  padding: 0.8rem;
+  border: 2px solid #041e42;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.7rem !important;
+  color: #041e42;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.resend-verification-content .resend-form .resend-form-group .resend-email-input::placeholder {
+  text-align: center;
+  font-size: 0.7rem !important;
+  font-family: 'Press Start 2P', cursive !important;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #bf0d3e;
+}
+
+.resend-button {
+  width: 50%;
+  align-self: center;
+  background: linear-gradient(45deg, #bf0d3e, #041e42);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.resend-button:hover {
+  transform: translateY(-2px);
+}
+
+.back-button {
+  background: none;
+  border: 2px solid #041e42;
+  color: #041e42;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background-color: #041e42;
+  color: white;
+}
+
+.error-message {
+  color: #bf0d3e;
+  font-size: 0.6rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 0.6rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .resend-verification-content {
+    padding: 1.5rem;
+    width: 85%;
+  }
+
+  .resend-verification-content h1 {
+    font-size: 1rem;
+  }
+
+  .resend-verification-content p {
+    font-size: 0.7rem;
+  }
+
+  .email-input {
+    font-size: 0.6rem;
+  }
+
+  .resend-button {
+    font-size: 0.7rem;
+  }
+
+  .back-button {
+    font-size: 0.6rem;
+  }
+}

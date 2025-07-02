@@ -125,7 +125,12 @@ const resendVerificationEmail =
         '/auth/user/resend-verification-email',
         { email },
       )
-      dispatch({ type: 'ADD_API_MESSAGE', payload: response.data })
+      if (response.data.error) {
+        dispatch({ type: 'ADD_ERROR', payload: response.data.error })
+        return
+      } else {
+        dispatch({ type: 'ADD_API_MESSAGE', payload: response.data })
+      }
       return
     } catch (err) {
       dispatch({ type: 'NETWORK_ERROR', payload: true })
@@ -168,6 +173,28 @@ const forgotPassword =
     dispatch({ type: 'LOADING' })
     try {
       const response = await ngrokApi.post('/auth/user/forgot', { email })
+      if (response.data.error) {
+        dispatch({ type: 'ADD_ERROR', payload: response.data.error })
+      }
+      if (response.data.success) {
+        dispatch({ type: 'ADD_API_MESSAGE', payload: response.data })
+      }
+    } catch (error) {
+      dispatch({ type: 'NETWORK_ERROR', payload: true })
+    }
+  }
+
+const updatePassword =
+  (dispatch) =>
+  async ({ password, password2, token }) => {
+    dispatch({ type: 'LOADING' })
+    try {
+      const response = await ngrokApi.post('/auth/user/reset', {
+        password,
+        password2,
+        token,
+      })
+      console.log('response @ updatePassword', response.data)
       if (response.data.error) {
         dispatch({ type: 'ADD_ERROR', payload: response.data.error })
       }
@@ -325,6 +352,18 @@ const fetchUsersInfoContent = (dispatch) => async () => {
   }
 }
 
+const verifyEmail = (dispatch) => async (data) => {
+  dispatch({ type: 'LOADING' })
+  try {
+    const response = await ngrokApi.post('/auth/user/email-verified', data)
+    console.log('response @ verifyEmail', response.data)
+    dispatch({ type: 'FETCH_USER', payload: response.data })
+  } catch (error) {
+    dispatch({ type: 'NETWORK_ERROR', payload: true })
+    return
+  }
+}
+
 // HR only Actions
 const updateUsersInfo = (dispatch) => async (data) => {
   dispatch({ type: 'LOADING' })
@@ -354,6 +393,72 @@ const setStaffCredentials = (dispatch) => (data) => {
   dispatch({ type: 'SET_STAFF_CREDENTIALS', payload: data })
 }
 
+const updateUserProfile = (dispatch) => async (data) => {
+  dispatch({ type: 'LOADING' })
+  try {
+    const response = await ngrokApi.patch(
+      '/auth/user/update-user-profile',
+      data,
+    )
+    if (response.data.error) {
+      dispatch({ type: 'ADD_ERROR', payload: response.data.error })
+      return
+    }
+    if (response.data.success) {
+      const { success } = response.data
+      if (success === 'Name updated successfully') {
+        const response2 = await ngrokApi.get('/auth/user/fetch-user')
+        dispatch({ type: 'FETCH_USER', payload: response2.data })
+        return
+      }
+      dispatch({ type: 'ADD_API_MESSAGE', payload: response.data })
+      return
+    }
+    return
+  } catch (error) {
+    dispatch({ type: 'NETWORK_ERROR', payload: true })
+    return
+  }
+}
+
+const verifyEmailUpdatePin = (dispatch) => async (data) => {
+  dispatch({ type: 'LOADING' })
+  try {
+    const response = await ngrokApi.post(
+      '/auth/user/verify-email-update-pin',
+      data,
+    )
+    if (response.data.error) {
+      dispatch({ type: 'ADD_ERROR', payload: response.data.error })
+      return
+    }
+    dispatch({ type: 'FETCH_USER', payload: response.data })
+    return
+  } catch (error) {
+    dispatch({ type: 'NETWORK_ERROR', payload: true })
+    return
+  }
+}
+
+const updateUserPasswordViaProfile = (dispatch) => async (data) => {
+  dispatch({ type: 'LOADING' })
+  try {
+    const response = await ngrokApi.patch(
+      '/auth/user/update-password-via-profile',
+      data,
+    )
+    if (response.data.error) {
+      dispatch({ type: 'ADD_ERROR', payload: response.data.error })
+    }
+    if (response.data.success) {
+      dispatch({ type: 'ADD_API_MESSAGE', payload: response.data })
+    }
+    return
+  } catch (error) {
+    dispatch({ type: 'NETWORK_ERROR', payload: true })
+  }
+}
+
 export const { Provider, Context } = createDataContext(
   authReducer,
   {
@@ -362,11 +467,13 @@ export const { Provider, Context } = createDataContext(
     resendVerificationEmail,
     login,
     signout,
+    updatePassword,
     clearApiMessage,
     clearErrorMessage,
     setIsAuthChecked,
     tryLocalSignin,
     forgotPassword,
+    verifyEmail,
     fetchUser,
     acceptTermsAndConditions,
     createDeviceInfo,
@@ -384,6 +491,9 @@ export const { Provider, Context } = createDataContext(
     updateUsersInfo,
     showVerifyAndForward,
     setStaffCredentials,
+    updateUserProfile,
+    verifyEmailUpdatePin,
+    updateUserPasswordViaProfile,
   },
   {
     token: null,

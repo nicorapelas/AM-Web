@@ -1,12 +1,16 @@
-.login-container {
+.login-page-bed {
   background-color: #041e42;
+  font-family: 'Press Start 2P', cursive;
+
+}
+
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   padding: 1rem;
-  font-family: 'Press Start 2P', cursive;
   position: relative;
   overflow: hidden;
 }

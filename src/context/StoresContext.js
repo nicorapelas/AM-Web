@@ -16,6 +16,8 @@ const CommonReducer = (state, action) => {
       return { ...state, storeToEdit: action.payload }
     case 'SET_STORE_SELECTED':
       return { ...state, storeSelected: action.payload }
+    case 'SET_NEW_STORE_TO_ADD':
+      return { ...state, newStoreToAdd: action.payload }
     default:
       return state
   }
@@ -24,6 +26,10 @@ const CommonReducer = (state, action) => {
 // Actions
 const setLoading = (dispatch) => (value) => {
   dispatch({ type: 'LOADING', payload: value })
+}
+
+const setError = (dispatch) => (value) => {
+  dispatch({ type: 'ADD_ERROR', payload: value })
 }
 
 const createStore = (dispatch) => async (data) => {
@@ -65,11 +71,18 @@ const setStoreSelected = (dispatch) => async (data) => {
   dispatch({ type: 'SET_STORE_SELECTED', payload: data })
 }
 
-const deleteStore = (dispatch) => async (data) => {
+const deleteStore = (dispatch) => async (storeId) => {
   dispatch({ type: 'LOADING', payload: true })
   try {
-    const response = await ngrokApi.post(`/stores/delete-store`, data)
-    dispatch({ type: 'USER_STORES', payload: response.data })
+    const response = await ngrokApi.post(`/stores/delete-store`, storeId)
+
+    // Handle the enhanced response that includes PayPal cancellation info
+    if (response.data.stores) {
+      dispatch({ type: 'USER_STORES', payload: response.data.stores })
+    } else {
+      // Fallback for old response format
+      dispatch({ type: 'USER_STORES', payload: response.data })
+    }
   } catch (error) {
     dispatch({ type: 'ADD_ERROR', payload: error })
     return
@@ -80,6 +93,10 @@ const fetchStore = (dispatch) => async (data) => {
   dispatch({ type: 'LOADING', payload: true })
   const response = await ngrokApi.post(`/stores/fetch-store`, data)
   dispatch({ type: 'USER_STORES', payload: response.data })
+}
+
+const setNewStoreToAdd = (dispatch) => async (data) => {
+  dispatch({ type: 'SET_NEW_STORE_TO_ADD', payload: data })
 }
 
 export const { Provider, Context } = createDataContext(
@@ -93,6 +110,8 @@ export const { Provider, Context } = createDataContext(
     setStoreSelected,
     deleteStore,
     fetchStore,
+    setNewStoreToAdd,
+    setError,
   },
   {
     loading: false,
@@ -100,5 +119,7 @@ export const { Provider, Context } = createDataContext(
     userStores: [],
     storeToEdit: null,
     storeSelected: null,
+    newStoreToAdd: null,
+    error: null,
   },
 )

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Context as StoresContext } from '../../../context/StoresContext'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
@@ -13,7 +13,28 @@ const Stores = () => {
     state: { loading, userStores },
     setStoreToEdit,
     setStoreSelected,
+    deleteStore,
   } = useContext(StoresContext)
+
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+  const [storeToDelete, setStoreToDelete] = useState(null)
+
+  const handleDeleteStore = (store) => {
+    setStoreToDelete(store)
+    setShowDeleteConfirmation(true)
+  }
+
+  const handleDeleteConfirmation = (e) => {
+    e.preventDefault()
+    deleteStore({ storeId: storeToDelete._id })
+    setShowDeleteConfirmation(false)
+    setStoreToDelete(null)
+  }
+
+  const handleCancelDelete = () => {
+    setShowDeleteConfirmation(false)
+    setStoreToDelete(null)
+  }
 
   const renderContent = () => {
     if (loading) {
@@ -60,6 +81,33 @@ const Stores = () => {
           {userStores.map((store) => (
             <div key={store._id} className="store-card">
               <div className="card-star"></div>
+              {showDeleteConfirmation && storeToDelete?._id === store._id && (
+                <div className="delete-confirmation">
+                  <p className="delete-warning">
+                    Are you sure you want to delete "{store.storeName}"?
+                  </p>
+                  {store.subscriptionId && (
+                    <div className="paypal-warning">
+                      <p>
+                        ⚠️ This store has an active PayPal subscription that
+                        will be cancelled.
+                      </p>
+                      <p>Subscription ID: {store.subscriptionId}</p>
+                    </div>
+                  )}
+                  <div className="delete-buttons">
+                    <button
+                      onClick={handleDeleteConfirmation}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                    <button onClick={handleCancelDelete} className="cancel-btn">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
               <h2 className="store-name">{store.storeName}</h2>
               <div className="store-details">
                 <p>
@@ -93,6 +141,12 @@ const Stores = () => {
                   onClick={() => handleStoreDetails(store)}
                 >
                   View Details
+                </button>
+                <button
+                  className="action-btn delete"
+                  onClick={() => handleDeleteStore(store)}
+                >
+                  Delete
                 </button>
               </div>
             </div>

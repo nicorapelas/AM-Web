@@ -10,6 +10,7 @@ import LoaderFullScreen from './components/common/loaders/fullScreenLoader/Loade
 import NotFound from './components/common/notFound/NotFound'
 import SignupHR from './components/screens/authScreens/signup/Signup'
 import Login from './components/screens/authScreens/login/Login'
+import EmailVerified from './components/screens/authScreens/emailVerified/EmailVerified'
 import PasswordReset from './components/screens/authScreens/passwordReset/PasswordReset'
 import Dashboard from './components/screens/dashboard/Dashboard'
 import InitDataFetch from './components/InitDataFetch'
@@ -33,6 +34,13 @@ import AddStaff from './components/screens/addStaff/AddStaff'
 import Staff from './components/screens/staff/Staff'
 import StaffDashboard from './components/screens/staffDashboard/StaffDashboard'
 import EditStaff from './components/screens/editStaff/EditStaff'
+import ResendVerificationEmail from './components/screens/authScreens/reSendVerifivationEmail/ResendVerificationEmail'
+import UpdatePassword from './components/screens/authScreens/updatePassword/UpdatePassword'
+import Pricing from './components/screens/pricing/Pricing'
+import ManageAccount from './components/screens/manageAccount/ManageAccount'
+import Billing from './components/screens/billing/Billing'
+import BillingSuccess from './components/screens/billing/BillingSuccess'
+import BillingCancel from './components/screens/billing/BillingCancel'
 import { Context as AuthContext } from './context/AuthContext'
 
 const AppRouter = () => {
@@ -115,8 +123,14 @@ const AppRouter = () => {
                 token ? <Navigate to="/dashboard" replace /> : <PasswordReset />
               }
             />
+            <Route path="/reset-password/:token" element={<UpdatePassword />} />
             <Route path="/network-error" element={<NetworkError />} />
-
+            <Route path="/email-verified/:id" element={<EmailVerified />} />
+            <Route
+              path="/resend-verification-email"
+              element={<ResendVerificationEmail />}
+            />
+            <Route path="/pricing" element={<Pricing />} />
             {/* Protected routes - only accessible with token */}
             {token && (
               <>
@@ -157,6 +171,10 @@ const AppRouter = () => {
                   path="/edit-financial"
                   element={protectedRoute(EditFinancial)}
                 />
+                <Route path="/manage-account" element={<ManageAccount />} />
+                <Route path="/billing" element={<Billing />} />
+                <Route path="/billing/success" element={<BillingSuccess />} />
+                <Route path="/billing/cancel" element={<BillingCancel />} />
                 <Route path="/add-staff" element={protectedRoute(AddStaff)} />
                 <Route path="/staff" element={protectedRoute(Staff)} />
                 <Route path="/edit-staff" element={protectedRoute(EditStaff)} />
