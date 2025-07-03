@@ -83,7 +83,7 @@ const Home = () => {
         </div>
 
         <div className="home-card">
-          <div className="card-star" />
+          <div className="card-star" onClick={() => signout()} />
           <div className="home-description">
             <img
               src={arcadeLogo}
