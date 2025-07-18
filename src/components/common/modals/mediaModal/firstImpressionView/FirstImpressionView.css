@@ -42,3 +42,47 @@
   align-self: center;
   padding-bottom: 10px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .video-player-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .cld-video-player {
+    max-height: 70vh;
+  }
+
+  .videoContainer {
+    width: 95%;
+    max-height: 80vh;
+  }
+
+  .firstImpressionViewName {
+    font-size: 18px;
+  }
+
+  .firstImpressionViewDateOfBirth {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cld-video-player {
+    max-height: 60vh;
+  }
+
+  .videoContainer {
+    width: 98%;
+    max-height: 70vh;
+  }
+
+  .firstImpressionViewName {
+    font-size: 16px;
+  }
+
+  .firstImpressionViewDateOfBirth {
+    font-size: 11px;
+  }
+}

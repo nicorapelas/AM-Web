@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-.stars-background {
+.edit-financial-stars {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,7 +22,6 @@
   opacity: 0.1;
   pointer-events: none;
 }
-
 .edit-financial-header {
   background-color: #bf0d3e;
   padding: 1.5rem;

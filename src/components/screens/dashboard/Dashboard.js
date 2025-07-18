@@ -326,7 +326,7 @@ const Dashboard = () => {
             <h2 className="card-title">Total Stores</h2>
             <p className="stat">{userStores.length}</p>
             {userStores.length === 0 && (
-              <p className="start-here-message">Start here!</p>
+              <p className="start-here-message-dashboard">Start here!</p>
             )}
           </div>
 

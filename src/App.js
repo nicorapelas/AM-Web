@@ -6,6 +6,8 @@ import { Provider as StoresProvider } from './context/StoresContext'
 import { Provider as GamesProvider } from './context/GamesContext'
 import { Provider as FinancialsProvider } from './context/FinancialsContext'
 import { Provider as StaffProvider } from './context/StaffContext'
+import { Provider as BillingProvider } from './context/BillingContext'
+import { Provider as PayPalProvider } from './context/PayPalContext'
 import AppRouter from './AppRouter'
 import './App.css'
 
@@ -18,11 +20,15 @@ function App() {
             <GamesProvider>
               <FinancialsProvider>
                 <StaffProvider>
-                  <div className="app-container">
-                    <div className="scanline"></div>
-                    <div className="grid-overlay"></div>
-                    <AppRouter />
-                  </div>
+                  <BillingProvider>
+                    <PayPalProvider>
+                      <div className="app-container">
+                        <div className="scanline"></div>
+                        <div className="grid-overlay"></div>
+                        <AppRouter />
+                      </div>
+                    </PayPalProvider>
+                  </BillingProvider>
                 </StaffProvider>
               </FinancialsProvider>
             </GamesProvider>

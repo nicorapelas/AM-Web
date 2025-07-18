@@ -427,8 +427,8 @@ const EditFinancial = () => {
   if (!storeGames || storeGames.length === 0) {
     return (
       <div className="add-financial-page-container">
-        <div className="add-financial-stars-bg" />
         <Header />
+        <div className="add-financial-stars-bg" />
         <div
           className="add-financial-card"
           style={{
@@ -464,8 +464,8 @@ const EditFinancial = () => {
   }
 
   return (
-    <div className="add-financial-page-container">
-      <div className="add-financial-stars-bg" />
+    <div className="edit-financial-container">
+      <div className="edit-financial-stars"></div>
       <Header />
       <form onSubmit={handleSubmit} className="add-financial-grid">
         <div className="add-financial-cards-container">

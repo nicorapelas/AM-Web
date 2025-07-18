@@ -5,9 +5,6 @@
   font-family: 'Press Start 2P', cursive;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .add-staff-stars-bg {
@@ -22,6 +19,13 @@
   background-position: 0 0, 25px 25px;
   opacity: 0.1;
   pointer-events: none;
+}
+
+
+.add-staff-form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .add-staff-form {
@@ -160,6 +164,77 @@
   margin-left: 1rem;
   color: #bf0d3e;
   font-size: 0.8rem;
+}
+
+/* Custom Toggle Switch Styles */
+.toggle-switch-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-switch-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: #041e42;
+  user-select: none;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid #041e42;
+}
+
+.toggle-switch.active {
+  background-color: #bf0d3e;
+  border-color: #bf0d3e;
+  box-shadow: 0 0 10px rgba(191, 13, 62, 0.3);
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch.active::after {
+  transform: translateX(26px);
+  background-color: #ffd700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-switch:hover {
+  transform: scale(1.05);
+}
+
+.toggle-switch.active:hover {
+  box-shadow: 0 0 15px rgba(191, 13, 62, 0.5);
+}
+
+/* Hide the original checkbox */
+.toggle-switch input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
 }
 
 @media (max-width: 768px) {

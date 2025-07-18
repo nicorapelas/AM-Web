@@ -1,21 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AuthError from '../authScreens/authApiFeedback/authError/AuthError'
 import AuthSuccess from '../authScreens/authApiFeedback/authSuccess/AuthSuccess'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
 import { Context as AuthContext } from '../../../context/AuthContext'
+import { Context as StoresContext } from '../../../context/StoresContext'
 import Header from '../../common/header/Header'
+import BillingHistoryModal from '../../common/modals/BillingHistoryModal'
 import './manageAccount.css'
 
 const ManageAccount = () => {
+  const navigate = useNavigate()
   const {
     state: { loading, user, errorMessage, apiMessage },
-    updateUserProfile,
-    verifyEmailUpdatePin,
-    updateUserPasswordViaProfile,
-    clearApiMessage,
-    clearErrorMessage,
+    updateProfile,
+    updatePassword,
     deleteAccount,
   } = useContext(AuthContext)
+
+  const {
+    state: { userStores },
+  } = useContext(StoresContext)
 
   const [isEditing, setIsEditing] = useState(false)
   const [showPinInput, setShowPinInput] = useState(false)
@@ -23,7 +28,10 @@ const ManageAccount = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
   const [deleteConfirmationNumber, setDeleteConfirmationNumber] = useState('')
   const [deleteConfirmationInput, setDeleteConfirmationInput] = useState('')
-  const [formData, setFormData] = useState({
+  const [showBillingHistory, setShowBillingHistory] = useState(false)
+  const [selectedStoreForBilling, setSelectedStoreForBilling] = useState(null)
+
+  const [formDataState, setFormDataState] = useState({
     name: user?.name || '',
     email: user?.email || '',
     currentPassword: '',
@@ -31,6 +39,129 @@ const ManageAccount = () => {
     confirmPassword: '',
     emailUpdatePin: '',
   })
+
+  // Update form data when user data changes
+  useEffect(() => {
+    setFormDataState({
+      name: user?.name || '',
+      email: user?.email || '',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+      emailUpdatePin: '',
+    })
+  }, [user?.name, user?.email])
+
+  // Memoized billing information calculation
+  const billingInfo = useMemo(() => {
+    if (!userStores || userStores.length === 0) {
+      return {
+        totalStores: 0,
+        activeStores: 0,
+        paidStores: 0,
+        freeStores: 0,
+        pendingStores: 0,
+        highestTier: 'free-tier',
+        subscriptionCount: 0,
+        paymentIssues: 0,
+      }
+    }
+
+    const activeStores = userStores.filter((store) => store.isActive)
+    const paidStores = userStores.filter(
+      (store) =>
+        store.tier &&
+        store.tier !== 'free-tier' &&
+        store.paymentStatus === 'ACTIVE',
+    )
+    const freeStores = userStores.filter(
+      (store) => store.tier === 'free-tier' || !store.tier,
+    )
+    const pendingStores = userStores.filter(
+      (store) => store.paymentStatus === 'PENDING',
+    )
+    const storesWithIssues = userStores.filter(
+      (store) =>
+        store.paymentFailureCount > 0 || store.paymentStatus === 'FAILED',
+    )
+
+    // Determine highest tier
+    const tiers = userStores.map((store) => store.tier).filter(Boolean)
+    const highestTier =
+      tiers.length > 0
+        ? tiers.reduce((highest, tier) => {
+            if (tier === 'PAID_HIGH_SCORE_HERO') return tier
+            if (highest === 'PAID_HIGH_SCORE_HERO') return highest
+            if (tier === 'PAID_ARCADE_MASTER') return tier
+            if (highest === 'PAID_ARCADE_MASTER') return highest
+            return tier
+          })
+        : 'free-tier'
+
+    return {
+      totalStores: userStores.length,
+      activeStores: activeStores.length,
+      paidStores: paidStores.length,
+      freeStores: freeStores.length,
+      pendingStores: pendingStores.length,
+      highestTier,
+      subscriptionCount: userStores.filter((store) => store.subscriptionId)
+        .length,
+      paymentIssues: storesWithIssues.length,
+    }
+  }, [userStores])
+
+  // Memoized next billing date calculation
+  const nextBillingDate = useMemo(() => {
+    // Find the most recent store with a subscription
+    const storesWithSubscriptions = userStores.filter(
+      (store) => store.subscriptionId,
+    )
+    if (storesWithSubscriptions.length === 0) return 'N/A'
+
+    // Get the most recent tier anchor date
+    const mostRecentStore = storesWithSubscriptions.reduce((latest, store) => {
+      return new Date(store.tierAnchorDate) > new Date(latest.tierAnchorDate)
+        ? store
+        : latest
+    })
+
+    if (!mostRecentStore.tierAnchorDate) return 'N/A'
+
+    const anchorDate = new Date(mostRecentStore.tierAnchorDate)
+    const nextBilling = new Date(anchorDate)
+    nextBilling.setMonth(nextBilling.getMonth() + 1)
+
+    return nextBilling.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }, [userStores])
+
+  const getTierDisplayName = (tier) => {
+    switch (tier) {
+      case 'PAID_HIGH_SCORE_HERO':
+        return 'High Score Hero'
+      case 'PAID_ARCADE_MASTER':
+        return 'Arcade Master'
+      case 'free-tier':
+      default:
+        return 'Free Tier'
+    }
+  }
+
+  const getTierStoreLimit = (tier) => {
+    switch (tier) {
+      case 'PAID_HIGH_SCORE_HERO':
+        return 'Unlimited'
+      case 'PAID_ARCADE_MASTER':
+        return '10 stores'
+      case 'free-tier':
+      default:
+        return '3 stores'
+    }
+  }
 
   // Scroll to top when error or API message changes
   useEffect(() => {
@@ -47,7 +178,7 @@ const ManageAccount = () => {
       const { success } = apiMessage
       if (success === 'Name updated successfully') {
         setIsEditing(false)
-        setFormData((prev) => ({
+        setFormDataState((prev) => ({
           ...prev,
           name: '',
         }))
@@ -64,9 +195,21 @@ const ManageAccount = () => {
     }
   }, [errorMessage])
 
+  // Show PIN input form when API message indicates PIN has been sent
+  useEffect(() => {
+    if (
+      apiMessage &&
+      apiMessage.success &&
+      apiMessage.success.includes('verification PIN has been sent')
+    ) {
+      setShowPinInput(true)
+      setIsEditing(false)
+    }
+  }, [apiMessage])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
+    setFormDataState((prev) => ({
       ...prev,
       [name]: value,
     }))
@@ -77,37 +220,13 @@ const ManageAccount = () => {
   }
 
   const handleProfileUpdate = async (e) => {
-    clearApiMessage()
-    clearErrorMessage()
     e.preventDefault()
-    if (showPinInput) {
-      // Handle PIN verification
-      verifyEmailUpdatePin({
-        emailUpdatePin: formData.emailUpdatePin,
-        email: formData.email,
-      })
-      setShowPinInput(false)
-      setFormData((prev) => ({
-        ...prev,
-        emailUpdatePin: '',
-      }))
-    } else {
-      // Handle initial email update request
-      updateUserProfile({
-        name: formData.name,
-        email: formData.email,
-      })
-      setIsEditing(false)
-    }
+    await updateProfile({ name: formDataState.name })
   }
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault()
-    updateUserPasswordViaProfile({
-      currentPassword: formData.currentPassword,
-      newPassword: formData.newPassword,
-      confirmPassword: formData.confirmPassword,
-    })
+    await updatePassword(formDataState)
   }
 
   const handleDeleteAccount = () => {
@@ -146,17 +265,19 @@ const ManageAccount = () => {
     setDeleteConfirmationNumber('')
   }
 
-  // Show PIN input form when API message indicates PIN has been sent
-  React.useEffect(() => {
-    if (
-      apiMessage &&
-      apiMessage.success &&
-      apiMessage.success.includes('verification PIN has been sent')
-    ) {
-      setShowPinInput(true)
-      setIsEditing(false)
-    }
-  }, [apiMessage])
+  const handleViewBillingHistory = () => {
+    navigate('/all-billing-history')
+  }
+
+  const handleViewStoreBillingHistory = (store) => {
+    setSelectedStoreForBilling(store)
+    setShowBillingHistory(true)
+  }
+
+  const handleCloseBillingHistory = () => {
+    setShowBillingHistory(false)
+    setSelectedStoreForBilling(null)
+  }
 
   if (loading) {
     return <LoadingSpinner />
@@ -204,7 +325,7 @@ const ManageAccount = () => {
                         type="text"
                         id="emailUpdatePin"
                         name="emailUpdatePin"
-                        value={formData.emailUpdatePin}
+                        value={formDataState.emailUpdatePin}
                         onChange={handleInputChange}
                         placeholder="Enter 6-digit PIN"
                         maxLength="6"
@@ -228,7 +349,7 @@ const ManageAccount = () => {
                         type="text"
                         id="name"
                         name="name"
-                        value={formData.name}
+                        value={formDataState.name}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                         className={isEditing ? 'editing' : ''}
@@ -243,7 +364,7 @@ const ManageAccount = () => {
                         type="email"
                         id="email"
                         name="email"
-                        value={formData.email}
+                        value={formDataState.email}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                         className={isEditing ? 'editing' : ''}
@@ -284,7 +405,7 @@ const ManageAccount = () => {
                       type={showPasswords ? 'text' : 'password'}
                       id="currentPassword"
                       name="currentPassword"
-                      value={formData.currentPassword}
+                      value={formDataState.currentPassword}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -297,7 +418,7 @@ const ManageAccount = () => {
                       type={showPasswords ? 'text' : 'password'}
                       id="newPassword"
                       name="newPassword"
-                      value={formData.newPassword}
+                      value={formDataState.newPassword}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -310,7 +431,7 @@ const ManageAccount = () => {
                       type={showPasswords ? 'text' : 'password'}
                       id="confirmPassword"
                       name="confirmPassword"
-                      value={formData.confirmPassword}
+                      value={formDataState.confirmPassword}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -331,27 +452,144 @@ const ManageAccount = () => {
                 <div className="billing-info">
                   <div className="billing-item">
                     <span className="billing-label">Current Plan:</span>
-                    <span className="billing-value">Free Tier</span>
+                    <span className="billing-value">
+                      {getTierDisplayName(billingInfo.highestTier)}
+                    </span>
                   </div>
                   <div className="billing-item">
                     <span className="billing-label">Next Billing:</span>
-                    <span className="billing-value">N/A</span>
+                    <span className="billing-value">{nextBillingDate}</span>
                   </div>
                   <div className="billing-item">
                     <span className="billing-label">Stores Limit:</span>
-                    <span className="billing-value">3 stores</span>
+                    <span className="billing-value">
+                      {getTierStoreLimit(billingInfo.highestTier)}
+                    </span>
                   </div>
+                  <div className="billing-item">
+                    <span className="billing-label">Total Stores:</span>
+                    <span className="billing-value">
+                      {billingInfo.totalStores}
+                    </span>
+                  </div>
+                  <div className="billing-item">
+                    <span className="billing-label">Active Stores:</span>
+                    <span className="billing-value">
+                      {billingInfo.activeStores}
+                    </span>
+                  </div>
+                  <div className="billing-item">
+                    <span className="billing-label">Paid Subscriptions:</span>
+                    <span className="billing-value">
+                      {billingInfo.subscriptionCount}
+                    </span>
+                  </div>
+                  {billingInfo.paymentIssues > 0 && (
+                    <div className="billing-item billing-warning">
+                      <span className="billing-label">Payment Issues:</span>
+                      <span className="billing-value warning">
+                        {billingInfo.paymentIssues} stores
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="billing-actions">
-                  <button className="manage-account-billing-btn">
-                    Upgrade Plan
-                  </button>
-                  <button className="manage-account-billing-btn secondary">
+                  <button
+                    className="manage-account-billing-btn secondary"
+                    onClick={handleViewBillingHistory}
+                  >
                     View Billing History
                   </button>
                 </div>
               </div>
             </div>
+
+            {/* Store Details Section */}
+            {userStores && userStores.length > 0 && (
+              <div className="manage-account-section">
+                <div className="manage-account-section-header">
+                  <h2>Your Stores & Subscriptions</h2>
+                </div>
+                <div className="store-details-content">
+                  {userStores.map((store) => (
+                    <div key={store._id} className="store-detail-item">
+                      <div className="store-detail-header">
+                        <h3 className="store-name">{store.storeName}</h3>
+                        <div
+                          className={`store-status ${store.isActive ? 'active' : 'inactive'}`}
+                        >
+                          {store.isActive ? 'ACTIVE' : 'INACTIVE'}
+                        </div>
+                      </div>
+                      <div className="store-detail-info">
+                        <div className="store-info-row">
+                          <span className="store-info-label">Address:</span>
+                          <span className="store-info-value">
+                            {store.address}
+                          </span>
+                        </div>
+                        <div className="store-info-row">
+                          <span className="store-info-label">Tier:</span>
+                          <span className="store-info-value">
+                            {getTierDisplayName(store.tier)}
+                          </span>
+                        </div>
+                        <div className="store-info-row">
+                          <span className="store-info-label">
+                            Payment Status:
+                          </span>
+                          <span
+                            className={`store-info-value payment-status-${store.paymentStatus?.toLowerCase()}`}
+                          >
+                            {store.tier === 'free-tier'
+                              ? 'N/A'
+                              : store.paymentStatus || 'N/A'}
+                          </span>
+                        </div>
+                        {store.subscriptionId && (
+                          <div className="store-info-row">
+                            <span className="store-info-label">
+                              Subscription ID:
+                            </span>
+                            <span className="store-info-value subscription-id">
+                              {store.subscriptionId}
+                            </span>
+                          </div>
+                        )}
+                        {store.paymentFailureCount > 0 && (
+                          <div className="store-info-row">
+                            <span className="store-info-label">
+                              Payment Failures:
+                            </span>
+                            <span className="store-info-value warning">
+                              {store.paymentFailureCount}
+                            </span>
+                          </div>
+                        )}
+                        {store.notes && (
+                          <div className="store-info-row">
+                            <span className="store-info-label">Notes:</span>
+                            <span className="store-info-value">
+                              {store.notes}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      {store.subscriptionId && (
+                        <div className="store-detail-actions">
+                          <button
+                            className="store-billing-history-btn"
+                            onClick={() => handleViewStoreBillingHistory(store)}
+                          >
+                            View Payment History
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Danger Zone */}
             <div className="manage-account-section manage-account-danger-zone">
@@ -414,6 +652,13 @@ const ManageAccount = () => {
           </div>
         </div>
       </div>
+
+      {/* Billing History Modal */}
+      <BillingHistoryModal
+        isOpen={showBillingHistory}
+        onClose={handleCloseBillingHistory}
+        selectedStore={selectedStoreForBilling}
+      />
     </div>
   )
 }

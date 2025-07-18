@@ -85,6 +85,8 @@ const Header = () => {
         return <BackButton to="/dashboard" />
       case '/billing':
         return <BackButton to="/add-store" />
+      case '/all-billing-history':
+        return <BackButton to="/manage-account" />
       default:
         break
     }
@@ -214,6 +216,12 @@ const Header = () => {
         return (
           <div className="nav-header-title-container">
             <div className="nav-header-title">Billing</div>
+          </div>
+        )
+      case '/all-billing-history':
+        return (
+          <div className="nav-header-title-container">
+            <div className="nav-header-title">Billing History</div>
           </div>
         )
       default:

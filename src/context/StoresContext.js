@@ -35,11 +35,21 @@ const setError = (dispatch) => (value) => {
 const createStore = (dispatch) => async (data) => {
   try {
     dispatch({ type: 'LOADING', payload: true })
+    dispatch({ type: 'ADD_ERROR', payload: null }) // Clear any previous errors
+
     const response = await ngrokApi.post('/stores/create-store', data)
-    dispatch({ type: 'USER_STORES', payload: response.data.stores })
-    return response.data.staffCredentials
+
+    if (response.data && response.data.stores) {
+      dispatch({ type: 'USER_STORES', payload: response.data.stores })
+      return response.data.staffCredentials
+    } else {
+      throw new Error('Invalid response from server')
+    }
   } catch (error) {
-    dispatch({ type: 'ADD_ERROR', payload: error })
+    console.error('Error creating store:', error)
+    const errorMessage =
+      error.response?.data?.error || error.message || 'Failed to create store'
+    dispatch({ type: 'ADD_ERROR', payload: errorMessage })
     return null
   } finally {
     dispatch({ type: 'LOADING', payload: false })

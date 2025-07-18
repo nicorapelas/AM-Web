@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { Context as StoreContext } from '../../../context/StoresContext'
-import { checkSubscriptionStatus } from '../../../api/paypal'
+import { Context as PayPalContext } from '../../../context/PayPalContext'
+import { Context as BillingContext } from '../../../context/BillingContext'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
 import './billing.css'
 
@@ -16,6 +17,13 @@ const BillingSuccess = () => {
   const [storeInfo, setStoreInfo] = useState(null)
 
   const { fetchUserStores } = useContext(StoreContext)
+  const { checkSubscriptionStatus } = useContext(PayPalContext)
+
+  const {
+    state: { tierSelected },
+  } = useContext(BillingContext)
+
+  console.log('Tier selected!!!!!!!!!!!!!!!!:', tierSelected)
 
   useEffect(() => {
     const subscriptionId = searchParams.get('subscription_id')
@@ -49,7 +57,10 @@ const BillingSuccess = () => {
           'Checking subscription status for ID:',
           actualSubscriptionId,
         )
-        const response = await checkSubscriptionStatus(actualSubscriptionId)
+        const response = await checkSubscriptionStatus({
+          subscriptionId: actualSubscriptionId,
+          tierSelected: tierSelected,
+        })
 
         setSubscriptionStatus(response.status)
 
@@ -134,7 +145,6 @@ const BillingSuccess = () => {
 
   return (
     <div className="billing-page">
-      \{' '}
       <div className="billing-container">
         <div className="stars-background" />
         <div className="billing-content">

@@ -1104,3 +1104,37 @@
     padding: 0.8rem;
   }
 }
+
+/* Print Button */
+.financial-print-section {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.financial-print-btn {
+  background: linear-gradient(135deg, #bf0d3e 0%, #a00d35 100%);
+  color: #ffffff;
+  border: 2px solid #bf0d3e;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(191, 13, 62, 0.3);
+  line-height: 1.4;
+}
+
+.financial-print-btn:hover {
+  background: linear-gradient(135deg, #a00d35 0%, #bf0d3e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(191, 13, 62, 0.4);
+  border-color: #ffd700;
+}
+
+@media (max-width: 768px) {
+  .financial-print-btn {
+    font-size: 0.6rem;
+    padding: 0.8rem 1.5rem;
+  }
+}

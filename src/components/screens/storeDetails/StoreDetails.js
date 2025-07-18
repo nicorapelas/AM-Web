@@ -19,17 +19,17 @@ const StoreDetails = () => {
   } = useContext(StoresContext)
 
   const {
-    state: { storeFinancials },
+    state: { loading: financialLoading, storeFinancials },
     fetchStoreFinancials,
   } = useContext(FinancialsContext)
 
   const {
-    state: { storeGames },
+    state: { loading: gamesLoading, storeGames },
     fetchStoreGames,
   } = useContext(GamesContext)
 
   const {
-    state: { storeStaff },
+    state: { loading: staffLoading, storeStaff },
     fetchStoreStaff,
   } = useContext(StaffContext)
 
@@ -123,7 +123,7 @@ const StoreDetails = () => {
   }
 
   const renderContent = () => {
-    if (loading) {
+    if (loading || financialLoading || gamesLoading || staffLoading) {
       return <LoadingSpinner />
     }
 

@@ -425,3 +425,224 @@
   transform: translateY(-2px);
   box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.5);
 }
+
+/* Billing warning and pending states */
+.billing-warning {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.billing-pending {
+  background-color: #e7f3ff;
+  border-left: 4px solid #007bff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.billing-value.warning {
+  color: #856404;
+  font-weight: bold;
+}
+
+.billing-value.pending {
+  color: #004085;
+  font-weight: bold;
+}
+
+.billing-item.billing-warning .billing-label,
+.billing-item.billing-pending .billing-label {
+  color: #041e42;
+  font-weight: bold;
+}
+
+/* Store Details Section */
+.store-details-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.store-detail-item {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.store-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.store-name {
+  font-size: 0.9rem;
+  color: #041e42;
+  margin: 0;
+  font-weight: bold;
+}
+
+.store-status {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.store-status.active {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.store-status.inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.store-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.store-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+
+.store-info-label {
+  font-size: 0.7rem;
+  color: #6c757d;
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.store-info-value {
+  font-size: 0.7rem;
+  color: #041e42;
+  text-align: right;
+  word-break: break-all;
+}
+
+.store-info-value.warning {
+  color: #856404;
+  font-weight: bold;
+}
+
+.subscription-id {
+  font-family: monospace;
+  font-size: 0.6rem;
+  background-color: #e9ecef;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  color: #495057;
+}
+
+.payment-status-active {
+  color: #155724;
+  font-weight: bold;
+}
+
+.payment-status-pending {
+  color: #856404;
+  font-weight: bold;
+}
+
+.payment-status-failed {
+  color: #721c24;
+  font-weight: bold;
+}
+
+/* Responsive adjustments for store details */
+@media (max-width: 768px) {
+  .store-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .store-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  
+  .store-info-value {
+    text-align: left;
+  }
+}
+
+/* Store Detail Actions */
+.store-detail-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.store-billing-history-btn {
+  background-color: #041e42;
+  color: #ffd700;
+  text-shadow: 1px 1px 0 #bf0d3e;
+  padding: 0.6rem 1rem;
+  border: 1px solid #bf0d3e;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.store-billing-history-btn:hover {
+  background-color: #bf0d3e;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Payment Status Colors */
+.payment-status-active {
+  color: #28a745 !important;
+}
+
+.payment-status-failed {
+  color: #dc3545 !important;
+}
+
+.payment-status-suspended {
+  color: #ffc107 !important;
+}
+
+.payment-status-cancelled {
+  color: #6c757d !important;
+}
+
+.payment-status-pending {
+  color: #17a2b8 !important;
+}
+
+/* Subscription ID Styling */
+.subscription-id {
+  font-family: monospace;
+  font-size: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 2px;
+  word-break: break-all;
+}

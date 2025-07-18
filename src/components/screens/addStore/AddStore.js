@@ -13,6 +13,8 @@ const AddStore = () => {
     phone: '',
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const {
     state: { loading, userStores, error },
     createStore,
@@ -24,12 +26,12 @@ const AddStore = () => {
 
   useEffect(() => {
     if (error) {
-      let timer = setTimeout(() => {
+      const timer = setTimeout(() => {
         setError(null)
       }, 5000)
       return () => clearTimeout(timer)
     }
-  }, [error])
+  }, [error, setError])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -41,24 +43,47 @@ const AddStore = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (userStores.length === 0) {
-      await createStore(formData)
-      navigate('/stores')
-      return
+
+    if (isSubmitting) {
+      return // Prevent multiple submissions
     }
-    // Check if the store name is unique
-    const existingStore = userStores.find(
-      (store) => store.storeName === formData.storeName,
-    )
-    if (existingStore) {
-      setError(
-        'A store with this name already exists. Please choose a different name.',
+
+    setIsSubmitting(true)
+
+    try {
+      if (userStores.length === 0) {
+        // First store - create directly
+        const staffCredentials = await createStore(formData)
+        if (staffCredentials) {
+          // Wait a bit for state to settle before navigation
+          setTimeout(() => {
+            navigate('/stores')
+          }, 100)
+        }
+        return
+      }
+
+      // Check if the store name is unique
+      const existingStore = userStores.find(
+        (store) => store.storeName === formData.storeName,
       )
-      return
-    }
-    if (userStores.length > 0) {
-      setNewStoreToAdd(formData)
-      navigate('/billing')
+      if (existingStore) {
+        setError(
+          'A store with this name already exists. Please choose a different name.',
+        )
+        return
+      }
+
+      // Multiple stores - redirect to billing
+      if (userStores.length > 0) {
+        setNewStoreToAdd(formData)
+        navigate('/billing')
+      }
+    } catch (error) {
+      console.error('Error creating store:', error)
+      setError('An error occurred while creating the store. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -120,8 +145,12 @@ const AddStore = () => {
         {error && <div className="error-message">{error}</div>}
 
         <div className="add-store-button-container">
-          <button type="submit" className="add-store-submit-btn">
-            Add Store
+          <button
+            type="submit"
+            className="add-store-submit-btn"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Creating Store...' : 'Add Store'}
           </button>
         </div>
       </form>

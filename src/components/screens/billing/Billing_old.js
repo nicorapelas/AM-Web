@@ -28,8 +28,6 @@ const Billing = () => {
   const { setTierSelected } = useContext(BillingContext)
 
   const [isProcessing, setIsProcessing] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
 
@@ -91,11 +89,9 @@ const Billing = () => {
       const response = await createPayPalSubscription(newStoreToAdd)
 
       if (response.success && response.approvalUrl) {
-        // Show success message in modal instead of text
-        setSuccessMessage(
+        setSuccess(
           'Subscription created successfully! Redirecting to PayPal for payment...',
         )
-        setShowSuccessModal(true)
         // Small delay to show success message before redirect
         setTimeout(() => {
           window.location.href = response.approvalUrl
@@ -137,16 +133,6 @@ const Billing = () => {
           <div className="loading-modal">
             <LoadingSpinner />
             <p className="loading-message">{getLoadingMessage()}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Success Modal */}
-      {showSuccessModal && (
-        <div className="loading-modal-overlay">
-          <div className="loading-modal">
-            <LoadingSpinner />
-            <p className="loading-message success">{successMessage}</p>
           </div>
         </div>
       )}

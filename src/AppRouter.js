@@ -41,6 +41,7 @@ import ManageAccount from './components/screens/manageAccount/ManageAccount'
 import Billing from './components/screens/billing/Billing'
 import BillingSuccess from './components/screens/billing/BillingSuccess'
 import BillingCancel from './components/screens/billing/BillingCancel'
+import AllBillingHistory from './components/screens/allBillingHistory/AllBillingHistory'
 import { Context as AuthContext } from './context/AuthContext'
 
 const AppRouter = () => {
@@ -175,6 +176,10 @@ const AppRouter = () => {
                 <Route path="/billing" element={<Billing />} />
                 <Route path="/billing/success" element={<BillingSuccess />} />
                 <Route path="/billing/cancel" element={<BillingCancel />} />
+                <Route
+                  path="/all-billing-history"
+                  element={<AllBillingHistory />}
+                />
                 <Route path="/add-staff" element={protectedRoute(AddStaff)} />
                 <Route path="/staff" element={protectedRoute(Staff)} />
                 <Route path="/edit-staff" element={protectedRoute(EditStaff)} />

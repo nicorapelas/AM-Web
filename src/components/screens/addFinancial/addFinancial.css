@@ -1,18 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.add-financial-page-container {
+.add-financial-container {
   background-color: #041e42;
   min-height: 100vh;
   padding: 1.5rem;
   font-family: 'Press Start 2P', cursive;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-.add-financial-stars-bg {
+.add-financial-stars {
   position: absolute;
   top: 0;
   left: 0;

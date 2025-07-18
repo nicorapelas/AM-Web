@@ -406,8 +406,8 @@ const AddFinancial = () => {
   }
 
   return (
-    <div className="add-financial-page-container">
-      <div className="add-financial-stars-bg" />
+    <div className="add-financial-container">
+      <div className="add-financial-stars"></div>
       <Header />
       <form onSubmit={handleSubmit} className="add-financial-grid">
         <div className="add-financial-cards-container">
