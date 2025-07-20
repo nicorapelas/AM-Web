@@ -42,6 +42,7 @@ import Billing from './components/screens/billing/Billing'
 import BillingSuccess from './components/screens/billing/BillingSuccess'
 import BillingCancel from './components/screens/billing/BillingCancel'
 import AllBillingHistory from './components/screens/allBillingHistory/AllBillingHistory'
+import ContactSupport from './components/screens/contactSupport/ContactSupport'
 import { Context as AuthContext } from './context/AuthContext'
 
 const AppRouter = () => {
@@ -189,6 +190,7 @@ const AppRouter = () => {
                   path="/payment-cancelled"
                   element={<PaymentCancelled />}
                 />
+                <Route path="/contact-support" element={<ContactSupport />} />
               </>
             )}
 

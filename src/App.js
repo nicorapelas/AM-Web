@@ -8,6 +8,7 @@ import { Provider as FinancialsProvider } from './context/FinancialsContext'
 import { Provider as StaffProvider } from './context/StaffContext'
 import { Provider as BillingProvider } from './context/BillingContext'
 import { Provider as PayPalProvider } from './context/PayPalContext'
+import { Provider as SupportProvider } from './context/SupportContext'
 import AppRouter from './AppRouter'
 import './App.css'
 
@@ -22,11 +23,13 @@ function App() {
                 <StaffProvider>
                   <BillingProvider>
                     <PayPalProvider>
-                      <div className="app-container">
-                        <div className="scanline"></div>
-                        <div className="grid-overlay"></div>
-                        <AppRouter />
-                      </div>
+                      <SupportProvider>
+                        <div className="app-container">
+                          <div className="scanline"></div>
+                          <div className="grid-overlay"></div>
+                          <AppRouter />
+                        </div>
+                      </SupportProvider>
                     </PayPalProvider>
                   </BillingProvider>
                 </StaffProvider>

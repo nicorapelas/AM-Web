@@ -49,6 +49,10 @@ const Header = () => {
     navigate('/manage-account')
   }
 
+  const handleContactSupport = () => {
+    navigate('/contact-support')
+  }
+
   const renderLeft = () => {
     switch (location.pathname) {
       case '/dashboard':
@@ -87,6 +91,8 @@ const Header = () => {
         return <BackButton to="/add-store" />
       case '/all-billing-history':
         return <BackButton to="/manage-account" />
+      case '/contact-support':
+        return <BackButton to="/dashboard" />
       default:
         break
     }
@@ -224,6 +230,12 @@ const Header = () => {
             <div className="nav-header-title">Billing History</div>
           </div>
         )
+      case '/contact-support':
+        return (
+          <div className="nav-header-title-container">
+            <div className="nav-header-title">Contact Support</div>
+          </div>
+        )
       default:
         break
     }
@@ -280,17 +292,32 @@ const Header = () => {
         <div className="nav-header-username-container">
           <div className="nav-header-username">{user && user.username}</div>
         </div>
-        <div className="nav-header-right-btn-container">
-          <button
-            className={
-              location.pathname === '/manage-account' || userStores.length < 1
-                ? 'nav-header-right-account-btn-hidden'
-                : 'nav-header-right-account-btn'
-            }
-            onClick={handleManageAccount}
-          >
-            Manage Account
-          </button>
+        <div className="nav-header-right-btn-bed">
+          <div className="nav-header-right-btn-container">
+            {userStores && userStores.length > 1 && (
+              <button
+                className={
+                  location.pathname === '/manage-account' ||
+                  userStores.length < 1
+                    ? 'nav-header-right-account-btn-hidden'
+                    : 'nav-header-right-account-btn'
+                }
+                onClick={handleContactSupport}
+              >
+                Support
+              </button>
+            )}
+            <button
+              className={
+                location.pathname === '/manage-account' || userStores.length < 1
+                  ? 'nav-header-right-account-btn-hidden'
+                  : 'nav-header-right-account-btn'
+              }
+              onClick={handleManageAccount}
+            >
+              Account
+            </button>
+          </div>
         </div>
       </div>
       <div className="nav-header-bed">

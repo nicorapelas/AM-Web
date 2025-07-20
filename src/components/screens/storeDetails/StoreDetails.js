@@ -45,7 +45,11 @@ const StoreDetails = () => {
 
   // Auto-scroll to Games card when there are no games
   useEffect(() => {
-    if (storeGames && storeGames.length === 0) {
+    // Only auto-scroll if:
+    // 1. Games are not loading (data has been fetched)
+    // 2. storeGames is not undefined (data exists)
+    // 3. storeGames is an empty array (no games)
+    if (!gamesLoading && storeGames && storeGames.length === 0) {
       setTimeout(() => {
         const gamesCard = document.querySelector('.games-section')
         if (gamesCard) {
@@ -56,7 +60,7 @@ const StoreDetails = () => {
         }
       }, 500) // Small delay to ensure the component is fully rendered
     }
-  }, [storeGames])
+  }, [storeGames, gamesLoading])
 
   const handleEditStore = (store) => {
     setStoreToEdit(store)

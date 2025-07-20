@@ -142,6 +142,19 @@
   border-color: #ffffff;
 }
 
+.nav-header-right-btn-bed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-header-right-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .nav-header-right-btn {
   z-index: 10;
   background-color: #ffffff;
@@ -165,12 +178,6 @@
   border-color: #ffffff;
 }
 
-.nav-header-right-btn-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .nav-header-right-account-btn-hidden {
   z-index: 10;
   background: transparent;
@@ -189,6 +196,7 @@
 
 .nav-header-right-account-btn {
   z-index: 10;
+  height: 20px;
   background-color: #ffffff;
   color: #bf0d3e;
   border: 2px solid transparent;
@@ -202,6 +210,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: 5px;
 }
 
 

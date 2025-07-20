@@ -205,24 +205,6 @@ const Billing = () => {
                 </div>
 
                 <button
-                  className="billing-btn secondary"
-                  onClick={handleTestAuth}
-                  disabled={paypalLoading}
-                  style={{ marginBottom: '1rem', backgroundColor: '#17a2b8' }}
-                >
-                  {paypalLoading ? 'Testing...' : 'Test Authentication'}
-                </button>
-
-                <button
-                  className="billing-btn secondary"
-                  onClick={handleTestPayPal}
-                  disabled={paypalLoading}
-                  style={{ marginBottom: '1rem', backgroundColor: '#6c757d' }}
-                >
-                  {paypalLoading ? 'Testing...' : 'Test PayPal Connection'}
-                </button>
-
-                <button
                   className={`billing-btn primary ${isProcessing ? 'processing' : ''}`}
                   onClick={handleAddStoreSubscription}
                   disabled={
