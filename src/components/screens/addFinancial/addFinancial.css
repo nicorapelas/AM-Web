@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-.add-financial-container {
+.add-financial-page-container {
   background-color: #041e42;
   min-height: 100vh;
   padding: 1.5rem;
@@ -427,4 +427,83 @@
 
 .add-financial-btn-cancel:hover {
   background-color: #5a6268;
+}
+
+.add-financial-empty-state {
+  background: #041e42;
+  border: 3px solid #bf0d3e;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(4, 30, 66, 0.18);
+  max-width: 420px;
+  margin: 3rem auto 0 auto;
+  padding: 2.5rem 2rem 2rem 2rem;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  position: relative;
+}
+
+.add-financial-empty-star {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  background: #bf0d3e;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  z-index: 2;
+}
+
+.add-financial-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.2rem;
+  color: #fff;
+  text-shadow: 2px 2px 0 #bf0d3e;
+}
+
+.add-financial-empty-title {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 2px 2px 0 #bf0d3e;
+  letter-spacing: 1px;
+}
+
+.add-financial-empty-message {
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .add-financial-empty-state {
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    max-width: 98vw;
+  }
+  .add-financial-empty-title {
+    font-size: 0.9rem;
+  }
+  .add-financial-empty-icon {
+    font-size: 2rem;
+  }
+  .add-financial-empty-message {
+    font-size: 0.7rem;
+  }
+  .add-financial-empty-star {
+    width: 24px;
+    height: 24px;
+    top: -12px;
+  }
 }

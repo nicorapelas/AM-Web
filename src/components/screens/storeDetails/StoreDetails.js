@@ -126,6 +126,54 @@ const StoreDetails = () => {
     )
   }
 
+  const financialsCardButton = () => {
+    if (storeGames && storeGames.length === 0) {
+      return null
+    }
+    if (storeFinancials && storeFinancials.length > 0) {
+      return (
+        <button
+          className="action-btn view-financials"
+          onClick={() => navigate(`/financials`)}
+        >
+          View Financial Records
+        </button>
+      )
+    }
+    return (
+      <button
+        className="action-btn add-financial"
+        onClick={() => navigate(`/add-financial`)}
+      >
+        Add Financial Records
+      </button>
+    )
+  }
+
+  const staffCardButton = () => {
+    if (storeGames && storeGames.length === 0) {
+      return null
+    }
+    if (storeStaff && storeStaff.length === 0) {
+      return (
+        <button
+          className="action-btn add-staff"
+          onClick={() => navigate(`/add-staff`)}
+        >
+          Add Staff
+        </button>
+      )
+    }
+    return (
+      <button
+        className="action-btn view-staff"
+        onClick={() => navigate(`/staff`)}
+      >
+        View All Staff
+      </button>
+    )
+  }
+
   const renderContent = () => {
     if (loading || financialLoading || gamesLoading || staffLoading) {
       return <LoadingSpinner />
@@ -202,14 +250,8 @@ const StoreDetails = () => {
                 </span>
               </div>
             </div>
-            <div className="financials-actions">
-              <button
-                className="action-btn view-financials"
-                onClick={() => navigate(`/financials`)}
-              >
-                View Financial Records
-              </button>
-            </div>
+
+            <div className="financials-actions">{financialsCardButton()}</div>
           </div>
 
           <div className="details-card games-section">
@@ -251,35 +293,6 @@ const StoreDetails = () => {
             </div>
           </div>
 
-          {/* <div className="details-card staff-section">
-            <div className="card-star"></div>
-            <h2 className="section-title">Staff</h2>
-            <div className="staff-preview">
-              <div className="staff-stats">
-                <div className="staff-stat">
-                  <span className="stat-label">Total Staff</span>
-                  <span className="stat-value">0</span>
-                </div>
-                <div className="staff-stat">
-                  <span className="stat-label">Active Staff</span>
-                  <span className="stat-value">0</span>
-                </div>
-                <div className="staff-stat">
-                  <span className="stat-label">On Shift</span>
-                  <span className="stat-value">0</span>
-                </div>
-              </div>
-              <div className="staff-actions">
-                <button
-                  className="action-btn view-staff"
-                  onClick={() => navigate(`/staff`)}
-                >
-                  View All Staff
-                </button>
-              </div>
-            </div>
-          </div> */}
-
           <div className="details-card staff-section">
             <div className="card-star"></div>
             <h2 className="section-title">Staff</h2>
@@ -303,14 +316,7 @@ const StoreDetails = () => {
                   </span>
                 </div>
               </div>
-              <div className="staff-actions">
-                <button
-                  className="action-btn view-staff"
-                  onClick={() => navigate(`/staff`)}
-                >
-                  View All Staff
-                </button>
-              </div>
+              <div className="staff-actions">{staffCardButton()}</div>
             </div>
           </div>
 

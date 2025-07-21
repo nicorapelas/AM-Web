@@ -371,34 +371,17 @@ const AddFinancial = () => {
       <div className="add-financial-page-container">
         <div className="add-financial-stars-bg" />
         <Header />
-        <div
-          className="add-financial-card"
-          style={{
-            textAlign: 'center',
-            marginTop: '2rem',
-            maxWidth: '600px',
-            padding: '2rem',
-          }}
-        >
-          <h2
-            style={{
-              color: '#041e42',
-              marginBottom: '2rem',
-              fontSize: '1.2rem',
-              lineHeight: '1.8',
-            }}
-          >
-            No Games Available
-          </h2>
-          <p
-            style={{
-              color: '#041e42',
-              fontSize: '1rem',
-              lineHeight: '2',
-            }}
-          >
+        <div className="add-financial-empty-state">
+          <div className="add-financial-empty-star" />
+          <div className="add-financial-empty-icon">🎮</div>
+          <h2 className="add-financial-empty-title">No Games Available</h2>
+          <p className="add-financial-empty-message">
             There are no games in this arcade, so no financial document can be
             created.
+            <br />
+            <span style={{ color: '#bf0d3e', fontWeight: 'bold' }}>
+              Add a game to get started!
+            </span>
           </p>
         </div>
       </div>

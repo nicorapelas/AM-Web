@@ -5,6 +5,9 @@ import BackButton from '../../common/backButton/BackButton'
 import './header.css'
 import { Context as AuthContext } from '../../../context/AuthContext'
 import { Context as StoresContext } from '../../../context/StoresContext'
+import { Context as FinancialsContext } from '../../../context/FinancialsContext'
+import { Context as GamesContext } from '../../../context/GamesContext'
+import { Context as StaffContext } from '../../../context/StaffContext'
 import logo from '../../../assets/images/logo/arcadeManagerLogoLong.png'
 
 const Header = () => {
@@ -19,6 +22,18 @@ const Header = () => {
   const {
     state: { storeSelected, userStores, storeToEdit },
   } = useContext(StoresContext)
+
+  const {
+    state: { storeFinancials },
+  } = useContext(FinancialsContext)
+
+  const {
+    state: { storeGames },
+  } = useContext(GamesContext)
+
+  const {
+    state: { storeStaff },
+  } = useContext(StaffContext)
 
   const handleSignOut = () => {
     navigate('/')
@@ -62,11 +77,19 @@ const Header = () => {
       case '/store-details':
         return <BackButton to="/stores" />
       case '/add-game':
-        return <BackButton to="/games" />
+        return storeGames && storeGames.length > 0 ? (
+          <BackButton to="/games" />
+        ) : (
+          <BackButton to="/store-details" />
+        )
       case '/games':
         return <BackButton to="/store-details" />
       case '/add-financial':
-        return <BackButton to="/financials" />
+        return storeFinancials && storeFinancials.length > 0 ? (
+          <BackButton to="/financials" />
+        ) : (
+          <BackButton to="/store-details" />
+        )
       case '/financials':
         return <BackButton to="/store-details" />
       case '/financial-detail':
@@ -76,7 +99,11 @@ const Header = () => {
       case '/edit-store':
         return <BackButton to="/stores" />
       case '/add-staff':
-        return <BackButton to="/staff" />
+        return storeStaff && storeStaff.length > 0 ? (
+          <BackButton to="/staff" />
+        ) : (
+          <BackButton to="/store-details" />
+        )
       case '/staff':
         return <BackButton to="/store-details" />
       case '/add-store':
