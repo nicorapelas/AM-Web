@@ -107,7 +107,11 @@ const Header = () => {
       case '/staff':
         return <BackButton to="/store-details" />
       case '/add-store':
-        return <BackButton to="/stores" />
+        return userStores && userStores.length > 0 ? (
+          <BackButton to="/stores" />
+        ) : (
+          <BackButton to="/dashboard" />
+        )
       case '/edit-financial':
         return <BackButton to="/financials" />
       case '/edit-staff':
