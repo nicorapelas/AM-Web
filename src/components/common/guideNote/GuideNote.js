@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './guideNote.css'
 
 const GuideNote = ({ message, onNext, onPrev, onClose, step, totalSteps }) => {
-  const [minimized, setMinimized] = useState(false)
+  const [minimized, setMinimized] = useState(true)
 
   if (minimized) {
     return (
@@ -11,7 +11,8 @@ const GuideNote = ({ message, onNext, onPrev, onClose, step, totalSteps }) => {
         onClick={() => setMinimized(false)}
         aria-label="Show Guide"
       >
-        🛈 Guide
+        <span className="guide-icon">🛈</span>
+        <span className="guide-text">Guide</span>
       </button>
     )
   }
@@ -24,7 +25,7 @@ const GuideNote = ({ message, onNext, onPrev, onClose, step, totalSteps }) => {
           onClick={() => setMinimized(true)}
           aria-label="Minimize Guide"
         >
-          =
+          HIDE
         </button>
         <div className="guide-note-message">{message}</div>
         <div className="guide-note-navigation">

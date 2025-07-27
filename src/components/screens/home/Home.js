@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import RunningBanner from '../../common/runningBanner/RunningBanner'
 import usaFlag from '../../../assets/images/general/USA_Flag-pixed.png'
@@ -24,6 +25,8 @@ import './home.css'
 import { Context as AuthContext } from '../../../context/AuthContext'
 
 const Home = () => {
+  const navigate = useNavigate()
+
   const gameLogos = [
     gameLogo01,
     gameLogo02,
@@ -41,7 +44,7 @@ const Home = () => {
   ]
 
   const {
-    state: { apiMessage },
+    state: { apiMessage, user, token },
     signout,
   } = useContext(AuthContext)
 
@@ -57,9 +60,11 @@ const Home = () => {
     }
   }, [apiMessage])
 
-  // useEffect(() => {
-  //   signout()
-  // }, [])
+  useEffect(() => {
+    if (user && token) {
+      navigate('/dashboard')
+    }
+  }, [user, token])
 
   return (
     <div className="home-container">
