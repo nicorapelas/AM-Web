@@ -1,8 +1,10 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000',
-  // baseURL: 'https://arcade-manager-server-c205931feabf.herokuapp.com',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:5000'
+      : 'https://arcade-manager-server-c205931feabf.herokuapp.com',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
