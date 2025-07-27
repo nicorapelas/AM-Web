@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from 'react-router-dom'
 
 import LoaderFullScreen from './components/common/loaders/fullScreenLoader/LoaderFullScreen'
@@ -44,6 +45,74 @@ import BillingCancel from './components/screens/billing/BillingCancel'
 import AllBillingHistory from './components/screens/allBillingHistory/AllBillingHistory'
 import ContactSupport from './components/screens/contactSupport/ContactSupport'
 import { Context as AuthContext } from './context/AuthContext'
+import { Context as GuidedTourContext } from './context/GuidedTourContext'
+import GuideNote from './components/common/guideNote/GuideNote'
+import guideNotesArray from './components/common/guideNote/guideNotesArray'
+
+// Component to handle guide logic inside Router context
+function GuideHandler() {
+  const location = useLocation()
+  const {
+    state: { guideEnabled, guidePartIndex },
+    setGuideEnabled,
+    setGuidePartIndex,
+  } = useContext(GuidedTourContext)
+
+  // Define auth routes where guide should not be shown
+  const authRoutes = [
+    '/',
+    '/login',
+    '/signup',
+    '/forgot-password',
+    '/password-reset',
+    '/email-verified',
+    '/resend-verification',
+    '/update-password',
+    '/network-error',
+    '/email-verified',
+    '/resend-verification-email',
+    '/pricing',
+    '/contact-support',
+  ]
+
+  // Check if current route is an auth route
+  const isAuthRoute = authRoutes.includes(location.pathname)
+
+  const totalSteps = guideNotesArray.length
+  const currentStep = guidePartIndex
+  const showGuide = guideEnabled && currentStep < totalSteps && !isAuthRoute
+
+  const handleNext = () => {
+    if (currentStep < totalSteps - 1) {
+      setGuidePartIndex(currentStep + 1)
+    } else {
+      setGuideEnabled(false)
+    }
+  }
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setGuidePartIndex(currentStep - 1)
+    }
+  }
+  const handleClose = () => {
+    setGuideEnabled(false)
+  }
+
+  return (
+    <>
+      {showGuide && (
+        <GuideNote
+          message={guideNotesArray[currentStep].message}
+          onNext={handleNext}
+          onPrev={currentStep > 0 ? handlePrev : null}
+          onClose={handleClose}
+          step={currentStep}
+          totalSteps={totalSteps}
+        />
+      )}
+    </>
+  )
+}
 
 const AppRouter = () => {
   const {
@@ -106,6 +175,7 @@ const AppRouter = () => {
       <>
         <InitDataFetch />
         <Router>
+          <GuideHandler />
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<Home />} />

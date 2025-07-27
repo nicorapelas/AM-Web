@@ -307,6 +307,13 @@ const Header = () => {
             + Add New Staff
           </button>
         )
+      case '/manage-account':
+        return (
+          <button className="nav-header-right-btn" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        )
+      case '/billing':
       default:
         break
     }

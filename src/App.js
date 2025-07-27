@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Provider as AuthProvider } from './context/AuthContext'
 import { Provider as CommonProvider } from './context/CommonContext'
 import { Provider as YocoProvider } from './context/YocoContext'
@@ -19,47 +20,11 @@ import AppRouter from './AppRouter'
 import './App.css'
 
 function AppContent() {
-  const {
-    state: { guideEnabled, guidePartIndex },
-    setGuideEnabled,
-    setGuidePartIndex,
-  } = useContext(GuidedTourContext)
-
-  const totalSteps = guideNotesArray.length
-  const currentStep = guidePartIndex
-  const showGuide = guideEnabled && currentStep < totalSteps
-
-  const handleNext = () => {
-    if (currentStep < totalSteps - 1) {
-      setGuidePartIndex(currentStep + 1)
-    } else {
-      setGuideEnabled(false)
-    }
-  }
-  const handlePrev = () => {
-    if (currentStep > 0) {
-      setGuidePartIndex(currentStep - 1)
-    }
-  }
-  const handleClose = () => {
-    setGuideEnabled(false)
-  }
-
   return (
     <div className="app-container">
       <div className="scanline"></div>
       <div className="grid-overlay"></div>
       <AppRouter />
-      {showGuide && (
-        <GuideNote
-          message={guideNotesArray[currentStep].message}
-          onNext={handleNext}
-          onPrev={currentStep > 0 ? handlePrev : null}
-          onClose={handleClose}
-          step={currentStep}
-          totalSteps={totalSteps}
-        />
-      )}
     </div>
   )
 }
