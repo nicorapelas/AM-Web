@@ -6,7 +6,7 @@ import { Context as AuthContext } from '../../../../../context/AuthContext'
 import './authSuccess.css'
 
 const AuthSuccess = () => {
-  const [successMessage, setSuccessMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const navigate = useNavigate()
 
@@ -32,6 +32,8 @@ const AuthSuccess = () => {
   }, [apiMessage])
 
   const renderContent = () => {
+    if (!successMessage) return null
+
     return (
       <div className="auth-success-container-wrapper">
         <div className="auth-success-container" onClick={clearApiMessage}>

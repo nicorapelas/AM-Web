@@ -5,18 +5,38 @@ import { useNavigate } from 'react-router-dom'
 import { Context as AuthContext } from '../../../../../context/AuthContext'
 import './authError.css'
 
-const AuthError = ({ error }) => {
-  const [errorMessage, setErrorMessage] = useState('')
+const AuthError = () => {
+  const {
+    state: { errorMessage },
+    clearErrorMessage,
+  } = useContext(AuthContext)
 
-  const { clearErrorMessage } = useContext(AuthContext)
+  console.log('errorMessage', errorMessage)
+
+  const [error, setError] = useState(null)
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (error) {
-      // Handle error display
+    if (errorMessage) {
+      const { email, password, password2, notVerified } = errorMessage
+      if (email) {
+        setError(email)
+      }
+      if (password) {
+        setError(password)
+      }
+      if (password2) {
+        setError(password2)
+      }
+      if (notVerified) {
+        setError(notVerified)
+      }
     }
-  }, [error])
+    if (!errorMessage) {
+      setError(null)
+    }
+  }, [errorMessage])
 
   const handleResendVerificationEmail = () => {
     clearErrorMessage()
@@ -24,12 +44,17 @@ const AuthError = ({ error }) => {
   }
 
   const renderContent = () => {
+    if (!error) return null
+
     return (
       <div className="auth-error-container-wrapper">
         <div className="auth-error-container" onClick={clearErrorMessage}>
           <div className="auth-error-content-container">
-            <div className="auth-error-content">{errorMessage}</div>
-            {errorMessage === 'Email address not yet verified' && (
+            <div className="auth-error-content">
+              {error}, if you don't receive the email, please check your spam
+              folder.
+            </div>
+            {error === 'Email address not yet verified' && (
               <div
                 className="auth-error-resend-button"
                 onClick={handleResendVerificationEmail}

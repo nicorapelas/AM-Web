@@ -18,7 +18,7 @@ const Login = () => {
   })
 
   const {
-    state: { loading, apiMessage, errorMessage },
+    state: { loading },
     login,
     clearErrorMessage,
     clearApiMessage,
@@ -97,8 +97,8 @@ const Login = () => {
   return (
     <div className="login-page-bed">
       <NetworkChecker />
-      {!errorMessage ? null : <AuthError error={errorMessage} />}
-      {!apiMessage ? null : <AuthSuccess />}
+      <AuthError />
+      <AuthSuccess />
       {renderContent()}
     </div>
   )
