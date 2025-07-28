@@ -23,28 +23,17 @@ const BillingSuccess = () => {
     state: { tierSelected },
   } = useContext(BillingContext)
 
-  console.log('Tier selected!!!!!!!!!!!!!!!!:', tierSelected)
-
   useEffect(() => {
     const subscriptionId = searchParams.get('subscription_id')
     const token = searchParams.get('token')
     const payerId = searchParams.get('PayerID')
     const baToken = searchParams.get('ba_token')
 
-    console.log('PayPal success URL parameters:', {
-      subscriptionId,
-      token,
-      payerId,
-      baToken,
-      allParams: Object.fromEntries(searchParams.entries()),
-    })
-
     // PayPal can send different parameter combinations
     // For subscriptions, we might get ba_token instead of subscription_id
     const actualSubscriptionId = subscriptionId || baToken
 
     if (!actualSubscriptionId) {
-      console.error('No subscription ID found in URL parameters')
       setError('Invalid payment response from PayPal - missing subscription ID')
       setIsProcessing(false)
       return
@@ -53,10 +42,6 @@ const BillingSuccess = () => {
     // Check the subscription status
     const checkSubscription = async () => {
       try {
-        console.log(
-          'Checking subscription status for ID:',
-          actualSubscriptionId,
-        )
         const response = await checkSubscriptionStatus({
           subscriptionId: actualSubscriptionId,
           tierSelected: tierSelected,
@@ -99,7 +84,6 @@ const BillingSuccess = () => {
           }
         }
       } catch (err) {
-        console.error('Error checking subscription status:', err)
         setError(
           err.response?.data?.error ||
             'An error occurred while checking the subscription status',

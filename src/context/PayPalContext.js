@@ -70,10 +70,7 @@ const checkAuthStatus = (dispatch) => async () => {
     dispatch({ type: 'LOADING', payload: true })
     dispatch({ type: 'CLEAR_ERROR' })
 
-    console.log('Checking authentication status...')
     const response = await ngrokApi.get('/payment/paypal/auth-check')
-    console.log('Auth check response:', response.data)
-
     dispatch({ type: 'SET_AUTH_RESULT', payload: response.data })
     return response.data
   } catch (error) {
@@ -91,10 +88,7 @@ const testPayPalCredentials = (dispatch) => async () => {
     dispatch({ type: 'LOADING', payload: true })
     dispatch({ type: 'CLEAR_ERROR' })
 
-    console.log('Testing PayPal credentials...')
     const response = await ngrokApi.get('/payment/paypal/test')
-    console.log('PayPal test response:', response.data)
-
     dispatch({ type: 'SET_TEST_RESULT', payload: response.data })
     return response.data
   } catch (error) {
@@ -112,7 +106,6 @@ const createPayPalSubscription = (dispatch) => async (storeData) => {
     dispatch({ type: 'LOADING', payload: true })
     dispatch({ type: 'CLEAR_ERROR' })
 
-    console.log('Creating PayPal subscription for store:', storeData)
     const response = await ngrokApi.post(
       '/payment/paypal/create-subscription',
       {
@@ -120,8 +113,6 @@ const createPayPalSubscription = (dispatch) => async (storeData) => {
         storeData: storeData,
       },
     )
-    console.log('PayPal subscription response:', response.data)
-
     dispatch({ type: 'SET_SUBSCRIPTION_RESULT', payload: response.data })
     return response.data
   } catch (error) {
@@ -278,20 +269,11 @@ const fetchPaymentData =
   (dispatch) =>
   async (selectedStore = null) => {
     try {
-      console.log(
-        'PayPalContext: Starting fetchPaymentData, selectedStore:',
-        selectedStore,
-      )
       dispatch({ type: 'SET_PAYMENT_HISTORY_LOADING', payload: true })
       dispatch({ type: 'CLEAR_PAYMENT_HISTORY_ERROR' })
 
       // Fetch payment summary
-      console.log('PayPalContext: Fetching payment summary...')
       const summaryResponse = await ngrokApi.get('/payment/payment-summary')
-      console.log(
-        'PayPalContext: Payment summary response:',
-        summaryResponse.data,
-      )
       dispatch({ type: 'SET_PAYMENT_SUMMARY', payload: summaryResponse.data })
 
       // Fetch payment history
@@ -299,12 +281,7 @@ const fetchPaymentData =
         ? `/payment/store-payment-history/${selectedStore._id}`
         : '/payment/user-payment-history'
 
-      console.log('PayPalContext: Fetching payment history from:', historyUrl)
       const historyResponse = await ngrokApi.get(historyUrl)
-      console.log(
-        'PayPalContext: Payment history response:',
-        historyResponse.data,
-      )
       dispatch({ type: 'SET_PAYMENT_HISTORY', payload: historyResponse.data })
 
       // Ensure loading is set to false
@@ -315,9 +292,9 @@ const fetchPaymentData =
         history: historyResponse.data,
       }
     } catch (error) {
-      console.error('PayPalContext: Error fetching payment data:', error)
-      console.error('PayPalContext: Error response:', error.response?.data)
-      console.error('PayPalContext: Error status:', error.response?.status)
+      console.error('Error fetching payment data:', error)
+      console.error('Error response:', error.response?.data)
+      console.error('Error status:', error.response?.status)
       const errorMessage = error.response?.data?.error || error.message
       dispatch({ type: 'SET_PAYMENT_HISTORY_ERROR', payload: errorMessage })
       throw error

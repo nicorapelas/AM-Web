@@ -11,20 +11,13 @@ import Header from '../../common/header/Header'
 import './addFinancial.css'
 
 const AddFinancial = () => {
-  console.log('AddFinancial component rendering')
-
   const {
-    state: { loading },
-    createFinancial,
-  } = useContext(FinancialContext)
-
-  const {
-    state: { storeGames },
-  } = useContext(GamesContext)
-
-  const {
-    state: { storeSelected, userStores },
+    state: { loading, storeSelected, userStores },
   } = useContext(StoreContext)
+
+  const {
+    state: { storeGames, gamesLoading },
+  } = useContext(GamesContext)
 
   const {
     state: { staffCredentials },
@@ -36,60 +29,18 @@ const AddFinancial = () => {
 
   const navigate = useNavigate()
 
-  const [staffName, setStaffName] = useState('')
-
-  // Move financialData state after staffName to avoid using empty initial value
   const [financialData, setFinancialData] = useState({
-    _id: '',
-    _user: '',
-    storeId: '',
     date: '',
     gameFinances: [],
     expenses: [],
-    totalMoneyIn: 0,
-    totalMoneyOut: 0,
-    dailyProfit: 0,
-    cash: 0, // Add cash field
-    actualCashCount: 0,
+    cash: 0,
     notes: '',
-    createdBy: '',
-    createdAt: '',
-    updatedAt: '',
-    __v: 0,
-    updatedBy: '',
   })
 
+  const [pin, setPin] = useState('')
+  const [pinError, setPinError] = useState('')
+  const [showPinModal, setShowPinModal] = useState(false)
   const pinVerifiedStaffName = useRef('')
-
-  useEffect(() => {
-    if (staffCredentials && storeStaff && storeStaff.length > 0) {
-      const currentStaff = storeStaff.find((staff) => {
-        return (
-          staff._id === staffCredentials.staffId ||
-          staff._id === staffCredentials._id ||
-          staff.id === staffCredentials.staffId
-        )
-      })
-
-      if (currentStaff) {
-        const fullName = `${currentStaff.firstName} ${currentStaff.lastName}`
-        setStaffName(fullName)
-        setFinancialData((prev) => ({
-          ...prev,
-          createdBy: fullName,
-        }))
-      }
-    }
-  }, [staffCredentials, storeStaff])
-
-  useEffect(() => {
-    if (staffName) {
-      setFinancialData((prev) => ({
-        ...prev,
-        createdBy: staffName,
-      }))
-    }
-  }, [staffName])
 
   const [newExpense, setNewExpense] = useState({
     description: '',
@@ -102,36 +53,26 @@ const AddFinancial = () => {
     amount: '',
   })
 
-  const [showPinModal, setShowPinModal] = useState(false)
-  const [pin, setPin] = useState('')
-  const [pinError, setPinError] = useState('')
+  const { createFinancial } = useContext(FinancialContext)
 
+  // Set initial date to today
   useEffect(() => {
-    if (!userStores || userStores.length === 0) {
-      navigate('/dashboard')
-    }
-  }, [userStores])
-
-  useEffect(() => {
-    // Format current date as YYYY-MM-DD for the date input
     const today = new Date()
     const formattedDate = today.toISOString().split('T')[0]
-    console.log('Setting initial date:', formattedDate)
-    setFinancialData((prevState) => ({
-      ...prevState,
+    setFinancialData((prev) => ({
+      ...prev,
       date: formattedDate,
     }))
-  }, []) // Empty dependency array means this runs once when component mounts
+  }, [])
 
+  // Set up game finances when storeGames are loaded
   useEffect(() => {
     if (storeGames.length > 0) {
-      console.log('Setting up game finances with storeGames:', storeGames)
       const initialGameFinances = storeGames.map((game) => ({
         gameId: game._id,
         sum: '',
         gameName: game.gameName, // for display purposes
       }))
-      console.log('Initial game finances:', initialGameFinances)
       setFinancialData((prev) => ({
         ...prev,
         gameFinances: initialGameFinances,
@@ -184,7 +125,6 @@ const AddFinancial = () => {
         }
       })
     } else {
-      console.log('Other input changed:', name)
       setFinancialData((prevState) => {
         // Only update if the value is actually different
         if (prevState[name] === value) {
@@ -287,7 +227,6 @@ const AddFinancial = () => {
     }
 
     const staffMember = storeStaff.find((staff) => staff.pin === pin)
-    console.log('Found staff member:', staffMember)
 
     if (!staffMember) {
       setPinError('Invalid PIN')
@@ -296,7 +235,6 @@ const AddFinancial = () => {
 
     // Store the staff name in the ref
     pinVerifiedStaffName.current = `${staffMember.firstName} ${staffMember.lastName}`
-    console.log('Stored staff name in ref:', pinVerifiedStaffName.current)
     return true
   }
 
@@ -312,8 +250,6 @@ const AddFinancial = () => {
   }
 
   const submitForm = async () => {
-    console.log('Submitting form with financialData:', financialData)
-
     // Format game finances to ensure all values are numbers
     const formattedGameFinances = financialData.gameFinances.map((game) => ({
       gameId: game.gameId,
@@ -407,7 +343,6 @@ const AddFinancial = () => {
                 name="date"
                 value={financialData.date}
                 onChange={(e) => {
-                  console.log('Date input changed directly:', e.target.value)
                   handleInputChange(e)
                 }}
                 required

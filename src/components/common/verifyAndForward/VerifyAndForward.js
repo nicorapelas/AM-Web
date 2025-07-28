@@ -15,7 +15,7 @@ const VerifyAndForward = () => {
   } = useContext(StaffContext)
 
   useEffect(() => {
-    console.log(storeStaff)
+    // Component logic will be implemented when needed
   }, [storeStaff])
 
   const renderContent = () => {

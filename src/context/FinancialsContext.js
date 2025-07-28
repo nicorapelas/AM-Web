@@ -47,9 +47,6 @@ const fetchUserFinancials = (dispatch) => async () => {
 }
 
 const editFinancial = (dispatch) => async (data) => {
-  console.log('data @editFinancial', data)
-
-  dispatch({ type: 'LOADING', payload: true })
   try {
     const response = await ngrokApi.patch(`/financials/edit-financial`, data)
     dispatch({ type: 'STORE_FINANCIALS', payload: response.data })

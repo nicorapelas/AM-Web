@@ -26,8 +26,6 @@ const Financial = () => {
     state: { storeGames },
   } = useContext(GameContext)
 
-  console.log('storeFinancials', storeFinancials)
-
   const { setFinancialSelected } = useContext(FinancialContext)
 
   const formatDate = (date) => {
@@ -240,210 +238,209 @@ const Financial = () => {
               .cash-status.short { color: #dc3545; }
               .cash-status.balanced { color: #17a2b8; }
               @page { margin: 0.5in; }
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1>Financial Report</h1>
-            <p>Generated on ${new Date().toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}</p>
-          </div>
-          
-          <div class="filter-info">
-            <h3>Filter Information</h3>
-            <p><strong>Filter Type:</strong> ${activeTab === 'week' ? 'Current Week' : activeTab === 'month' ? 'Current Month' : activeTab === 'custom' ? 'Selected Dates' : 'All Records'}</p>
-            ${activeTab === 'custom' ? `<p><strong>Date Range:</strong> ${dateRange.start} to ${dateRange.end}</p>` : ''}
-            <p><strong>Total Records:</strong> ${filteredFinancials.length}</p>
-          </div>
-          
-          <div class="summary-section">
-            <h3>Summary</h3>
-            <div class="summary-grid">
-              <div class="summary-item">
-                <span class="summary-label">Total Money In:</span>
-                <span class="summary-value money-in">${formatCurrency(totalMoneyIn)}</span>
-              </div>
-              <div class="summary-item">
-                <span class="summary-label">Expenses:</span>
-                <span class="summary-value money-out">${formatCurrency(totalMoneyOut)}</span>
-              </div>
-              <div class="summary-item">
-                <span class="summary-label">Total Profit:</span>
-                <span class="summary-value ${totalProfit >= 0 ? 'positive' : 'negative'}">${formatCurrency(totalProfit)}</span>
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>Financial Report</h1>
+              <p>Generated on ${new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}</p>
+            </div>
+            
+            <div class="filter-info">
+              <h3>Filter Information</h3>
+              <p><strong>Filter Type:</strong> ${activeTab === 'week' ? 'Current Week' : activeTab === 'month' ? 'Current Month' : activeTab === 'custom' ? 'Selected Dates' : 'All Records'}</p>
+              ${activeTab === 'custom' ? `<p><strong>Date Range:</strong> ${dateRange.start} to ${dateRange.end}</p>` : ''}
+              <p><strong>Total Records:</strong> ${filteredFinancials.length}</p>
+            </div>
+            
+            <div class="summary-section">
+              <h3>Summary</h3>
+              <div class="summary-grid">
+                <div class="summary-item">
+                  <span class="summary-label">Total Money In:</span>
+                  <span class="summary-value money-in">${formatCurrency(totalMoneyIn)}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Expenses:</span>
+                  <span class="summary-value money-out">${formatCurrency(totalMoneyOut)}</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Total Profit:</span>
+                  <span class="summary-value ${totalProfit >= 0 ? 'positive' : 'negative'}">${formatCurrency(totalProfit)}</span>
+                </div>
               </div>
             </div>
-          </div>
-          
-          ${
-            Object.keys(repCommissions).length > 0
-              ? `
-          <div class="commission-section">
-            <h3>Commission Summary</h3>
-            ${Object.entries(repCommissions)
-              .map(
-                ([repName, data]) => `
-              <div class="rep-commission-card">
-                <h4>${repName}</h4>
-                <div class="rep-commission-games">
-                  ${Object.entries(data.games)
-                    .map(
-                      ([gameName, gameData]) => `
-                    <div class="game-commission">
-                      <span>${gameName} (${gameData.commission}%)</span>
-                      <span>${formatCurrency(gameData.total)}</span>
-                    </div>
-                  `,
-                    )
-                    .join('')}
+            
+            ${
+              Object.keys(repCommissions).length > 0
+                ? `
+            <div class="commission-section">
+              <h3>Commission Summary</h3>
+              ${Object.entries(repCommissions)
+                .map(
+                  ([repName, data]) => `
+                <div class="rep-commission-card">
+                  <h4>${repName}</h4>
+                  <div class="rep-commission-games">
+                    ${Object.entries(data.games)
+                      .map(
+                        ([gameName, gameData]) => `
+                      <div class="game-commission">
+                        <span>${gameName} (${gameData.commission}%)</span>
+                        <span>${formatCurrency(gameData.total)}</span>
+                      </div>
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                  <div class="rep-commission-total">
+                    <span>Total Commission:</span>
+                    <span>${formatCurrency(data.total)}</span>
+                  </div>
                 </div>
-                <div class="rep-commission-total">
-                  <span>Total Commission:</span>
-                  <span>${formatCurrency(data.total)}</span>
+              `,
+                )
+                .join('')}
+              <div class="commission-total-section">
+                <div class="commission-total-row">
+                  <span>Total Commission Owed</span>
+                  <span>${formatCurrency(totalCommission)}</span>
                 </div>
-              </div>
-            `,
-              )
-              .join('')}
-            <div class="commission-total-section">
-              <div class="commission-total-row">
-                <span>Total Commission Owed</span>
-                <span>${formatCurrency(totalCommission)}</span>
               </div>
             </div>
-          </div>
-          `
-              : ''
-          }
-          
-          ${
-            outstandingLoans.length > 0
-              ? `
-          <div class="outstanding-loans-section">
-            <h3>Outstanding Loans</h3>
-            ${outstandingLoans
-              .map(
-                (loan) => `
-              <div class="outstanding-loan-item">
-                <span>${loan.staffName}</span>
-                <span class="outstanding-amount">${formatCurrency(loan.outstanding)}</span>
-              </div>
-            `,
-              )
-              .join('')}
-          </div>
-          `
-              : ''
-          }
-          
-          <div class="financials-table">
-            <h3>Financial Records</h3>
-            ${filteredFinancials
-              .map((financial) => {
-                const difference =
-                  financial.actualCashCount - financial.dailyProfit
-                const cashStatus =
-                  Math.abs(difference) > 1
-                    ? difference >= 0
-                      ? 'over'
-                      : 'short'
-                    : 'balanced'
-                const cashStatusText =
-                  Math.abs(difference) > 1
-                    ? (difference >= 0 ? 'Over' : 'Short') +
-                      ' by ' +
-                      formatCurrency(Math.abs(difference))
-                    : 'Balanced'
-
-                return `
-              <div class="financial-record">
-                <div class="financial-header">
-                  <div class="financial-date">${formatDate(financial.date)}</div>
-                  <div class="financial-profit ${financial.dailyProfit >= 0 ? 'positive' : 'negative'}">${formatCurrency(financial.dailyProfit)}</div>
-                </div>
-                <div class="financial-details">
-                  <div class="financial-info">
-                    <div class="info-label">Created By:</div>
-                    <div class="info-value">${financial.createdBy}</div>
-                  </div>
-                  <div class="financial-info">
-                    <div class="info-label">Updated By:</div>
-                    <div class="info-value">${financial.updatedBy || 'N/A'}</div>
-                  </div>
-                  <div class="financial-info">
-                    <div class="info-label">Money In:</div>
-                    <div class="info-value money-in">${formatCurrency(financial.totalMoneyIn)}</div>
-                  </div>
-                  <div class="financial-info">
-                    <div class="info-label">Cash Count:</div>
-                    <div class="info-value">${formatCurrency(financial.actualCashCount)}</div>
-                  </div>
-                  <div class="financial-info">
-                    <div class="info-label">Cash Status:</div>
-                    <div class="cash-status ${cashStatus}">${cashStatusText}</div>
-                  </div>
-                </div>
-                ${
-                  financial.gameFinances.length > 0
-                    ? `
-                <div class="game-finances">
-                  <div class="info-label">Game Finances:</div>
-                  ${financial.gameFinances
-                    .map(
-                      (game) => `
-                    <div class="game-finance-item">
-                      <span>${game.gameName}</span>
-                      <span class="${game.sum >= 0 ? 'money-in' : 'money-out'}">${formatCurrency(game.sum)}</span>
-                    </div>
-                  `,
-                    )
-                    .join('')}
-                </div>
-                `
-                    : ''
-                }
-                ${
-                  financial.expenses.length > 0
-                    ? `
-                <div class="expenses-section">
-                  <div class="info-label">Expenses:</div>
-                  ${financial.expenses
-                    .map(
-                      (expense) => `
-                    <div class="expense-item">
-                      <span>${expense.description} (${expense.category})</span>
-                      <span class="money-out">${formatCurrency(expense.amount)}</span>
-                    </div>
-                  `,
-                    )
-                    .join('')}
-                </div>
-                `
-                    : ''
-                }
-                ${
-                  financial.notes
-                    ? `
-                <div class="financial-info">
-                  <div class="info-label">Notes:</div>
-                  <div class="info-value">${financial.notes}</div>
-                </div>
-                `
-                    : ''
-                }
-              </div>
             `
-              })
-              .join('')}
-          </div>
-        </body>
-      </html>
-    `
+                : ''
+            }
+            
+            ${
+              outstandingLoans.length > 0
+                ? `
+            <div class="outstanding-loans-section">
+              <h3>Outstanding Loans</h3>
+              ${outstandingLoans
+                .map(
+                  (loan) => `
+                <div class="outstanding-loan-item">
+                  <span>${loan.staffName}</span>
+                  <span class="outstanding-amount">${formatCurrency(loan.outstanding)}</span>
+                </div>
+              `,
+                )
+                .join('')}
+            </div>
+            `
+                : ''
+            }
+            
+            <div class="financials-table">
+              <h3>Financial Records</h3>
+              ${filteredFinancials
+                .map((financial) => {
+                  const difference =
+                    financial.actualCashCount - financial.dailyProfit
+                  const cashStatus =
+                    Math.abs(difference) > 1
+                      ? difference >= 0
+                        ? 'over'
+                        : 'short'
+                      : 'balanced'
+                  const cashStatusText =
+                    Math.abs(difference) > 1
+                      ? (difference >= 0 ? 'Over' : 'Short') +
+                        ' by ' +
+                        formatCurrency(Math.abs(difference))
+                      : 'Balanced'
+
+                  return `
+                <div class="financial-record">
+                  <div class="financial-header">
+                    <div class="financial-date">${formatDate(financial.date)}</div>
+                    <div class="financial-profit ${financial.dailyProfit >= 0 ? 'positive' : 'negative'}">${formatCurrency(financial.dailyProfit)}</div>
+                  </div>
+                  <div class="financial-details">
+                    <div class="financial-info">
+                      <div class="info-label">Created By:</div>
+                      <div class="info-value">${financial.createdBy}</div>
+                    </div>
+                    <div class="financial-info">
+                      <div class="info-label">Updated By:</div>
+                      <div class="info-value">${financial.updatedBy || 'N/A'}</div>
+                    </div>
+                    <div class="financial-info">
+                      <div class="info-label">Money In:</div>
+                      <div class="info-value money-in">${formatCurrency(financial.totalMoneyIn)}</div>
+                    </div>
+                    <div class="financial-info">
+                      <div class="info-label">Cash Count:</div>
+                      <div class="info-value">${formatCurrency(financial.actualCashCount)}</div>
+                    </div>
+                    <div class="financial-info">
+                      <div class="info-label">Cash Status:</div>
+                      <div class="cash-status ${cashStatus}">${cashStatusText}</div>
+                    </div>
+                  </div>
+                  ${
+                    financial.gameFinances.length > 0
+                      ? `
+                  <div class="game-finances">
+                    <div class="info-label">Game Finances:</div>
+                    ${financial.gameFinances
+                      .map(
+                        (game) => `
+                      <div class="game-finance-item">
+                        <span>${game.gameName}</span>
+                        <span class="${game.sum >= 0 ? 'money-in' : 'money-out'}">${formatCurrency(game.sum)}</span>
+                      </div>
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                  `
+                      : ''
+                  }
+                  ${
+                    financial.expenses.length > 0
+                      ? `
+                  <div class="expenses-section">
+                    <div class="info-label">Expenses:</div>
+                    ${financial.expenses
+                      .map(
+                        (expense) => `
+                      <div class="expense-item">
+                        <span>${expense.description} (${expense.category})</span>
+                        <span class="money-out">${formatCurrency(expense.amount)}</span>
+                      </div>
+                    `,
+                      )
+                      .join('')}
+                  </div>
+                  `
+                      : ''
+                  }
+                  ${
+                    financial.notes
+                      ? `
+                  <div class="financial-info">
+                    <div class="info-label">Notes:</div>
+                    <div class="info-value">${financial.notes}</div>
+                  </div>
+                  `
+                      : ''
+                  }
+                </div>
+              `
+                })
+                .join('')}
+            </div>
+          </body>
+        </html>
+      `
 
     // Create a new window for printing
     const printWindow = window.open('', '_blank')

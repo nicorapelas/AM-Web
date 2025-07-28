@@ -90,7 +90,7 @@ const tryLocalSignin = (dispatch) => async () => {
       dispatch({ type: 'SIGN_IN', payload: token })
     }
   } catch (err) {
-    console.log('Error checking local token:', err)
+    // Error checking local token
   }
 }
 
@@ -194,7 +194,6 @@ const updatePassword =
         password2,
         token,
       })
-      console.log('response @ updatePassword', response.data)
       if (response.data.error) {
         dispatch({ type: 'ADD_ERROR', payload: response.data.error })
       }
@@ -356,7 +355,6 @@ const verifyEmail = (dispatch) => async (data) => {
   dispatch({ type: 'LOADING' })
   try {
     const response = await ngrokApi.post('/auth/user/email-verified', data)
-    console.log('response @ verifyEmail', response.data)
     dispatch({ type: 'FETCH_USER', payload: response.data })
   } catch (error) {
     dispatch({ type: 'NETWORK_ERROR', payload: true })

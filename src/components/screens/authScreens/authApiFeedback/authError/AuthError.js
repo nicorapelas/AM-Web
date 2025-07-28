@@ -14,25 +14,7 @@ const AuthError = ({ error }) => {
 
   useEffect(() => {
     if (error) {
-      console.log('error', error)
-      const {
-        email,
-        password,
-        password2,
-        notVerified,
-        token,
-        pin,
-        currentPassword,
-      } = error
-      setErrorMessage(
-        email ||
-          password ||
-          password2 ||
-          notVerified ||
-          token ||
-          pin ||
-          currentPassword,
-      )
+      // Handle error display
     }
   }, [error])
 

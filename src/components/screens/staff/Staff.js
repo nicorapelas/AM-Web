@@ -17,6 +17,7 @@ const Staff = () => {
     deleteStaff,
     createLoan,
     addLoanPayment,
+    fetchStoreStaff,
   } = useContext(StaffContext)
 
   const navigate = useNavigate()
@@ -36,12 +37,16 @@ const Staff = () => {
   })
 
   useEffect(() => {
+    if (storeSelected) {
+      fetchStoreStaff(storeSelected._id)
+    }
+  }, [storeSelected])
+
+  useEffect(() => {
     if (!userStores || userStores.length === 0) {
       navigate('/dashboard')
     }
   }, [userStores])
-
-  console.log(storeStaff)
 
   const getStatusClass = (isActive) => {
     return isActive ? 'staff-status-active' : 'staff-status-inactive'

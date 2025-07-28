@@ -27,16 +27,12 @@ const YocoPaymentPortal = () => {
   }, [loading])
 
   useEffect(() => {
-    console.log(`cardToBuy:`, cardToBuy)
-    console.log(`confirmPurchase:`, confirmPurchase)
     if (confirmPurchase && cardToBuy) {
-      console.log(`let's go`)
       setPaymentTriggered(true)
     }
   }, [confirmPurchase, cardToBuy])
 
   useEffect(() => {
-    console.log(`paymentTriggered:`, paymentTriggered)
     if (paymentTriggered) {
       handleConfirmedPurchase()
     }
@@ -45,15 +41,25 @@ const YocoPaymentPortal = () => {
   const navigate = useNavigate()
 
   const handleConfirmedPurchase = async () => {
-    console.log(`at handleConfirmedPurchase`)
-
-    setPaymentTriggered(false)
-    const { productCode, price } = cardToBuy
     try {
-      await handlePayment(productCode, price)
-    } finally {
-      setCardToBuy(null)
-      setConfirmPurchase(false)
+      setLoading(true)
+      setError(null)
+
+      const response = await initiatePayment({
+        amountInCents: cardToBuy.price,
+        currency: 'ZAR',
+        productCode: cardToBuy.productCode,
+      })
+
+      if (response?.redirectUrl) {
+        window.location.href = response.redirectUrl
+      } else {
+        setError('No redirect URL available')
+        setLoading(false)
+      }
+    } catch (error) {
+      setError(error.message || 'Failed to initialize payment')
+      setLoading(false)
     }
   }
 
