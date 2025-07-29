@@ -81,7 +81,16 @@ function GuideHandler() {
   ]
 
   // Check if current route is an auth route
-  const isAuthRoute = authRoutes.includes(location.pathname)
+  const isAuthRoute = authRoutes.some((route) => {
+    // Handle dynamic routes with parameters
+    if (route.includes(':')) {
+      // Convert route pattern to regex for matching
+      const routePattern = route.replace(/:[^/]+/g, '[^/]+')
+      const regex = new RegExp(`^${routePattern}$`)
+      return regex.test(location.pathname)
+    }
+    return location.pathname === route
+  })
 
   const totalSteps = guideNotesArray.length
   const currentStep = guidePartIndex

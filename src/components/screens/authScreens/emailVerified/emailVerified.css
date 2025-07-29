@@ -72,3 +72,68 @@
         font-size: 0.7rem;
     }
 }
+
+/* Button styles */
+.email-verified-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.email-verified-resend-btn {
+    background-color: #bf0d3e;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.email-verified-resend-btn:hover {
+    background-color: #e6c82f;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.email-verified-back-btn {
+    background-color: #041e42;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.email-verified-back-btn:hover {
+    background-color: #bf0d3e;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(191, 13, 62, 0.5);
+}
+
+/* Responsive button adjustments */
+@media (max-width: 768px) {
+    .email-verified-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .email-verified-resend-btn,
+    .email-verified-back-btn {
+        width: 100%;
+        max-width: 250px;
+        font-size: 0.6rem;
+        padding: 0.7rem 1rem;
+    }
+}
