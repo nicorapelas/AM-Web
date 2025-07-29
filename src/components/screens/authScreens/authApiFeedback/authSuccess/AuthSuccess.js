@@ -20,6 +20,9 @@ const AuthSuccess = () => {
       const { success } = apiMessage
       setSuccessMessage(success)
     }
+    if (!apiMessage) {
+      setSuccessMessage(null)
+    }
   }, [apiMessage])
 
   useEffect(() => {
@@ -28,6 +31,15 @@ const AuthSuccess = () => {
       if (success === 'Account deleted successfully') {
         navigate('/')
       }
+    }
+  }, [apiMessage])
+
+  useEffect(() => {
+    if (apiMessage) {
+      let timer = setTimeout(() => {
+        clearApiMessage()
+      }, 5000)
+      return () => clearTimeout(timer)
     }
   }, [apiMessage])
 
