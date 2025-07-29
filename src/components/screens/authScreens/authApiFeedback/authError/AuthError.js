@@ -50,17 +50,19 @@ const AuthError = () => {
       <div className="auth-error-container-wrapper">
         <div className="auth-error-container" onClick={clearErrorMessage}>
           <div className="auth-error-content-container">
-            <div className="auth-error-content">
-              {error}, if you don't receive the email, please check your spam
-              folder.
-            </div>
+            <div className="auth-error-content">{error}</div>
             {error === 'Email address not yet verified' && (
-              <div
-                className="auth-error-resend-button"
-                onClick={handleResendVerificationEmail}
-              >
-                Click here to resend verification email
-              </div>
+              <>
+                <div>
+                  If you don't receive the email, please check your spam folder.
+                </div>
+                <div
+                  className="auth-error-resend-button"
+                  onClick={handleResendVerificationEmail}
+                >
+                  Click here to resend verification email
+                </div>
+              </>
             )}
           </div>
           <IoIosCloseCircle className="auth-error-icon" />

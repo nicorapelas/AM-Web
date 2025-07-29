@@ -68,11 +68,15 @@ function GuideHandler() {
     '/email-verified',
     '/resend-verification',
     '/update-password',
-    '/network-error',
-    '/email-verified',
-    '/resend-verification-email',
-    '/pricing',
-    '/contact-support',
+    '/reset-password',
+    '/reset-password/:token',
+    '/payment-success',
+    '/payment-cancelled',
+    '/billing',
+    '/billing/success',
+    '/billing/cancel',
+    '/all-billing-history',
+    '/add-staff',
   ]
 
   // Check if current route is an auth route

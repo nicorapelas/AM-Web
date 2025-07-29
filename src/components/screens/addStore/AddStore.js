@@ -87,7 +87,7 @@ const AddStore = () => {
     }
   }
 
-  if (loading) {
+  if (loading || isSubmitting) {
     return <LoadingSpinner />
   }
 
