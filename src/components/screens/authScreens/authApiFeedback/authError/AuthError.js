@@ -17,7 +17,7 @@ const AuthError = () => {
 
   useEffect(() => {
     if (errorMessage) {
-      const { email, password, password2, notVerified } = errorMessage
+      const { email, password, password2, notVerified, token } = errorMessage
       if (email) {
         setError(email)
       }
@@ -29,6 +29,9 @@ const AuthError = () => {
       }
       if (notVerified) {
         setError(notVerified)
+      }
+      if (token) {
+        setError(token)
       }
     }
     if (!errorMessage) {
@@ -53,6 +56,20 @@ const AuthError = () => {
               <div>
                 <div className="auth-error-content">
                   If you don't receive the email, please check your spam folder.
+                </div>
+                <div
+                  className="auth-error-resend-button"
+                  onClick={handleResendVerificationEmail}
+                >
+                  Click here to resend verification email
+                </div>
+              </div>
+            )}
+            {(error === 'Invalid or expired verification token' ||
+              error.includes('expired')) && (
+              <div>
+                <div className="auth-error-content">
+                  The verification link has expired or is invalid.
                 </div>
                 <div
                   className="auth-error-resend-button"

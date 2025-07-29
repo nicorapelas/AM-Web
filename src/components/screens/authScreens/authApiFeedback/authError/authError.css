@@ -24,6 +24,7 @@
 }
 
 .auth-error-content {
+  text-align: center;
   color: #991b1b;
   font-size: 14px;
   line-height: 1.5;

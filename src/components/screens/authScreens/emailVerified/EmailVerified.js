@@ -11,8 +11,9 @@ const EmailVerified = () => {
   const [checkDone, setCheckDone] = useState(false)
 
   const {
-    state: { loading, user },
+    state: { loading, user, errorMessage },
     verifyEmail,
+    clearErrorMessage,
   } = useContext(AuthContext)
 
   useEffect(() => {
@@ -34,8 +35,67 @@ const EmailVerified = () => {
     }
   }, [user])
 
+  const handleResendVerification = () => {
+    clearErrorMessage()
+    navigate('/resend-verification-email')
+  }
+
+  const handleBackToLogin = () => {
+    clearErrorMessage()
+    navigate('/login')
+  }
+
   if (loading) {
     return <LoadingSpinner />
+  }
+
+  // Check for error message
+  if (errorMessage) {
+    const { token } = errorMessage
+    if (token) {
+      return (
+        <div className="email-verified-container">
+          <div className="email-verified-content">
+            <h1>Verification Failed</h1>
+            <p>{token}</p>
+            <p>The verification link may have expired or is invalid.</p>
+            <div style={{ marginTop: '2rem' }}>
+              <button
+                onClick={handleResendVerification}
+                style={{
+                  backgroundColor: '#bf0d3e',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  marginRight: '1rem',
+                  fontFamily: 'Press Start 2P, cursive',
+                  fontSize: '0.7rem',
+                }}
+              >
+                Resend Verification Email
+              </button>
+              <button
+                onClick={handleBackToLogin}
+                style={{
+                  backgroundColor: '#041e42',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontFamily: 'Press Start 2P, cursive',
+                  fontSize: '0.7rem',
+                }}
+              >
+                Back to Login
+              </button>
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
 
   return (

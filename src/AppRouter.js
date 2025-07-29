@@ -66,6 +66,7 @@ function GuideHandler() {
     '/forgot-password',
     '/password-reset',
     '/email-verified',
+    '/email-verified/:id',
     '/resend-verification',
     '/update-password',
     '/reset-password',

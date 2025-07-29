@@ -355,9 +355,24 @@ const verifyEmail = (dispatch) => async (data) => {
   dispatch({ type: 'LOADING' })
   try {
     const response = await ngrokApi.post('/auth/user/email-verified', data)
+
+    // Check if response contains an error
+    if (response.data.error) {
+      dispatch({ type: 'ADD_ERROR', payload: { token: response.data.error } })
+      return
+    }
+
     dispatch({ type: 'FETCH_USER', payload: response.data })
   } catch (error) {
-    dispatch({ type: 'NETWORK_ERROR', payload: true })
+    // Handle network errors or other exceptions
+    if (error.response && error.response.data && error.response.data.error) {
+      dispatch({
+        type: 'ADD_ERROR',
+        payload: { token: error.response.data.error },
+      })
+    } else {
+      dispatch({ type: 'NETWORK_ERROR', payload: true })
+    }
     return
   }
 }
