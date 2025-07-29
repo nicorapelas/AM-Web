@@ -11,8 +11,6 @@ const AuthError = () => {
     clearErrorMessage,
   } = useContext(AuthContext)
 
-  console.log('errorMessage', errorMessage)
-
   const [error, setError] = useState(null)
 
   const navigate = useNavigate()
@@ -52,7 +50,7 @@ const AuthError = () => {
           <div className="auth-error-content-container">
             <div className="auth-error-content">{error}</div>
             {error === 'Email address not yet verified' && (
-              <>
+              <div>
                 <div className="auth-error-content">
                   If you don't receive the email, please check your spam folder.
                 </div>
@@ -62,7 +60,7 @@ const AuthError = () => {
                 >
                   Click here to resend verification email
                 </div>
-              </>
+              </div>
             )}
           </div>
           <IoIosCloseCircle className="auth-error-icon" />
