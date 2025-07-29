@@ -24,7 +24,7 @@ const EmailVerified = () => {
   }, [checkDone, params])
 
   useEffect(() => {
-    if (user) {
+    if (user && !errorMessage) {
       const { emailVerified } = user
       if (emailVerified) {
         let run = setTimeout(() => {
@@ -33,7 +33,7 @@ const EmailVerified = () => {
         return () => clearTimeout(run)
       }
     }
-  }, [user])
+  }, [user, errorMessage])
 
   const handleResendVerification = () => {
     clearErrorMessage()
@@ -49,7 +49,7 @@ const EmailVerified = () => {
     return <LoadingSpinner />
   }
 
-  // Check for error message
+  // Check for error message first
   if (errorMessage) {
     const { token } = errorMessage
     if (token) {
@@ -98,12 +98,28 @@ const EmailVerified = () => {
     }
   }
 
+  // Only show success if we have a user and no errors
+  if (user && !errorMessage) {
+    const { emailVerified } = user
+    if (emailVerified) {
+      return (
+        <div className="email-verified-container">
+          <div className="email-verified-content">
+            <h1>Email Verified!</h1>
+            <p>Your email has been successfully verified.</p>
+            <p>You can now close this window and return to the application.</p>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  // Show loading or processing state if no user yet and no error
   return (
     <div className="email-verified-container">
       <div className="email-verified-content">
-        <h1>Email Verified!</h1>
-        <p>Your email has been successfully verified.</p>
-        <p>You can now close this window and return to the application.</p>
+        <h1>Verifying Email...</h1>
+        <p>Please wait while we verify your email address.</p>
       </div>
     </div>
   )
