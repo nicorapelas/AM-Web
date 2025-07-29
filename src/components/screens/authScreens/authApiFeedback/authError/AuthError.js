@@ -53,7 +53,7 @@ const AuthError = () => {
             <div className="auth-error-content">{error}</div>
             {error === 'Email address not yet verified' && (
               <>
-                <div>
+                <div className="auth-error-content">
                   If you don't receive the email, please check your spam folder.
                 </div>
                 <div
