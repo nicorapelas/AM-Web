@@ -56,6 +56,7 @@ function GuideHandler() {
     state: { guideEnabled, guidePartIndex },
     setGuideEnabled,
     setGuidePartIndex,
+    restartTour,
   } = useContext(GuidedTourContext)
 
   // Define auth routes where guide should not be shown
@@ -122,6 +123,7 @@ function GuideHandler() {
           onClose={handleClose}
           step={currentStep}
           totalSteps={totalSteps}
+          restartTour={restartTour}
         />
       )}
     </>

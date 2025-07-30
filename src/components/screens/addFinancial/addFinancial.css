@@ -125,6 +125,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: none !important;
 }
 
 .add-financial-expenses-title-container {
@@ -141,6 +142,11 @@
   gap: 2rem;
   width: 100%;
   margin-bottom: 2rem;
+}
+
+/* Specific rule for AddFinancial component only */
+.add-financial-page-container .add-financial-cards-container {
+  justify-content: flex-start;
 }
 
 .add-financial-card {

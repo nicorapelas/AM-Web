@@ -13,7 +13,8 @@ const guideNotesArray = [
       "🕹️ Now, add some games to your store by clicking on 'View details' on the Stores page, then click 'Add Game' and enter your arcade's games.",
   },
   {
-    message: '👥 Add your staff members so they can help manage your arcade.',
+    message:
+      "👥 Then go back to 'Store details', and add your staff members so they can help manage your arcade.",
   },
   {
     message:
@@ -25,7 +26,7 @@ const guideNotesArray = [
   },
   {
     message:
-      '💡 Need help or want to suggest a feature? Use the Support button in the menu!',
+      '💡 Need help or want to suggest a feature? Use the Support button in the menu! (Only available to paid users with more than 1 store)',
   },
   {
     message: "🎉 That's it! You're ready to manage your arcade. Have fun!",

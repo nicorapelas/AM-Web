@@ -155,15 +155,150 @@
 }
 
 .add-staff-credentials-item:last-child {
-  margin-bottom: 0;
+  border-bottom: none;
 }
 
 .add-staff-username,
 .add-staff-password {
-  display: inline-block;
-  margin-left: 1rem;
-  color: #bf0d3e;
+  font-family: monospace;
+  background-color: #f8f9fa;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  color: #041e42;
+  border: 1px solid #dee2e6;
+}
+
+/* Success Message Styles */
+.add-staff-success-message {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.add-staff-success-content {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  border: 3px solid #28a745;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-staff-success-title {
+  color: #28a745;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.add-staff-credentials-display {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.add-staff-credentials-display h3 {
+  color: #041e42;
   font-size: 0.8rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.add-staff-credential-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.add-staff-credential-item:last-child {
+  border-bottom: none;
+}
+
+.add-staff-credential-label {
+  font-size: 0.6rem;
+  color: #041e42;
+  font-weight: bold;
+}
+
+.add-staff-credential-value {
+  font-family: monospace;
+  background-color: #ffffff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  color: #bf0d3e;
+  border: 2px solid #bf0d3e;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.add-staff-access-info {
+  background-color: #e7f3ff;
+  border: 2px solid #007bff;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-staff-access-info p {
+  font-size: 0.6rem;
+  color: #041e42;
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.add-staff-access-info p:last-child {
+  margin-bottom: 0;
+}
+
+.add-staff-access-info strong {
+  color: #bf0d3e;
+}
+
+.add-staff-success-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.add-staff-success-btn {
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add-staff-success-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.add-staff-success-btn.secondary {
+  background-color: #6c757d;
+}
+
+.add-staff-success-btn.secondary:hover {
+  background-color: #5a6268;
 }
 
 /* Custom Toggle Switch Styles */
@@ -240,7 +375,7 @@
 @media (max-width: 768px) {
   .add-staff-form {
     padding: 1.5rem;
-    margin: 1rem;
+    margin-top: 1rem;
   }
 
   .add-staff-form-row {
@@ -253,15 +388,50 @@
   }
 
   .add-staff-submit-btn {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
   }
 
   .add-staff-credentials {
-    position: static;
-    margin: 1rem 0;
-    width: 100%;
-    max-width: none;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .add-staff-success-content {
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .add-staff-success-title {
+    font-size: 1rem;
+  }
+
+  .add-staff-credentials-display h3 {
+    font-size: 0.8rem;
+  }
+
+  .add-staff-credential-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .add-staff-credential-label,
+  .add-staff-credential-value {
+    font-size: 0.6rem;
+  }
+
+  .add-staff-access-info p {
+    font-size: 0.5rem;
+  }
+
+  .add-staff-success-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .add-staff-success-btn {
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
   }
 }

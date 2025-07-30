@@ -646,3 +646,152 @@
   border-radius: 2px;
   word-break: break-all;
 }
+
+/* Guide Settings Styles */
+.guide-settings-content {
+  width: 100%;
+  max-width: 500px;
+}
+
+.guide-settings-info {
+  margin-bottom: 1.5rem;
+}
+
+.guide-settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.guide-settings-label {
+  font-size: 0.7rem;
+  color: #041e42;
+  font-weight: bold;
+}
+
+.guide-settings-value {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.guide-settings-value.active {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.guide-settings-value.inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.guide-settings-description {
+  font-size: 0.6rem;
+  color: #6c757d;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+}
+
+.guide-settings-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.manage-account-guide-btn {
+  background-color: #bf0d3e;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.manage-account-guide-btn:hover {
+  background-color: #e6c82f;
+  color: #041e42;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.guide-active-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.6rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .manage-account-container {
+    margin-top: 10px;
+  }
+
+  .manage-account-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .manage-account-section {
+    padding: 1.5rem;
+  }
+
+  .manage-account-section-header h2 {
+    font-size: 0.9rem;
+  }
+
+  .manage-account-form {
+    max-width: 100%;
+  }
+
+  .manage-account-form-group label,
+  .manage-account-form-group input {
+    font-size: 0.6rem;
+  }
+
+  .manage-account-edit-btn,
+  .manage-account-save-btn,
+  .manage-account-signout-btn {
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .guide-settings-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .guide-settings-label,
+  .guide-settings-value {
+    font-size: 0.6rem;
+  }
+
+  .guide-settings-description {
+    font-size: 0.5rem;
+  }
+
+  .manage-account-guide-btn {
+    font-size: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .guide-active-message {
+    font-size: 0.5rem;
+    padding: 0.8rem;
+  }
+}

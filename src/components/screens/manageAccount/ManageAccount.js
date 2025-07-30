@@ -5,6 +5,7 @@ import AuthSuccess from '../authScreens/authApiFeedback/authSuccess/AuthSuccess'
 import LoadingSpinner from '../../common/loaders/loadingSpinner/LoadingSpinner'
 import { Context as AuthContext } from '../../../context/AuthContext'
 import { Context as StoresContext } from '../../../context/StoresContext'
+import { Context as GuidedTourContext } from '../../../context/GuidedTourContext'
 import Header from '../../common/header/Header'
 import BillingHistoryModal from '../../common/modals/BillingHistoryModal'
 import './manageAccount.css'
@@ -21,6 +22,11 @@ const ManageAccount = () => {
   const {
     state: { userStores },
   } = useContext(StoresContext)
+
+  const {
+    state: { guideEnabled },
+    restartTour,
+  } = useContext(GuidedTourContext)
 
   const [isEditing, setIsEditing] = useState(false)
   const [showPinInput, setShowPinInput] = useState(false)
@@ -590,6 +596,46 @@ const ManageAccount = () => {
                 </div>
               </div>
             )}
+
+            {/* Guide Settings */}
+            <div className="manage-account-section">
+              <div className="manage-account-section-header">
+                <h2>Guide & Tutorial</h2>
+              </div>
+              <div className="guide-settings-content">
+                <div className="guide-settings-info">
+                  <div className="guide-settings-item">
+                    <span className="guide-settings-label">Guide Status:</span>
+                    <span
+                      className={`guide-settings-value ${guideEnabled ? 'active' : 'inactive'}`}
+                    >
+                      {guideEnabled ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
+                  <div className="guide-settings-description">
+                    {guideEnabled
+                      ? 'The interactive guide is currently active and will help you navigate the app.'
+                      : 'The guide has been ended. You can restart it anytime to get help with using the app.'}
+                  </div>
+                </div>
+                <div className="guide-settings-actions">
+                  {!guideEnabled && (
+                    <button
+                      className="manage-account-guide-btn"
+                      onClick={restartTour}
+                    >
+                      Restart Guide
+                    </button>
+                  )}
+                  {guideEnabled && (
+                    <div className="guide-active-message">
+                      Guide is currently active. You can end it from the guide
+                      button on any page.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
             {/* Danger Zone */}
             <div className="manage-account-section manage-account-danger-zone">

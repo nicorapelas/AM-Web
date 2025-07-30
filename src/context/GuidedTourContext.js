@@ -22,11 +22,17 @@ const setGuidePartIndex = (dispatch) => (value) => {
   dispatch({ type: 'SET_GUIDE_PART_INDEX', payload: value })
 }
 
+const restartTour = (dispatch) => () => {
+  dispatch({ type: 'SET_GUIDE_ENABLED', payload: true })
+  dispatch({ type: 'SET_GUIDE_PART_INDEX', payload: 0 })
+}
+
 export const { Provider, Context } = createDataContext(
   GuidedTourReducer,
   {
     setGuideEnabled,
     setGuidePartIndex,
+    restartTour,
   },
   {
     guideEnabled: true,

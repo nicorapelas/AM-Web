@@ -45,10 +45,6 @@ const StoreDetails = () => {
 
   // Auto-scroll to Games card when there are no games
   useEffect(() => {
-    // Only auto-scroll if:
-    // 1. Games are not loading (data has been fetched)
-    // 2. storeGames is not undefined (data exists)
-    // 3. storeGames is an empty array (no games)
     if (!gamesLoading && storeGames && storeGames.length === 0) {
       setTimeout(() => {
         const gamesCard = document.querySelector('.games-section')
@@ -58,9 +54,24 @@ const StoreDetails = () => {
             block: 'center',
           })
         }
-      }, 500) // Small delay to ensure the component is fully rendered
+      }, 500)
     }
   }, [storeGames, gamesLoading])
+
+  // Auto-scroll to Games card when there are no games
+  useEffect(() => {
+    if (!staffLoading && storeGames.length > 0 && storeStaff.length === 0) {
+      setTimeout(() => {
+        const staffCard = document.querySelector('.staff-section')
+        if (staffCard) {
+          staffCard.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
+        }
+      }, 500)
+    }
+  }, [storeStaff, staffLoading])
 
   const handleEditStore = (store) => {
     setStoreToEdit(store)
@@ -316,6 +327,11 @@ const StoreDetails = () => {
                   </span>
                 </div>
               </div>
+              {storeGames.length > 0 && storeStaff.length === 0 && (
+                <p className="start-here-message">
+                  Now add your staff members.
+                </p>
+              )}
               <div className="staff-actions">{staffCardButton()}</div>
             </div>
           </div>

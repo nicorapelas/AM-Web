@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Context as GamesContext } from '../../../context/GamesContext'
 import { Context as StoresContext } from '../../../context/StoresContext'
 import { useNavigate } from 'react-router-dom'
@@ -26,6 +26,14 @@ const AddGame = () => {
   })
 
   const navigate = useNavigate()
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target

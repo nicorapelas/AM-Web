@@ -1,7 +1,4 @@
 .guide-note-minimize-btn {
-  position: absolute;
-  top: 8px;
-  right: 12px;
   background: #bf0d3e;
   color: #fff;
   border: 2px solid #041e42;
@@ -9,7 +6,6 @@
   font-size: 0.7rem;
   font-family: 'Press Start 2P', cursive;
   cursor: pointer;
-  z-index: 10;
   opacity: 0.8;
   transition: all 0.2s ease;
   padding: 0.3rem 0.6rem;
@@ -20,6 +16,40 @@
 .guide-note-minimize-btn:hover {
   opacity: 1;
   background: #041e42;
+  color: #fff;
+  border-color: #bf0d3e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.guide-note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid #bf0d3e;
+  background: linear-gradient(135deg, #041e42 0%, #0a2b5a 100%);
+  border-radius: 8px 8px 0 0;
+}
+
+.guide-note-end-tour-btn {
+  background: #ff4d4d;
+  color: #fff;
+  border: 2px solid #041e42;
+  border-radius: 6px;
+  font-size: 0.6rem;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  padding: 0.3rem 0.6rem;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.guide-note-end-tour-btn:hover {
+  opacity: 1;
+  background: #ff0000;
   color: #fff;
   border-color: #bf0d3e;
   transform: translateY(-1px);
@@ -301,4 +331,80 @@
     font-size: 0.8rem;
     padding: 0.5rem 1rem; /* extra bottom padding for mobile */
   }
+}
+
+.guide-note-minimized-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2100;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-note-minimized-menu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: #041e42;
+  border: 2px solid #bf0d3e;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 150px;
+  box-shadow: 0 4px 16px rgba(4, 30, 66, 0.3);
+}
+
+.guide-note-menu-btn {
+  background: #bf0d3e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.guide-note-menu-btn:hover {
+  background: #e6c82f;
+  color: #041e42;
+  transform: translateX(2px);
+}
+
+.guide-note-menu-btn-close {
+  background: #ff4d4d;
+}
+
+.guide-note-menu-btn-close:hover {
+  background: #ff0000;
+  color: #fff;
+}
+
+.guide-note-menu-toggle {
+  background: #041e42;
+  color: #fff;
+  border: 2px solid #bf0d3e;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.guide-note-menu-toggle:hover {
+  background: #bf0d3e;
+  transform: scale(1.1);
 }
