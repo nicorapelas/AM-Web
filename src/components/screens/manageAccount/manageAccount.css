@@ -737,6 +737,81 @@
   line-height: 1.4;
 }
 
+/* Contact Information Styles */
+.manage-account-contact-info {
+  border: 2px solid #007bff;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.manage-account-contact-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.05) 0%, rgba(0, 123, 255, 0.1) 100%);
+  pointer-events: none;
+}
+
+.manage-account-contact-content {
+  padding: 1rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-description {
+  color: #041e42;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.contact-email {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.contact-label {
+  color: #041e42;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.contact-email-link {
+  color: #007bff;
+  font-size: 0.7rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-family: monospace;
+}
+
+.contact-email-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .contact-email {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+  
+  .contact-description {
+    font-size: 0.6rem;
+  }
+  
+  .contact-label,
+  .contact-email-link {
+    font-size: 0.6rem;
+  }
+}
+
 @media (max-width: 768px) {
   .manage-account-container {
     margin-top: 10px;

@@ -695,6 +695,27 @@ const ManageAccount = () => {
                 </button>
               )}
             </div>
+
+            {/* Contact Information */}
+            <div className="manage-account-section manage-account-contact-info">
+              <div className="manage-account-section-header">
+                <h2>Contact Support</h2>
+              </div>
+              <div className="manage-account-contact-content">
+                <p className="contact-description">
+                  Need help with your account? Contact our support team:
+                </p>
+                <div className="contact-email">
+                  <span className="contact-label">Email:</span>
+                  <a
+                    href="mailto:hello@arcademanager.app"
+                    className="contact-email-link"
+                  >
+                    hello@arcademanager.app
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
