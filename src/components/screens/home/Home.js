@@ -103,10 +103,6 @@ const Home = () => {
               Manage your arcade business with ease. Track games, finances,
               staff, and more.
             </p>
-            <p>
-              All your data is securely encrypted to protect your business
-              information.
-            </p>
           </div>
 
           <div className="home-buttons">

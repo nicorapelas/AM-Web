@@ -38,7 +38,7 @@ const Staff = () => {
 
   useEffect(() => {
     if (storeSelected) {
-      fetchStoreStaff(storeSelected._id)
+      fetchStoreStaff({ storeId: storeSelected._id })
     }
   }, [storeSelected])
 
@@ -454,7 +454,7 @@ const Staff = () => {
 
         <div className="staff-grid">
           {storeStaff.map((staff) => (
-            <div key={staff.id} className="staff-card">
+            <div key={staff._id} className="staff-card">
               <div className="staff-card-star" />
               <div className="staff-card-header">
                 <h3 className="staff-name">

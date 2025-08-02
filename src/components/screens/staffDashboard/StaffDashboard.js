@@ -236,10 +236,7 @@ const StaffDashboard = () => {
         <div className="staff-dashboard-header-content">
           <div className="staff-dashboard-date">{currentDate}</div>
           <h1 className="staff-dashboard-store-name">{storeName}</h1>
-          <button
-            className="staff-dashboard-nav-button signout-btn"
-            onClick={handleSignOut}
-          >
+          <button className="nav-signout-btn" onClick={handleSignOut}>
             Sign Out
           </button>
         </div>

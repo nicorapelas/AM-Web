@@ -18,6 +18,8 @@ const CommonReducer = (state, action) => {
       return { ...state, staffToEdit: action.payload }
     case 'SET_STAFF_SELECTED':
       return { ...state, staffSelected: action.payload }
+    case 'STORE_STAFF_USERNAME_AVAILABLE':
+      return { ...state, usernameAvailable: action.payload }
     default:
       return state
   }
@@ -47,6 +49,7 @@ const fetchUserStaff = (dispatch) => async () => {
 }
 
 const fetchStoreStaff = (dispatch) => async (storeId) => {
+  console.log('storeId', storeId)
   dispatch({ type: 'LOADING', payload: true })
   try {
     const response = await ngrokApi.post(`/staff/fetch-store-staff`, storeId)
@@ -109,6 +112,18 @@ const addLoanPayment = (dispatch) => async (data) => {
   }
 }
 
+const checkUsernameAvailability = (dispatch) => async (username) => {
+  try {
+    const response = await ngrokApi.post(`/staff/check-username-availability`, {
+      username,
+    })
+    dispatch({ type: 'STORE_STAFF_USERNAME_AVAILABLE', payload: response.data })
+  } catch (error) {
+    dispatch({ type: 'ADD_ERROR', payload: error })
+    return
+  }
+}
+
 export const { Provider, Context } = createDataContext(
   CommonReducer,
   {
@@ -122,6 +137,7 @@ export const { Provider, Context } = createDataContext(
     deleteStaff,
     createLoan,
     addLoanPayment,
+    checkUsernameAvailability,
   },
   {
     loading: false,
@@ -130,5 +146,6 @@ export const { Provider, Context } = createDataContext(
     storeStaff: [],
     staffToEdit: null,
     staffSelected: null,
+    usernameAvailable: 'not-checked',
   },
 )

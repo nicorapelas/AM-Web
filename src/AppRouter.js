@@ -79,6 +79,7 @@ function GuideHandler() {
     '/billing/cancel',
     '/all-billing-history',
     '/add-staff',
+    '/staff-dashboard',
   ]
 
   // Check if current route is an auth route

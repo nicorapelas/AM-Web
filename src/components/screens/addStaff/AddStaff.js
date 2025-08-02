@@ -11,7 +11,11 @@ const AddStaff = () => {
     state: { loading, storeSelected, userStores },
   } = useContext(StoresContext)
 
-  const { createStaff } = useContext(StaffContext)
+  const {
+    state: { usernameAvailable },
+    createStaff,
+    checkUsernameAvailability,
+  } = useContext(StaffContext)
 
   const navigate = useNavigate()
 
@@ -22,6 +26,9 @@ const AddStaff = () => {
       behavior: 'smooth',
     })
   }, [])
+
+  const [triggerUsernameAvailableCheck, setTriggerUsernameAvailableCheck] =
+    useState(true)
 
   const [formData, setFormData] = useState({
     storeId: storeSelected?._id,
@@ -68,6 +75,21 @@ const AddStaff = () => {
     }
   }, [formData.firstName, formData.lastName])
 
+  useEffect(() => {
+    if (triggerUsernameAvailableCheck) {
+      checkUsernameAvailability(formData.username)
+      setTriggerUsernameAvailableCheck(false)
+    }
+  }, [triggerUsernameAvailableCheck])
+
+  useEffect(() => {
+    if (usernameAvailable === false) {
+      const username = generateUsername(formData.firstName, formData.lastName)
+      setFormData((prev) => ({ ...prev, username }))
+      setTriggerUsernameAvailableCheck(true)
+    }
+  }, [usernameAvailable])
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setFormData((prevState) => ({
@@ -81,6 +103,10 @@ const AddStaff = () => {
     createStaff(formData)
     setShowSuccessMessage(true)
     setNewStaffMember(formData)
+  }
+
+  const handleBlur = () => {
+    setTriggerUsernameAvailableCheck(true)
   }
 
   if (loading) {
@@ -201,6 +227,7 @@ const AddStaff = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   required
                 />
               </div>

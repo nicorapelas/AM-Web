@@ -92,7 +92,7 @@ const AddGame = () => {
         <div className="add-game-form-row">
           <div className="add-game-form-group">
             <label className="add-game-label" htmlFor="commission">
-              Commission
+              Commission %
             </label>
             <input
               className="add-game-input"
