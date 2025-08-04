@@ -27,6 +27,11 @@ const AddFinancial = () => {
     state: { storeStaff },
   } = useContext(StaffContext)
 
+  const {
+    state: { loading: financialLoading },
+    createFinancial,
+  } = useContext(FinancialContext)
+
   const navigate = useNavigate()
 
   const [financialData, setFinancialData] = useState({
@@ -52,8 +57,6 @@ const AddFinancial = () => {
     description: '',
     amount: '',
   })
-
-  const { createFinancial } = useContext(FinancialContext)
 
   // Set initial date to today
   useEffect(() => {
@@ -298,7 +301,7 @@ const AddFinancial = () => {
     }
   }
 
-  if (loading) {
+  if (loading || financialLoading) {
     return <LoaderFullScreen />
   }
 
