@@ -4,6 +4,7 @@ import { Context as FinancialsContext } from '../../../context/FinancialsContext
 import { Context as StoresContext } from '../../../context/StoresContext'
 import { Context as AuthContext } from '../../../context/AuthContext'
 import { Context as StaffContext } from '../../../context/StaffContext'
+import LoaderFullScreen from '../../common/loaders/fullScreenLoader/LoaderFullScreen'
 import Header from '../../common/header/Header'
 import './financialDetail.css'
 
@@ -12,7 +13,7 @@ const FinancialDetail = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const {
-    state: { financialSelected },
+    state: { loading, financialSelected },
     setFinancialToEdit,
     deleteFinancial,
   } = useContext(FinancialsContext)
@@ -72,8 +73,8 @@ const FinancialDetail = () => {
     setShowDeleteModal(false)
   }
 
-  if (!financialSelected) {
-    return <div>Loading...</div>
+  if (!financialSelected || loading) {
+    return <LoaderFullScreen />
   }
 
   const renderDeleteModal = () => {
