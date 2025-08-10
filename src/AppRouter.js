@@ -80,6 +80,9 @@ function GuideHandler() {
     '/all-billing-history',
     '/add-staff',
     '/staff-dashboard',
+    '/financial-detail',
+    '/add-financial',
+    '/edit-financial',
   ]
 
   // Check if current route is an auth route
